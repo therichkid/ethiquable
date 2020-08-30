@@ -14,15 +14,10 @@ export default new Vuetify({
       customProperties: true
     },
     themes: {
-      dark: {
-        primary: "#f07f00",
-        secondary: "#3b2e88",
-        accent: "#f07f00"
-      },
       light: {
-        primary: "#3b2e88",
-        secondary: "#f07f00",
-        accent: "#3b2e88"
+        primary: "#80a018",
+        secondary: "#b25c2d",
+        accent: "#80a018"
       }
     }
   },

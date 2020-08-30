@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="position: absolute; top: 0; right: 16px;">
     <v-menu v-if="!isHidden" v-model="isOpen" offset-y max-height="75%">
       <template v-slot:activator="scope">
         <v-text-field
