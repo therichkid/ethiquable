@@ -38,7 +38,6 @@
           </template>
           <v-list>
             <v-list-item v-for="(item, i) in item.to" :key="i" :to="item.to">
-              <v-list-item-icon></v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title>{{ item.title }}</v-list-item-title>
               </v-list-item-content>

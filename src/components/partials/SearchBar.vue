@@ -77,11 +77,7 @@ export default {
 
   watch: {
     model(value) {
-      // Call with simple debounce
-      clearTimeout(this.timeout);
-      this.timeout = setTimeout(() => {
-        this.search(value);
-      }, 150);
+      this.search(value);
     },
     includePosts() {
       this.search(this.model);
@@ -106,6 +102,11 @@ export default {
     },
     async search(value) {
       if (this.isLoading) {
+        // Delay request with simple debounce
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+          this.search(value);
+        }, 150);
         return;
       }
       this.isLoading = true;
