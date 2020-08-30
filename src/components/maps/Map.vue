@@ -3,8 +3,11 @@
     <!-- Table -->
     <v-col cols="12" sm="5" md="4">
       <v-card>
-        <v-card-text>
+        <v-card-text v-if="type === 'shopfinder'">
           <v-row dense>
+            <v-col cols="12">
+              <GeolocationSearch @setGeolocation="onSetGeolocation($event)" />
+            </v-col>
             <v-col cols="12">
               <v-text-field
                 v-model="search"
@@ -13,23 +16,6 @@
                 clearable
                 hide-details
               ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-select
-                :items="facilityTypes"
-                v-model="selectedFacilityType"
-                label="Typ"
-                clearable
-                hide-details
-                v-if="type === 'facilities'"
-              ></v-select>
-              <v-select
-                :items="regions"
-                v-model="selectedRegion"
-                label="Regierungsbezirk"
-                clearable
-                hide-details
-              ></v-select>
             </v-col>
           </v-row>
         </v-card-text>
@@ -46,7 +32,7 @@
           @click:row="setGroupToActive"
           style="cursor: pointer;"
         >
-          <template v-slot:item.action="{ item }">
+          <template v-slot:[`item.action`]="{ item }">
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
                 <v-btn
@@ -153,6 +139,7 @@
 </template>
 
 <script>
+import GeolocationSearch from "@/components/partials/GeolocationSearch";
 import MapPopup from "@/components/partials/MapPopup";
 import { LMap, LTileLayer, LGeoJson, LMarker, LIcon, LPopup, LCircle } from "vue2-leaflet";
 import L from "leaflet";
@@ -161,6 +148,7 @@ import bavaria from "@/assets/map/bavaria.geo.json";
 
 export default {
   components: {
+    GeolocationSearch,
     MapPopup,
     LMap,
     LTileLayer,
@@ -181,11 +169,16 @@ export default {
     return {
       zoom: 7,
       center: [48.8, 11.0],
+      tileProvider: {
+        url: "https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png",
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors'
+      },
       bavaria,
       geojsonOptions: {
         color: "var(--v-primary-base)",
         opacity: 0.75,
-        fillOpacity: 0.05,
+        fillOpacity: 0.5,
         weight: 2
       },
       allowGeolocation: false,
@@ -198,40 +191,12 @@ export default {
         sortBy: "name"
       },
       search: null,
-      facilityTypes: ["Klinik", "Reha", "Beratungsstelle"],
-      selectedFacilityType: null,
-      regions: [
-        "Oberbayern",
-        "Niederbayern",
-        "Schwaben",
-        "Oberfranken",
-        "Mittelfranken",
-        "Unterfranken",
-        "Oberpfalz",
-        "Thüringen"
-      ],
-      selectedRegion: null,
       activeGroup: null,
       timeout: null
     };
   },
 
   computed: {
-    tileProvider() {
-      if (this.$vuetify.theme.dark) {
-        return {
-          url: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-        };
-      } else {
-        return {
-          url: "https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png",
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors'
-        };
-      }
-    },
     isLoading() {
       return this.type === "shgs"
         ? this.$store.state.groupsLoading
@@ -240,12 +205,6 @@ export default {
     filteredGroups() {
       const filteredGroups = [];
       for (const group of this.groups) {
-        if (this.selectedFacilityType && group.type !== this.selectedFacilityType) {
-          continue;
-        }
-        if (this.selectedRegion && group.region !== this.selectedRegion) {
-          continue;
-        }
         if (this.search && !group.name.toLowerCase().includes(this.search.toLowerCase())) {
           continue;
         }
@@ -260,9 +219,6 @@ export default {
       if (!isLoading) {
         this.getCurrentLocation();
       }
-    },
-    selectedRegion(region) {
-      this.$store.commit("changeRegion", region);
     }
   },
 
@@ -276,10 +232,12 @@ export default {
               radius: location.coords.accuracy / 2
             };
             this.addDistanceToGroups();
-            this.table.headers.splice(1, 0, {
-              text: "Distanz [km]",
-              value: "distance"
-            });
+            if (!this.table.headers.filter(header => header.value === "distance").length) {
+              this.table.headers.splice(1, 0, {
+                text: "Distanz [km]",
+                value: "distance"
+              });
+            }
             this.allowGeolocation = true;
             this.center = this.currentLocation.center;
             this.zoom = 8;
@@ -308,15 +266,27 @@ export default {
       this.timeout = setTimeout(() => {
         this.activeGroup = null;
       }, 2250);
+    },
+    onSetGeolocation(latlng) {
+      this.currentLocation = {
+        center: latlng
+      };
+      this.addDistanceToGroups();
+      if (!this.table.headers.filter(header => header.value === "distance").length) {
+        this.table.headers.splice(1, 0, {
+          text: "Distanz [km]",
+          value: "distance"
+        });
+      }
+      this.center = this.currentLocation.center;
+      this.zoom = 8;
+      this.table.sortBy = "distance";
     }
   },
 
   mounted() {
     if (!this.isLoading) {
       this.getCurrentLocation();
-    }
-    if (this.$store.state.region) {
-      this.selectedRegion = this.$store.state.region;
     }
   }
 };

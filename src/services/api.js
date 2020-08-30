@@ -8,10 +8,21 @@ const n2gInstance = axios.create({
   baseURL: "https://api.newsletter2go.com/",
   timeout: 7500
 });
+const osmInstance = axios.create({
+  baseURL: "https://nominatim.openstreetmap.org/",
+  timeout: 7500
+});
 
 export default {
   async fetchData(path, params) {
     const response = await wpInstance.get(path, { params }).catch(error => {
+      throw error;
+    });
+    return { data: response.data, headers: response.headers };
+  },
+
+  async fetchOsmData(params) {
+    const response = await osmInstance.get("search", { params }).catch(error => {
       throw error;
     });
     return { data: response.data, headers: response.headers };

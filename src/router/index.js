@@ -15,6 +15,7 @@ const Calendar = () => import(/* webpackChunkName: "calendar" */ "../views/Calen
 const Form = () => import(/* webpackChunkName: "form" */ "../views/Form");
 const SHGs = () => import(/* webpackChunkName: "map" */ "../views/SHGs");
 const Facilities = () => import(/* webpackChunkName: "map" */ "../views/Facilities");
+const ShopFinder = () => import(/* webpackChunkName: "map" */ "../views/ShopFinder");
 
 Vue.use(Router);
 
@@ -153,6 +154,14 @@ const routes = [
     component: Facilities,
     meta: {
       title: "Kliniken, Rehas, Beratungsstellen"
+    }
+  },
+  {
+    path: "/shopfinder",
+    name: "shopfinder",
+    component: ShopFinder,
+    meta: {
+      title: "Shopfinder"
     }
   },
   {

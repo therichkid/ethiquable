@@ -1,5 +1,5 @@
 <template>
-  <v-footer dark :class="$vuetify.theme.dark ? 'dark-gradient' : 'light-gradient'">
+  <v-footer dark color="primary">
     <v-row align="center">
       <!-- Left -->
       <v-col cols="12" sm="6">
@@ -58,7 +58,7 @@
       </v-col>
       <v-col cols="12" sm="6" class="text-center text-sm-right">
         &copy; {{ new Date().getFullYear() }} &minus;
-        <strong>Bayerischer Cochlea Implantat Verband e.V.</strong>
+        <strong>ETHIQUABLE Deutschland e.G.</strong>
       </v-col>
     </v-row>
 
@@ -153,12 +153,6 @@ export default {
 </script>
 
 <style scoped>
-.light-gradient {
-  background: linear-gradient(var(--v-primary-lighten2), var(--v-primary-base));
-}
-.dark-gradient {
-  background: linear-gradient(var(--v-primary-darken2), var(--v-primary-base));
-}
 .icon {
   float: left;
   margin-top: -3px;
