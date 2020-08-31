@@ -2,19 +2,12 @@ import Vue from "vue";
 import Router from "vue-router";
 
 import Home from "../views/Home";
-import News from "../views/News";
 import Posts from "../views/Posts";
 import Post from "../views/Post";
-import Event from "../views/Event";
-import SHG from "../views/SHG";
 import Page from "../views/Page";
 import PageNotFound from "../views/PageNotFound";
 
 // Chunks
-const Calendar = () => import(/* webpackChunkName: "calendar" */ "../views/Calendar");
-const Form = () => import(/* webpackChunkName: "form" */ "../views/Form");
-const SHGs = () => import(/* webpackChunkName: "map" */ "../views/SHGs");
-const Facilities = () => import(/* webpackChunkName: "map" */ "../views/Facilities");
 const ShopFinder = () => import(/* webpackChunkName: "map" */ "../views/ShopFinder");
 
 Vue.use(Router);
@@ -32,130 +25,6 @@ const routes = [
       title: "Home"
     }
   },
-  { path: "/bayciv", redirect: "/news" },
-  { path: "/aktuelle-meldungen", redirect: "/news" },
-  { path: "/aktuelle-meldungen-gruppen", redirect: "/news" },
-  {
-    path: "/news/page/:page?",
-    name: "news",
-    component: News,
-    meta: {
-      title: "Neuigkeiten"
-    },
-    alias: "/news"
-  },
-  // News redirects
-  {
-    path: "/aktuelles-lesen/*",
-    redirect: route => "/news/" + route.path.split("/").pop().replace(".html", "")
-  },
-  {
-    path: "/pressespiegel/articles/*",
-    redirect: route => "/news/" + route.path.split("/").pop().replace(".html", "")
-  },
-  {
-    path: "/erfahrungen/articles/*",
-    redirect: route => "/news/" + route.path.split("/").pop().replace(".html", "")
-  },
-  {
-    path: "/videos/articles/*",
-    redirect: route => "/news/" + route.path.split("/").pop().replace(".html", "")
-  },
-  {
-    path: "/texte/articles/*",
-    redirect: route => "/news/" + route.path.split("/").pop().replace(".html", "")
-  },
-  {
-    path: "/gedichte/articles/*",
-    redirect: route => "/news/" + route.path.split("/").pop().replace(".html", "")
-  },
-  {
-    path: "/news/:slug",
-    name: "post",
-    component: Post,
-    meta: {
-      title: "Neuigkeiten"
-    },
-    props: true
-  },
-  { path: "/anmeldungen", redirect: "/events" },
-  { path: "/veranstaltungen", redirect: "/events" },
-  { path: "/kalender", redirect: "/events" },
-  {
-    path: "/events",
-    name: "events",
-    component: Calendar,
-    meta: {
-      title: "Veranstaltungen"
-    }
-  },
-  {
-    path: "/events/:date/:slug",
-    name: "event",
-    component: Event,
-    meta: {
-      title: "Veranstaltungen"
-    },
-    props: true
-  },
-  {
-    path: "/events/:date/:slug/anmeldung",
-    name: "Anmeldung",
-    component: Form,
-    meta: {
-      title: "Anmeldung"
-    },
-    props: route => ({
-      date: route.params.date,
-      slug: route.params.slug,
-      type: "event"
-    })
-  },
-  { path: "/selbsthilfe", redirect: "/shgs" },
-  {
-    path: "/shgs",
-    name: "shgs",
-    component: SHGs,
-    meta: {
-      title: "Selbsthilfegruppen"
-    }
-  },
-  // SHG redirects
-  { path: "/shg-allgaeu", redirect: "/shgs/ci-shg-allgaeu" },
-  {
-    path: "/shgs/:groupName/page/:page?",
-    name: "shg",
-    component: SHG,
-    meta: {
-      title: "Selbsthilfegruppen"
-    },
-    props: true,
-    alias: "/shgs/:groupName"
-  },
-  {
-    path: "/erfahrungen/page/:page?",
-    name: "posts",
-    component: Posts,
-    meta: {
-      title: "Erfahrungen"
-    },
-    props: route => ({
-      routerPage: "erfahrungen",
-      page: route.params.page
-    }),
-    alias: "/erfahrungen"
-  },
-  { path: "/kliniken", redirect: "/einrichtungen" },
-  { path: "/rehabilation", redirect: "/einrichtungen" },
-  { path: "/beratungsstellen", redirect: "/einrichtungen" },
-  {
-    path: "/einrichtungen",
-    name: "facilities",
-    component: Facilities,
-    meta: {
-      title: "Kliniken, Rehas, Beratungsstellen"
-    }
-  },
   {
     path: "/shopfinder",
     name: "shopfinder",
@@ -165,6 +34,86 @@ const routes = [
     }
   },
   {
+    path: "/produkt-kategorie/*",
+    redirect: route => "/produkt-kategorie/" + route.path.split("/").pop().replace(".html", "")
+  },
+  // {
+  //   path: "/produkt-kategorien/:slug",
+  //   name: "products",
+  //   component: Products,
+  //   meta: {
+  //     title: "Produkte"
+  //   }
+  // },
+  // {
+  //   path: "/produkte/:slug",
+  //   name: "product",
+  //   component: Product,
+  //   meta: {
+  //     title: "Produkt"
+  //   }
+  // },
+  // {
+  //   path: "/uebersicht-weltkarte",
+  //   redirect: "/produzenten"
+  // },
+  // {
+  //   path: "/produzenten",
+  //   name: "producers",
+  //   component: Producers,
+  //   meta: {
+  //     title: "Produzenten"
+  //   }
+  // },
+  // {
+  //   path: "/uebersicht-weltkarte/*",
+  //   redirect: route => "/produzenten/" + route.path.split("/").pop().replace(".html", "")
+  // },
+  // {
+  //   path: "/produzenten/:slug",
+  //   name: "producer",
+  //   component: Producer,
+  //   meta: {
+  //     title: "Produzent"
+  //   }
+  // },
+  {
+    path: "/magazin/page/:page?",
+    name: "posts",
+    component: Posts,
+    meta: {
+      title: "Magazin"
+    },
+    alias: "/magazin"
+  },
+  {
+    path: "/magazin/:slug",
+    name: "post",
+    component: Post,
+    meta: {
+      title: "Magazin"
+    },
+    props: true
+  },
+  // { path: "/?wpupg_grid=rezepte", redirect: "/rezepte" },
+  // {
+  //   path: "/rezepte",
+  //   name: "recipes",
+  //   component: Recipes,
+  //   meta: {
+  //     title: "Rezepte"
+  //   }
+  // },
+  // {
+  //   path: "/rezepte/:slug",
+  //   name: "recipe",
+  //   component: Recipe,
+  //   meta: {
+  //     title: "Rezept"
+  //   },
+  //   props: true
+  // },
+  {
     path: "/404",
     name: "404",
     component: PageNotFound,
@@ -173,12 +122,9 @@ const routes = [
     }
   },
   // Page redirects
-  { path: "/cochlea", redirect: "/was-ist-ein-ci" },
-  { path: "/implantate", redirect: "/ci-systeme" },
-  { path: "/ziele", redirect: "/verband" },
-  { path: "/taetigkeitsberichte", redirect: "/infos-dokumente" },
-  { path: "/infomaterial", redirect: "/infos-dokumente" },
-  { path: "/mitglied_werden", redirect: "/mitglied-werden" },
+  { path: "/unser-ansatz", redirect: "/fair-trade" },
+  { path: "/stellenangebote", redirect: "/jobs" },
+  { path: "/disclaimer", redirect: "/impressum" },
   {
     path: "/:slug",
     name: "page",

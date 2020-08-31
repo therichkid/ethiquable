@@ -1,84 +1,85 @@
 export const ROUTER_ITEMS = [
   {
-    icon: "mdi-home",
     title: "Home",
     to: "/"
   },
   {
-    icon: "mdi-newspaper",
-    title: "Neuigkeiten",
-    to: "/news"
-  },
-  {
-    icon: "mdi-calendar",
-    title: "Veranstaltungen",
-    to: "/events"
-  },
-  {
-    icon: "mdi-account-multiple",
-    title: "Selbsthilfegruppen",
-    to: "/shgs"
-  },
-  {
-    icon: "mdi-ear-hearing",
-    title: "Cochlea-Implantat",
+    title: "Wer wir sind",
     to: [
       {
-        title: "Erfahrungen",
-        to: "/erfahrungen"
+        title: "ETHIQUABLE",
+        to: "/ethiquable"
       },
       {
-        title: "Was ist ein CI?",
-        to: "/was-ist-ein-ci"
+        title: "Fair Trade",
+        to: "/fair-trade"
       },
       {
-        title: "Kliniken, Rehas, Beratungsstellen",
-        to: "/einrichtungen"
-      },
-      {
-        title: "CI-Systeme",
-        to: "/ci-systeme"
+        title: "Jobs",
+        to: "/jobs"
       }
     ]
   },
   {
-    icon: "mdi-information",
-    title: "Über uns",
+    title: "Produkte",
     to: [
       {
-        title: "Verband",
-        to: "/verband"
+        title: "Kaffee",
+        to: "produkte/kaffee"
       },
       {
-        title: "Beratung",
-        to: "/beratung"
+        title: "Tee",
+        to: "produkte/tee"
       },
       {
-        title: "Vorstand",
-        to: "/vorstand"
+        title: "Kakao",
+        to: "produkte/kakao"
       },
       {
-        title: "Förderer",
-        to: "/foerderer"
+        title: "Schokolade",
+        to: "produkte/schokolade"
       },
       {
-        title: "Satzung",
-        to: "/satzung"
+        title: "Zucker",
+        to: "produkte/zucker"
       },
       {
-        title: "Infos & Dokumente",
-        to: "/infos-dokumente"
+        title: "Getreide",
+        to: "produkte/getreide"
+      },
+      {
+        title: "Öl",
+        to: "produkte/oel"
+      },
+      {
+        title: "Snack",
+        to: "produkte/snack"
+      },
+      {
+        title: "Aufstrich",
+        to: "produkte/aufstrich"
+      },
+      {
+        title: "Frucht",
+        to: "produkte/frucht"
       }
     ]
   },
   {
-    icon: "mdi-clipboard-account",
-    title: "Kontakt",
-    to: "/kontakt"
+    title: "Produzenten",
+    to: "/produzenten"
   },
   {
-    icon: "mdi-account-plus",
-    title: "Mitglied werden",
-    to: "/mitglied-werden"
+    title: "Magazin",
+    to: "/magazin"
+  },
+  {
+    title: "Rezepte",
+    to: "/rezepte"
+  },
+  {
+    icon: "mdi-basket",
+    title: "E-Shop",
+    to: "https://www.ethiquable-shop.de/"
   }
 ];
