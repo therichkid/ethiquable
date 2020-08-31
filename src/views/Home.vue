@@ -32,7 +32,7 @@ export default {
 
   methods: {
     loadMorePosts() {
-      this.$router.push("/news/page/2");
+      this.$router.push("/magazin/page/2");
     }
   }
 };

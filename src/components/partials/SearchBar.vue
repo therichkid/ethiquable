@@ -25,7 +25,7 @@
           <v-spacer></v-spacer>
           <v-switch dense v-model="includePosts"></v-switch>
         </v-subheader>
-        <v-list-item v-for="post in items.posts" :key="post.id" :to="`/news/${post.slug}`">
+        <v-list-item v-for="post in items.posts" :key="post.id" :to="`/magazin/${post.slug}`">
           <v-list-item-content>
             <v-list-item-title v-html="post.title.rendered"></v-list-item-title>
           </v-list-item-content>
@@ -124,11 +124,9 @@ export default {
         });
       // Re-open menu on mobile...
       // ...if there are search results now but none before
-      const cond1 =
-        (posts.length || events.length) && !this.items.posts.length && !this.items.events.length;
+      const cond1 = (posts.length || events.length) && !this.items.posts.length && !this.items.events.length;
       // ...or if there were search results before but none now
-      const cond2 =
-        (this.items.posts.length || this.items.events.length) && !posts.length && !events.length;
+      const cond2 = (this.items.posts.length || this.items.events.length) && !posts.length && !events.length;
       if (this.$vuetify.breakpoint.smAndDown && (cond1 || cond2)) {
         this.isOpen = false;
       }

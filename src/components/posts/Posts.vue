@@ -5,17 +5,8 @@
 
     <v-row v-if="!isLoading && !loadingError && posts.length">
       <v-col class="d-flex" v-for="article in posts" :key="article.id" cols="12" sm="6">
-        <v-card
-          hover
-          :to="`/news/${article.slug}`"
-          class="d-flex flex-column"
-          :style="{ width: '100%' }"
-        >
-          <v-img
-            :src="article.featuredImage.source"
-            maxHeight="300px"
-            :alt="article.featuredImage.title"
-          >
+        <v-card hover :to="`/magazin/${article.slug}`" class="d-flex flex-column" :style="{ width: '100%' }">
+          <v-img :src="article.featuredImage.source" maxHeight="300px" :alt="article.featuredImage.title">
             <v-row v-if="article.categories.length">
               <v-col class="ml-3">
                 <v-chip-group column>
@@ -63,8 +54,7 @@
 <script>
 import LoadingSkeleton from "@/components/partials/LoadingSkeleton";
 import NoContentYet from "@/components/partials/NoContentYet";
-const LoadingError = () =>
-  import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
+const LoadingError = () => import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
 
 export default {
   components: {
@@ -111,9 +101,7 @@ export default {
         this.posts = postsFetched[1];
       } else {
         // Not fetched yet
-        this.posts = await this.$store
-          .dispatch("fetchPosts", { page, groupName })
-          .catch(error => console.error(error));
+        this.posts = await this.$store.dispatch("fetchPosts", { page, groupName }).catch(error => console.error(error));
       }
       if (groupName) {
         this.$emit("postPagesInit", this.$store.state.totalPostPagesPerGroup[groupName]);

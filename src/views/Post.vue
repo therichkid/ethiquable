@@ -20,9 +20,7 @@
           <v-icon color="primary" class="pr-1">mdi-tag</v-icon>
           <span v-for="(category, i) in post.categories" :key="i">
             <span v-if="i !== 0">, </span>
-            <router-link :to="'/shgs/' + category.slug" v-if="category.type === 'shg'">{{
-              category.name
-            }}</router-link>
+            <router-link :to="'/shgs/' + category.slug" v-if="category.type === 'shg'">{{ category.name }}</router-link>
             <span v-else>{{ category.name }}</span>
           </span>
         </template>
@@ -30,7 +28,7 @@
       <v-col cols="12" v-html="post.content" :style="{ fontSize: fontSize + 'px' }"></v-col>
       <!-- Social media -->
       <v-col cols="12">
-        <SocialMedia :link="'/news/' + slug" :title="post.title" />
+        <SocialMedia :link="'/magazin/' + slug" :title="post.title" />
       </v-col>
 
       <!-- Actions -->
@@ -47,8 +45,7 @@
 <script>
 import LoadingSkeleton from "@/components/partials/LoadingSkeleton";
 import SocialMedia from "@/components/partials/SocialMedia";
-const LoadingError = () =>
-  import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
+const LoadingError = () => import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
 
 export default {
   components: {
