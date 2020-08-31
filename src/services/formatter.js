@@ -37,8 +37,7 @@ export default {
         content: orig.content.rendered,
         link: orig.link,
         startDate: orig.acf.event_datum,
-        endDate:
-          orig.acf.event_datum !== orig.acf.event_datum_ende ? orig.acf.event_datum_ende : null,
+        endDate: orig.acf.event_datum !== orig.acf.event_datum_ende ? orig.acf.event_datum_ende : null,
         startTime: orig.acf.zeit_von,
         endTime: orig.acf.zeit_bis,
         featured: !!orig.acf.hauptevent,
@@ -120,30 +119,21 @@ export default {
   },
 
   // * SHGs
-  formatGroups: input => {
-    const groups = [];
+  formatShops: input => {
+    const shops = [];
     for (const orig of input) {
+      if (!orig.acf.location.lat) {
+        console.log("Richard: no latlng", orig);
+      }
       const group = {
         id: orig.id,
-        slug: orig.slug,
         name: decodeHtml(orig.title.rendered),
-        content: orig.content ? orig.content.rendered : null,
         address: addAddress(orig),
-        latlng: [orig.acf.adresse.lat, orig.acf.adresse.lng],
-        mailingAddress: addMailingAddress(orig),
-        email: orig.acf.email,
-        phone: orig.acf.telefon,
-        mobile: orig.acf.mobil,
-        fax: orig.acf.fax,
-        homepage: orig.acf.homepage,
-        region: orig.acf.region,
-        featuredImage: addFeaturedImage(orig),
-        type: orig.acf.typ,
-        category: addCategories(orig, true)[0]
+        latlng: [orig.acf.location.lat, orig.acf.location.lng]
       };
-      groups.push(group);
+      shops.push(group);
     }
-    return groups;
+    return shops;
   }
 };
 
@@ -222,30 +212,10 @@ const checkDateFormat = (type, ...input) => {
 // Add the address to an event or a Selbsthilfegruppe
 const addAddress = input => {
   let str = "";
-  if (input.acf.adressname) {
-    str += `${input.acf.adressname}, `;
-  }
-  if (input.acf.adresse.address.includes("Deutschland")) {
-    str += input.acf.adresse.address.split(",").slice(0, -1).join(",");
+  if (input.acf.location.address.includes("Deutschland")) {
+    str += input.acf.location.address.split(",").slice(0, -1).join(",");
   } else {
-    str += input.acf.adresse.address;
-  }
-  return str;
-};
-
-// Add the address to an event or a Selbsthilfegruppe
-const addMailingAddress = input => {
-  if (!input.acf.postanschrift) {
-    return null;
-  }
-  let str = "";
-  if (input.acf.postanschriftsname) {
-    str += `${input.acf.postanschriftsname}, `;
-  }
-  if (input.acf.postanschrift.address.includes("Deutschland")) {
-    str += input.acf.postanschrift.address.split(",").slice(0, -1).join(",");
-  } else {
-    str += input.acf.postanschrift.address;
+    str += input.acf.location.address;
   }
   return str;
 };
@@ -282,10 +252,7 @@ const addCategories = (input, onlyGroups) => {
   if (input._embedded && input._embedded["wp:term"] && input._embedded["wp:term"][0]) {
     const taxonomies = input._embedded["wp:term"][0];
     for (const taxonomy of taxonomies) {
-      if (
-        taxonomy.taxonomy === "category" &&
-        !["uncategorized", "selbsthilfegruppen"].includes(taxonomy.slug)
-      ) {
+      if (taxonomy.taxonomy === "category" && !["uncategorized", "selbsthilfegruppen"].includes(taxonomy.slug)) {
         if ((onlyGroups && taxonomy.link.includes("selbsthilfegruppen")) || !onlyGroups) {
           categories.push({
             name: taxonomy.name,

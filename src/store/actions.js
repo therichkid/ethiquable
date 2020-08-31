@@ -251,35 +251,38 @@ export default {
         });
     });
   },
-  fetchGroups(context) {
-    context.commit("changeGroupsLoading", true);
-    context.commit("changeGroupsLoadingError", false);
-    const path = "wp/v2/shgs";
+  async fetchShops(context) {
+    context.commit("changeShopsLoading", true);
+    context.commit("changeShopsLoadingError", false);
+    const path = "wp/v2/shops";
+    let page = 1;
     const params = {
       _embed: true,
-      per_page: 100
+      per_page: 100,
+      page
     };
-    return new Promise((resolve, reject) => {
-      api
-        .fetchData(path, params)
-        .then(
-          response => {
-            let { data } = response;
-            const groups = formatter.formatGroups(data);
-            context.commit("storeGroups", groups);
-            context.commit("incrementFailedRequests", 0);
-            resolve(groups);
-          },
-          error => {
-            context.commit("changeGroupsLoadingError", true);
-            context.commit("incrementFailedRequests", 1);
-            reject(error);
-          }
-        )
-        .finally(() => {
-          context.commit("changeGroupsLoading", false);
-        });
-    });
+    try {
+      const response = await api.fetchData(path, params);
+      const { data, headers } = response;
+      let shops = formatter.formatShops(data);
+      const totalPages = headers["x-wp-totalpages"];
+      while (page < totalPages) {
+        page++;
+        params.page = page;
+        const response = await api.fetchData(path, params);
+        const { data } = response;
+        shops = [...shops, ...formatter.formatShops(data)];
+      }
+      context.commit("storeShops", shops);
+      context.commit("incrementFailedRequests", 0);
+      return shops;
+    } catch (error) {
+      context.commit("changeShopsLoadingError", true);
+      context.commit("incrementFailedRequests", 1);
+      throw error;
+    } finally {
+      context.commit("changeShopsLoading", false);
+    }
   },
   fetchFacilities(context) {
     context.commit("changeFacilitiesLoading", true);
@@ -295,7 +298,7 @@ export default {
         .then(
           response => {
             let { data } = response;
-            const facilities = formatter.formatGroups(data);
+            const facilities = formatter.formatShops(data);
             context.commit("storeFacilities", facilities);
             context.commit("incrementFailedRequests", 0);
             resolve(facilities);

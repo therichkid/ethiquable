@@ -6,8 +6,8 @@
         @keydown="scope.value = true"
         v-model="locationSearch"
         :loading="isLoading"
-        label="Ihren Standort suchen"
-        prepend-inner-icon="mdi-magnify"
+        label="Ihr Standort"
+        prepend-inner-icon="mdi-home"
         clearable
         hide-details
       ></v-text-field>
@@ -17,11 +17,7 @@
         <span v-if="!locationSearch">Tippen Sie Ort oder PLZ ein</span>
         <span v-else>Keine Ergebnisse gefunden</span>
       </v-subheader>
-      <v-list-item
-        v-for="location in locations"
-        :key="location.place_id"
-        @click="setGeolocation(location)"
-      >
+      <v-list-item v-for="location in locations" :key="location.place_id" @click="setGeolocation(location)">
         <v-list-item-content>
           <v-list-item-title v-html="location.display_name"></v-list-item-title>
         </v-list-item-content>

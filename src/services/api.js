@@ -1,7 +1,8 @@
 import axios from "axios";
 
+// TODO: enable https
 const wpInstance = axios.create({
-  baseURL: "https://admin.bayciv.de/wp-json/",
+  baseURL: "http://admin.ethiquable.de/wp-json/",
   timeout: 7500
 });
 const n2gInstance = axios.create({

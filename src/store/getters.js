@@ -79,9 +79,9 @@ export default {
     }
     return [false, null];
   },
-  getFetchedGroups: state => () => {
-    const groups = state.groups;
-    return groups && groups.length ? [true, groups] : [false, null];
+  getFetchedShops: state => () => {
+    const shops = state.shops;
+    return shops && shops.length ? [true, shops] : [false, null];
   },
   getFetchedFacilities: state => () => {
     const facilities = state.facilities;

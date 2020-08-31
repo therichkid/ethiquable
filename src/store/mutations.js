@@ -73,14 +73,14 @@ export default {
   storePage(state, { page, slug }) {
     state.pages[slug] = page;
   },
-  changeGroupsLoading(state, value) {
-    state.groupsLoading = value;
+  changeShopsLoading(state, value) {
+    state.shopsLoading = value;
   },
-  changeGroupsLoadingError(state, value) {
-    state.groupsLoadingError = value;
+  changeShopsLoadingError(state, value) {
+    state.shopsLoadingError = value;
   },
-  storeGroups(state, groups) {
-    state.groups = groups;
+  storeShops(state, shops) {
+    state.shops = shops;
   },
   changeFacilitiesLoading(state, value) {
     state.facilitiesLoading = value;
