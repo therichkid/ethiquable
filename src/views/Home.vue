@@ -11,20 +11,16 @@
         >Mehr Neuigkeiten</v-btn
       >
     </div>
-    <Events />
-    <Events type="mainEvents" />
   </div>
 </template>
 
 <script>
 import Posts from "@/components/posts/Posts";
 import InfoMessage from "@/components/partials/InfoMessage";
-const Events = () => import(/* webpackChunkName: "events" */ "@/components/events/Events");
 
 export default {
   components: {
     Posts,
-    Events,
     InfoMessage
   },
 
