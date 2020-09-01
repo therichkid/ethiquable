@@ -19,13 +19,13 @@
         <template v-if="post.categories.length">
           <v-icon color="primary" class="pr-1">mdi-tag</v-icon>
           <span v-for="(category, i) in post.categories" :key="i">
-            <span v-if="i !== 0">, </span>
+            <span v-if="i !== 0">,</span>
             <router-link :to="'/shgs/' + category.slug" v-if="category.type === 'shg'">{{ category.name }}</router-link>
             <span v-else>{{ category.name }}</span>
           </span>
         </template>
       </v-col>
-      <v-col cols="12" v-html="post.content" :style="{ fontSize: fontSize + 'px' }"></v-col>
+      <v-col cols="12" v-html="post.content"></v-col>
       <!-- Social media -->
       <v-col cols="12">
         <SocialMedia :link="'/magazin/' + slug" :title="post.title" />
@@ -70,9 +70,6 @@ export default {
     },
     loadingError() {
       return this.$store.state.postsLoadingError;
-    },
-    fontSize() {
-      return this.$store.state.fontSize;
     },
     failedRequests() {
       return this.$store.state.failedRequests;

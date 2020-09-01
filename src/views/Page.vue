@@ -10,7 +10,7 @@
       </v-col>
 
       <!-- Body -->
-      <v-col cols="12" v-html="page.content" :style="{ fontSize: fontSize + 'px' }"></v-col>
+      <v-col cols="12" v-html="page.content"></v-col>
       <!-- Social media -->
       <v-col cols="12">
         <SocialMedia :link="'/' + slug" :title="page.title" />
@@ -33,8 +33,7 @@
 <script>
 import LoadingSkeleton from "@/components/partials/LoadingSkeleton";
 import SocialMedia from "@/components/partials/SocialMedia";
-const LoadingError = () =>
-  import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
+const LoadingError = () => import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
 const Form = () => import(/* webpackChunkName: "form" */ "@/views/Form");
 
 export default {
@@ -61,9 +60,6 @@ export default {
     },
     loadingError() {
       return this.$store.state.pageLoadingError;
-    },
-    fontSize() {
-      return this.$store.state.fontSize;
     },
     failedRequests() {
       return this.$store.state.failedRequests;

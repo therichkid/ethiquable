@@ -1,7 +1,7 @@
 <template>
   <div>
     <LoadingSkeleton type="posts" v-if="isLoading" />
-    <LoadingError v-if="loadingError" :height="500" @retryAgain="getPosts(page, groupName)" />
+    <LoadingError v-if="loadingError" :height="500" @retryAgain="getPosts(page)" />
 
     <v-row v-if="!isLoading && !loadingError && posts.length">
       <v-col class="d-flex" v-for="article in posts" :key="article.id" cols="12" sm="6">
@@ -64,8 +64,7 @@ export default {
   },
 
   props: {
-    page: Number,
-    groupName: String
+    page: Number
   },
 
   data() {
@@ -85,34 +84,26 @@ export default {
 
   watch: {
     $route() {
-      this.getPosts(this.page, this.groupName);
+      this.getPosts(this.page);
     }
   },
 
   methods: {
-    async getPosts(page, groupName) {
-      // Overwrite groupName with query param if it exists
-      if (this.$route.query.selection) {
-        groupName = this.$route.query.selection;
-      }
-      const postsFetched = this.$store.getters.getFetchedPosts(page, groupName);
+    async getPosts(page) {
+      const postsFetched = this.$store.getters.getFetchedPosts(page);
       if (postsFetched[0]) {
         // Already fetched
         this.posts = postsFetched[1];
       } else {
         // Not fetched yet
-        this.posts = await this.$store.dispatch("fetchPosts", { page, groupName }).catch(error => console.error(error));
+        this.posts = await this.$store.dispatch("fetchPosts", page).catch(error => console.error(error));
       }
-      if (groupName) {
-        this.$emit("postPagesInit", this.$store.state.totalPostPagesPerGroup[groupName]);
-      } else {
-        this.$emit("postPagesInit", this.$store.state.totalPostPages);
-      }
+      this.$emit("postPagesInit", this.$store.state.totalPostPages);
     }
   },
 
   created() {
-    this.getPosts(this.page, this.groupName);
+    this.getPosts(this.page);
   }
 };
 </script>

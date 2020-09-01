@@ -10,7 +10,7 @@ export default {
         id: orig.id,
         slug: orig.slug,
         title: decodeHtml(orig.title.rendered),
-        author: orig.acf.abweichender_autor || orig._embedded.author[0].name,
+        author: orig._embedded.author[0].name,
         excerpt: orig.excerpt.rendered,
         content: orig.content.rendered,
         dateOrig: orig.date.slice(0, 10),
@@ -23,62 +23,6 @@ export default {
     return posts;
   },
 
-  // * Events
-  formatEvents: input => {
-    const events = [];
-    for (const orig of input) {
-      if (!orig.acf || !Object.keys(orig.acf.adresse).length) {
-        throw "Formatting of Events went wrong, please check if ACF-Plugin is enabled and all Events are valid!";
-      }
-      const event = {
-        id: orig.id,
-        slug: orig.slug,
-        title: decodeHtml(orig.title.rendered),
-        content: orig.content.rendered,
-        link: orig.link,
-        startDate: orig.acf.event_datum,
-        endDate: orig.acf.event_datum !== orig.acf.event_datum_ende ? orig.acf.event_datum_ende : null,
-        startTime: orig.acf.zeit_von,
-        endTime: orig.acf.zeit_bis,
-        featured: !!orig.acf.hauptevent,
-        registration: !!orig.acf.anmeldung,
-        address: addAddress(orig),
-        groups: addCategories(orig, true),
-        featuredImage: orig.acf.hauptevent ? addFeaturedImage(orig) : null
-      };
-      // Format the date
-      [event.dateFormatted, event.dayFormatted, event.monthFormatted] = formatDate(
-        "event",
-        event.startDate,
-        event.endDate
-      );
-      // Props for the Vuetify calendar
-      Object.assign(event, {
-        name: event.title,
-        start: event.startDate + " " + event.startTime
-      });
-      // Add the event end date
-      if (event.endDate && !event.endTime) {
-        event.end = event.endDate;
-      } else if (event.endDate && event.endTime) {
-        event.end = event.endDate + " " + event.endTime;
-      } else if (!event.endDate && event.endTime) {
-        event.end = event.startDate + " " + event.endTime;
-      }
-      // Add form data
-      Object.assign(event, {
-        formId: parseInt(orig.acf.formular_id, 10),
-        formData: orig.acf.formular_code
-      });
-      events.push(event);
-    }
-    // Sort events by date
-    events.sort((a, b) => {
-      return parseInt(a.startDate.replace(/-/g, "")) - parseInt(b.startDate.replace(/-/g, ""));
-    });
-    return events;
-  },
-
   // * Page
   formatPage: input => {
     if (!input.length) {
@@ -89,7 +33,7 @@ export default {
       id: orig.id,
       slug: orig.slug,
       title: decodeHtml(orig.title.rendered),
-      author: orig.acf.abweichender_autor || orig._embedded.author[0].name,
+      author: orig._embedded.author[0].name,
       content: orig.content.rendered,
       dateOrig: orig.date.slice(0, 10),
       date: formatDate(null, orig.date),
