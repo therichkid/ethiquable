@@ -72,9 +72,8 @@ export default {
     return new Promise((resolve, reject) => {
       api.fetchData(path, params).then(
         response => {
-          let { data } = response;
-          const posts = data;
-          resolve(posts);
+          const { data } = response;
+          resolve(data);
         },
         error => {
           reject(error);
@@ -173,6 +172,24 @@ export default {
         .finally(() => {
           context.commit("changeProductsLoading", false);
         });
+    });
+  },
+  fetchProductsBySearchTerm(context, { search, perPage }) {
+    const path = "wp/v2/products";
+    const params = {
+      search,
+      per_page: perPage
+    };
+    return new Promise((resolve, reject) => {
+      api.fetchData(path, params).then(
+        response => {
+          const { data } = response;
+          resolve(data);
+        },
+        error => {
+          reject(error);
+        }
+      );
     });
   },
   async fetchShops(context) {

@@ -7,9 +7,8 @@
           @keydown="scope.value = true"
           v-model="model"
           :loading="isLoading"
-          placeholder="Nach Neuigkeiten & Veranstaltungen suchen"
+          placeholder="Nach Neuigkeiten & Produkten suchen"
           solo
-          flat
           hide-details
           autofocus
           :light="!$vuetify.theme.dark"
@@ -35,21 +34,14 @@
         </v-list-item>
         <v-divider></v-divider>
         <v-subheader>
-          Veranstaltungen
+          Produkte
           <v-spacer></v-spacer>
-          <v-switch dense v-model="includeEvents"></v-switch>
+          <v-switch dense v-model="includeProducts"></v-switch>
         </v-subheader>
-        <v-list-item
-          v-for="event in items.events"
-          :key="event.id"
-          :to="`/events/${event.acf.event_datum}/${event.slug}`"
-        >
+        <v-list-item v-for="product in items.products" :key="product.id" :to="`/produkte/${product.slug}`">
           <v-list-item-content>
-            <v-list-item-title v-html="event.title.rendered"></v-list-item-title>
+            <v-list-item-title v-html="product.title.rendered"></v-list-item-title>
           </v-list-item-content>
-          <v-list-item-action>
-            <v-list-item-action-text>{{ formatDate(event, "event") }}</v-list-item-action-text>
-          </v-list-item-action>
         </v-list-item>
       </v-list>
     </v-menu>
@@ -63,13 +55,13 @@
 export default {
   data() {
     return {
-      items: { posts: [], events: [] },
+      items: { posts: [], products: [] },
       isLoading: false,
       isHidden: true,
       isOpen: false,
       model: null,
       includePosts: true,
-      includeEvents: true,
+      includeProducts: true,
       timeout: null,
       isInit: false
     };
@@ -82,7 +74,7 @@ export default {
     includePosts() {
       this.search(this.model);
     },
-    includeEvents() {
+    includeProducts() {
       this.search(this.model);
     }
   },
@@ -110,23 +102,19 @@ export default {
         return;
       }
       this.isLoading = true;
-      const perPage = this.includePosts && this.includeEvents ? 5 : 10;
-      const fetchPosts = this.includePosts
-        ? this.$store.dispatch("fetchPostsBySearchTerm", { search: value, perPage })
-        : [];
-      const fetchEvents = this.includeEvents
-        ? this.$store.dispatch("fetchEventsBySearchTerm", { search: value, perPage })
-        : [];
-      const [posts, events] = await Promise.all([fetchPosts, fetchEvents])
+      const perPage = this.includePosts && this.includeProducts ? 5 : 10;
+      const fetchPosts = this.includePosts ? this.$store.dispatch("fetchPostsBySearchTerm", { search: value, perPage }) : [];
+      const fetchProducts = this.includeProducts ? this.$store.dispatch("fetchProductsBySearchTerm", { search: value, perPage }) : [];
+      const [posts, products] = await Promise.all([fetchPosts, fetchProducts])
         .catch(error => console.error(error))
         .finally(() => {
           this.isLoading = false;
         });
       // Re-open menu on mobile...
       // ...if there are search results now but none before
-      const cond1 = (posts.length || events.length) && !this.items.posts.length && !this.items.events.length;
+      const cond1 = (posts.length || products.length) && !this.items.posts.length && !this.items.products.length;
       // ...or if there were search results before but none now
-      const cond2 = (this.items.posts.length || this.items.events.length) && !posts.length && !events.length;
+      const cond2 = (this.items.posts.length || this.items.products.length) && !posts.length && !products.length;
       if (this.$vuetify.breakpoint.smAndDown && (cond1 || cond2)) {
         this.isOpen = false;
       }
@@ -134,10 +122,10 @@ export default {
         this.isOpen = true;
       });
       this.items.posts = posts;
-      this.items.events = events;
+      this.items.products = products;
     },
-    formatDate(item, type) {
-      const date = type === "post" ? item.date : item.acf.event_datum;
+    formatDate(item) {
+      const date = item.date;
       return date.slice(8, 10) + "." + date.slice(5, 7) + "." + date.slice(2, 4);
     }
   }
