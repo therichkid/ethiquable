@@ -6,13 +6,10 @@
     </v-col>
   </v-row>
 
-  <!-- SHG -->
-  <v-row v-else-if="type === 'shg'">
-    <v-col cols="12">
-      <v-skeleton-loader type="heading"></v-skeleton-loader>
-    </v-col>
-    <v-col v-for="i in 3" :key="i" cols="12" sm="4">
-      <v-skeleton-loader :type="i === 1 ? 'image' : 'article'"></v-skeleton-loader>
+  <!-- Products -->
+  <v-row v-else-if="type === 'products'">
+    <v-col v-for="i in amount" :key="i" cols="6" sm="3">
+      <v-skeleton-loader type="card"></v-skeleton-loader>
     </v-col>
   </v-row>
 
@@ -33,9 +30,9 @@ export default {
   computed: {
     amount() {
       if (this.$vuetify.breakpoint.xsOnly) {
-        return 2;
-      } else {
         return 4;
+      } else {
+        return 8;
       }
     }
   }
