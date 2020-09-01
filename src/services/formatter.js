@@ -118,7 +118,28 @@ export default {
     return page;
   },
 
-  // * SHGs
+  // * Products
+  formatProducts: input => {
+    if (!Array.isArray(input)) {
+      input = [input];
+    }
+    const products = [];
+    for (const orig of input) {
+      const product = {
+        id: orig.id,
+        slug: orig.slug,
+        name: decodeHtml(orig.title.rendered),
+        excerpt: orig.excerpt.rendered,
+        content: orig.content.rendered,
+        categories: addCategories(orig),
+        featuredImage: addFeaturedImage(orig)
+      };
+      products.push(product);
+    }
+    return products;
+  },
+
+  // * Shops
   formatShops: input => {
     const shops = [];
     for (const orig of input) {
@@ -247,19 +268,17 @@ const addFeaturedImage = input => {
 };
 
 // Add categories to an event, article or group
-const addCategories = (input, onlyGroups) => {
+const addCategories = input => {
   const categories = [];
   if (input._embedded && input._embedded["wp:term"] && input._embedded["wp:term"][0]) {
     const taxonomies = input._embedded["wp:term"][0];
     for (const taxonomy of taxonomies) {
-      if (taxonomy.taxonomy === "category" && !["uncategorized", "selbsthilfegruppen"].includes(taxonomy.slug)) {
-        if ((onlyGroups && taxonomy.link.includes("selbsthilfegruppen")) || !onlyGroups) {
-          categories.push({
-            name: taxonomy.name,
-            slug: taxonomy.slug,
-            type: taxonomy.link.includes("selbsthilfegruppen") ? "shg" : ""
-          });
-        }
+      if (taxonomy.taxonomy === "category" && taxonomy.slug !== "uncategorized") {
+        categories.push({
+          name: taxonomy.name,
+          slug: taxonomy.slug,
+          type: taxonomy.link.includes("selbsthilfegruppen") ? "shg" : ""
+        });
       }
     }
   }

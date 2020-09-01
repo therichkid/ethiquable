@@ -79,6 +79,20 @@ export default {
     }
     return [false, null];
   },
+  getFetchedProductsPerCategory: state => category => {
+    const products = state.productsPerCategory[category];
+    return products && products.length ? [true, products] : [false, null];
+  },
+  getFetchedProductBySlug: state => slug => {
+    for (const products of Object.values(state.productsPerCategory)) {
+      for (const product of products) {
+        if (product.slug === slug) {
+          return [true, product];
+        }
+      }
+    }
+    return [false, null];
+  },
   getFetchedShops: state => () => {
     const shops = state.shops;
     return shops && shops.length ? [true, shops] : [false, null];

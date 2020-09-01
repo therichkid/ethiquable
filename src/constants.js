@@ -25,43 +25,43 @@ export const ROUTER_ITEMS = [
     to: [
       {
         title: "Kaffee",
-        to: "produkte/kaffee"
+        to: "/produkt-kategorien/kaffee"
       },
       {
         title: "Tee",
-        to: "produkte/tee"
+        to: "/produkt-kategorien/tee"
       },
       {
         title: "Kakao",
-        to: "produkte/kakao"
+        to: "/produkt-kategorien/kakao"
       },
       {
         title: "Schokolade",
-        to: "produkte/schokolade"
+        to: "/produkt-kategorien/schokolade"
       },
       {
         title: "Zucker",
-        to: "produkte/zucker"
+        to: "/produkt-kategorien/zucker"
       },
       {
         title: "Getreide",
-        to: "produkte/getreide"
+        to: "/produkt-kategorien/getreide"
       },
       {
         title: "Öl",
-        to: "produkte/oel"
+        to: "/produkt-kategorien/oel"
       },
       {
         title: "Snack",
-        to: "produkte/snack"
+        to: "/produkt-kategorien/snack"
       },
       {
         title: "Aufstrich",
-        to: "produkte/aufstrich"
+        to: "/produkt-kategorien/aufstrich"
       },
       {
         title: "Frucht",
-        to: "produkte/frucht"
+        to: "/produkt-kategorien/frucht"
       }
     ]
   },

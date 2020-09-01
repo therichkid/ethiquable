@@ -251,6 +251,69 @@ export default {
         });
     });
   },
+  fetchProducts(context, category) {
+    context.commit("changeProductsLoading", true);
+    context.commit("changeProductsLoadingError", false);
+    const path = "wp/v2/products";
+    const params = {
+      _embed: true,
+      per_page: 100,
+      "filter[category_name]": category
+    };
+    return new Promise((resolve, reject) => {
+      api
+        .fetchData(path, params)
+        .then(
+          response => {
+            const { data } = response;
+            const products = formatter.formatProducts(data);
+            context.commit("storeProductsPerCategory", {
+              products,
+              category
+            });
+            context.commit("incrementFailedRequests", 0);
+            resolve(products);
+          },
+          error => {
+            context.commit("changeProductsLoadingError", true);
+            context.commit("incrementFailedRequests", 1);
+            reject(error);
+          }
+        )
+        .finally(() => {
+          context.commit("changeProductsLoading", false);
+        });
+    });
+  },
+  fetchProductBySlug(context, slug) {
+    context.commit("changeProductsLoading", true);
+    context.commit("changeProductsLoadingError", false);
+    const path = "wp/v2/products";
+    const params = {
+      _embed: true,
+      slug
+    };
+    return new Promise((resolve, reject) => {
+      api
+        .fetchData(path, params)
+        .then(
+          response => {
+            let { data } = response;
+            const products = formatter.formatProducts(data);
+            context.commit("incrementFailedRequests", 0);
+            resolve(products[0]);
+          },
+          error => {
+            context.commit("changeProductsLoadingError", true);
+            context.commit("incrementFailedRequests", 1);
+            reject(error);
+          }
+        )
+        .finally(() => {
+          context.commit("changeProductsLoading", false);
+        });
+    });
+  },
   async fetchShops(context) {
     context.commit("changeShopsLoading", true);
     context.commit("changeShopsLoadingError", false);

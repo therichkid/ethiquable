@@ -5,6 +5,7 @@ import Home from "../views/Home";
 import Posts from "../views/Posts";
 import Post from "../views/Post";
 import Page from "../views/Page";
+import Products from "../views/Products";
 import PageNotFound from "../views/PageNotFound";
 
 // Chunks
@@ -37,14 +38,15 @@ const routes = [
     path: "/produkt-kategorie/*",
     redirect: route => "/produkt-kategorie/" + route.path.split("/").pop().replace(".html", "")
   },
-  // {
-  //   path: "/produkt-kategorien/:slug",
-  //   name: "products",
-  //   component: Products,
-  //   meta: {
-  //     title: "Produkte"
-  //   }
-  // },
+  {
+    path: "/produkt-kategorien/:category",
+    name: "products",
+    component: Products,
+    meta: {
+      title: "Produkte"
+    },
+    props: true
+  },
   // {
   //   path: "/produkte/:slug",
   //   name: "product",

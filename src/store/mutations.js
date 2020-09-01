@@ -73,6 +73,18 @@ export default {
   storePage(state, { page, slug }) {
     state.pages[slug] = page;
   },
+  changeProductsLoading(state, value) {
+    state.productsLoading = value;
+  },
+  changeProductsLoadingError(state, value) {
+    state.productsLoadingError = value;
+  },
+  storeProductsPerCategory(state, { products, category }) {
+    if (!state.productsPerCategory[category]) {
+      state.productsPerCategory[category] = {};
+    }
+    state.productsPerCategory[category] = products;
+  },
   changeShopsLoading(state, value) {
     state.shopsLoading = value;
   },
