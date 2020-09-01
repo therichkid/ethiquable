@@ -4,12 +4,12 @@
       <InfoMessage />
 
       <h1 class="display-1 mb-2">Neuigkeiten</h1>
-      <Posts :page="1" />
+      <Posts :page="1" type="home" />
     </v-container>
     <div class="text-center">
-      <v-btn :disabled="postPages < 2" large color="primary" @click="loadMorePosts()" class="mb-2"
-        >Mehr Neuigkeiten</v-btn
-      >
+      <v-btn large color="primary" @click="loadMorePosts()" class="mb-2">
+        Mehr Neuigkeiten
+      </v-btn>
     </div>
   </div>
 </template>
@@ -24,15 +24,9 @@ export default {
     InfoMessage
   },
 
-  computed: {
-    postPages() {
-      return this.$store.state.totalPostPages;
-    }
-  },
-
   methods: {
     loadMorePosts() {
-      this.$router.push("/magazin/page/2");
+      this.$router.push("/magazin");
     }
   }
 };
