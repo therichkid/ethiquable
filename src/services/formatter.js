@@ -75,6 +75,7 @@ export default {
         name: decodeHtml(orig.title.rendered),
         excerpt: orig.excerpt.rendered,
         content: orig.content.rendered,
+        producerId: orig.acf.producer && orig.acf.producer.length ? orig.acf.producer[0] : null,
         categories: addCategories(orig),
         featuredImage: addFeaturedImage(orig)
       };
@@ -87,9 +88,6 @@ export default {
   formatShops: input => {
     const shops = [];
     for (const orig of input) {
-      if (!orig.acf.location.lat) {
-        console.log("Richard: no latlng", orig);
-      }
       const group = {
         id: orig.id,
         name: decodeHtml(orig.title.rendered),
@@ -99,6 +97,22 @@ export default {
       shops.push(group);
     }
     return shops;
+  },
+
+  // * Producers
+  formatProducers: input => {
+    const producers = [];
+    for (const orig of input) {
+      const group = {
+        id: orig.id,
+        name: decodeHtml(orig.title.rendered),
+        excerpt: orig.excerpt.rendered,
+        content: orig.content.rendered,
+        featuredImage: addFeaturedImage(orig)
+      };
+      producers.push(group);
+    }
+    return producers;
   }
 };
 

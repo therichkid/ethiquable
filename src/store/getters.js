@@ -41,5 +41,13 @@ export default {
   getFetchedProducers: state => () => {
     const producers = state.producers;
     return producers && producers.length ? [true, producers] : [false, null];
+  },
+  getFetchedProducerByParam: state => (param, value) => {
+    for (const producer of state.producers) {
+      if (producer[param] === value) {
+        return [true, producer];
+      }
+    }
+    return [false, null];
   }
 };

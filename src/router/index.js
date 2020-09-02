@@ -5,6 +5,7 @@ import Home from "../views/Home";
 import Posts from "../views/Posts";
 import Post from "../views/Post";
 import Page from "../views/Page";
+import Product from "../views/Product";
 import Products from "../views/Products";
 import PageNotFound from "../views/PageNotFound";
 
@@ -47,14 +48,15 @@ const routes = [
     },
     props: true
   },
-  // {
-  //   path: "/produkte/:slug",
-  //   name: "product",
-  //   component: Product,
-  //   meta: {
-  //     title: "Produkt"
-  //   }
-  // },
+  {
+    path: "/produkte/:slug",
+    name: "product",
+    component: Product,
+    meta: {
+      title: "Produkt"
+    },
+    props: true
+  },
   // {
   //   path: "/uebersicht-weltkarte",
   //   redirect: "/produzenten"

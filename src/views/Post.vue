@@ -3,7 +3,7 @@
     <LoadingSkeleton v-if="isLoading" />
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getPostBySlug(slug)" />
 
-    <v-row v-if="!isLoading && !loadingError && Object.keys(post).length" align="center">
+    <v-row v-if="!isLoading && !loadingError && post" align="center">
       <!-- Header -->
       <v-col cols="12">
         <h1 class="display-1">{{ post.title }}</h1>
@@ -60,7 +60,7 @@ export default {
 
   data() {
     return {
-      post: {}
+      post: null
     };
   },
 

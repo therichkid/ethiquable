@@ -239,10 +239,39 @@ export default {
         .then(
           response => {
             let { data } = response;
-            const producers = formatter.formatShops(data);
+            const producers = formatter.formatProducers(data);
             context.commit("storeProducers", producers);
             context.commit("incrementFailedRequests", 0);
             resolve(producers);
+          },
+          error => {
+            context.commit("changeProducersLoadingError", true);
+            context.commit("incrementFailedRequests", 1);
+            reject(error);
+          }
+        )
+        .finally(() => {
+          context.commit("changeProducersLoading", false);
+        });
+    });
+  },
+  fetchProducerByParam(context, { param, value }) {
+    context.commit("changeProducersLoading", true);
+    context.commit("changeProducersLoadingError", false);
+    const path = "wp/v2/producers";
+    const params = {
+      _embed: true,
+      [param]: value
+    };
+    return new Promise((resolve, reject) => {
+      api
+        .fetchData(path, params)
+        .then(
+          response => {
+            let { data } = response;
+            const producers = formatter.formatProducers(data);
+            context.commit("incrementFailedRequests", 0);
+            resolve(producers[0]);
           },
           error => {
             context.commit("changeProducersLoadingError", true);

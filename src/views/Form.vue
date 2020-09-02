@@ -146,7 +146,7 @@ export default {
 
   data() {
     return {
-      event: {},
+      event: null,
       formId: 0,
       forms: [],
       textFieldTypes: ["text", "email", "url", "tel", "number"],
