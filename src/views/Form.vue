@@ -53,11 +53,7 @@
             <div v-if="form.type === 'date'" class="mt-3">
               <h3 v-if="form.label" class="subheading mb-2">{{ form.label }}</h3>
               <div>
-                <v-date-picker
-                  v-model="form.value"
-                  locale="de-DE"
-                  :first-day-of-week="1"
-                ></v-date-picker>
+                <v-date-picker v-model="form.value" locale="de-DE" :first-day-of-week="1"></v-date-picker>
               </div>
               <v-btn text v-if="form.value" @click="form.value = ''">
                 <v-icon>mdi-undo</v-icon>
@@ -93,12 +89,7 @@
               :rules="addFormRule(form)"
               v-model="form.value"
             >
-              <v-radio
-                v-for="item in form.options"
-                :key="item"
-                :label="item"
-                :value="item"
-              ></v-radio>
+              <v-radio v-for="item in form.options" :key="item" :label="item" :value="item"></v-radio>
             </v-radio-group>
           </div>
         </v-form>
@@ -108,9 +99,7 @@
             >Datenschutzbestimmungen</a
           >
           und
-          <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer"
-            >Nutzungsbedingungen</a
-          >
+          <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer">Nutzungsbedingungen</a>
           von Google.
         </div>
       </v-card-text>
@@ -120,9 +109,7 @@
           <span>Zurück</span>
         </v-btn>
         <v-spacer></v-spacer>
-        <v-btn color="success" right :disabled="!valid" :loading="isSending" @click="sendForm"
-          >Senden</v-btn
-        >
+        <v-btn color="success" right :disabled="!valid" :loading="isSending" @click="sendForm">Senden</v-btn>
       </v-card-actions>
     </v-card>
 
@@ -139,10 +126,8 @@
 <script>
 import Loading from "@/components/partials/Loading";
 import api from "@/services/api";
-const LoadingError = () =>
-  import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
-const AlertModal = () =>
-  import(/* webpackChunkName: "dialog" */ "@/components/partials/AlertModal");
+const LoadingError = () => import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
+const AlertModal = () => import(/* webpackChunkName: "dialog" */ "@/components/partials/AlertModal");
 
 export default {
   components: {
@@ -170,10 +155,7 @@ export default {
       mandatoryMultipleRules: [v => (!!v && !!v.length) || "Dies ist ein Pflichtfeld."],
       emailRules: [v => /\S+@\S+\.\S{2,}/.test(v) || !v || "Diese E-Mail ist ungültig!"],
       telRules: [
-        v =>
-          /^\+?[\s./0-9]*[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/g.test(v) ||
-          !v ||
-          "Diese Telefonnummer ist ungültig!"
+        v => /^\+?[\s./0-9]*[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/g.test(v) || !v || "Diese Telefonnummer ist ungültig!"
       ],
       urlRules: [v => /\S+\.\S{2,}/.test(v) || !v || "Die URL ist ungültig!"],
       isSending: false,

@@ -103,8 +103,12 @@ export default {
       }
       this.isLoading = true;
       const perPage = this.includePosts && this.includeProducts ? 5 : 10;
-      const fetchPosts = this.includePosts ? this.$store.dispatch("fetchPostsBySearchTerm", { search: value, perPage }) : [];
-      const fetchProducts = this.includeProducts ? this.$store.dispatch("fetchProductsBySearchTerm", { search: value, perPage }) : [];
+      const fetchPosts = this.includePosts
+        ? this.$store.dispatch("fetchPostsBySearchTerm", { search: value, perPage })
+        : [];
+      const fetchProducts = this.includeProducts
+        ? this.$store.dispatch("fetchProductsBySearchTerm", { search: value, perPage })
+        : [];
       const [posts, products] = await Promise.all([fetchPosts, fetchProducts])
         .catch(error => console.error(error))
         .finally(() => {

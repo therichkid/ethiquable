@@ -15,27 +15,14 @@
       <!-- Right -->
       <v-col cols="12" sm="6">
         <!-- Newsletter -->
-        <v-card-title :class="$vuetify.breakpoint.xsOnly && 'justify-center'"
-          >Newsletter abonnieren</v-card-title
-        >
+        <v-card-title :class="$vuetify.breakpoint.xsOnly && 'justify-center'">Newsletter abonnieren</v-card-title>
         <v-form v-model="valid">
           <v-card-text>
-            <v-text-field
-              solo-inverted
-              label="E-Mail"
-              v-model="email"
-              :rules="emailRules"
-              required
-            ></v-text-field>
-            <v-btn class="secondary" :disabled="!valid || !email" @click="sendForm"
-              >Abonnieren</v-btn
-            >
+            <v-text-field solo-inverted label="E-Mail" v-model="email" :rules="emailRules" required></v-text-field>
+            <v-btn class="secondary" :disabled="!valid || !email" @click="sendForm">Abonnieren</v-btn>
             <div class="caption link mt-2">
               Diese Website ist durch reCAPTCHA geschützt und es gelten die
-              <a
-                href="https://policies.google.com/privacy"
-                target="_blank"
-                rel="noopener noreferrer"
+              <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer"
                 >Datenschutzbestimmungen</a
               >
               und
@@ -74,8 +61,7 @@
 
 <script>
 import api from "@/services/api";
-const AlertModal = () =>
-  import(/* webpackChunkName: "dialog" */ "@/components/partials/AlertModal");
+const AlertModal = () => import(/* webpackChunkName: "dialog" */ "@/components/partials/AlertModal");
 
 export default {
   components: {
@@ -111,8 +97,7 @@ export default {
         },
         {
           icon: "mdi-facebook",
-          text:
-            "<a href='https://www.facebook.com/bayciv' target='_blank' rel='noopener noreferrer'>Facebook</a>"
+          text: "<a href='https://www.facebook.com/bayciv' target='_blank' rel='noopener noreferrer'>Facebook</a>"
         }
       ],
       menu: [

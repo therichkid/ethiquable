@@ -7,7 +7,8 @@
       <span>Benutzen Sie die Suche&nbsp;</span>
       <v-icon>mdi-magnify</v-icon>
       <span>
-        &nbsp;oben rechts oder finden Sie weitere interessante Neuigkeiten rund um ETHIQUABLE, Bio- und Fair-Trade-Produkte auf der
+        &nbsp;oben rechts oder finden Sie weitere interessante Neuigkeiten rund um ETHIQUABLE, Bio- und
+        Fair-Trade-Produkte auf der
         <router-link to="/">Startseite</router-link>.
       </span>
     </p>

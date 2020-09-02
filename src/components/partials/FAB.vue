@@ -19,26 +19,10 @@
     </v-fab-transition>
     <!-- Pages with maps -->
     <div class="fab-container" v-if="isRouteWithMap">
-      <v-btn
-        fab
-        large
-        dark
-        color="secondary"
-        class="mb-2"
-        @click="scrollToTop()"
-        aria-label="Nach oben scrollen"
-      >
+      <v-btn fab large dark color="secondary" class="mb-2" @click="scrollToTop()" aria-label="Nach oben scrollen">
         <v-icon>mdi-chevron-up</v-icon>
       </v-btn>
-      <v-btn
-        fab
-        large
-        dark
-        color="secondary"
-        class="mt-2"
-        @click="scrollDown()"
-        aria-label="Nach unten scrollen"
-      >
+      <v-btn fab large dark color="secondary" class="mt-2" @click="scrollDown()" aria-label="Nach unten scrollen">
         <v-icon>mdi-chevron-down</v-icon>
       </v-btn>
     </div>
