@@ -3,7 +3,7 @@
     <LoadingSkeleton v-if="isLoadingProducts" />
     <LoadingError v-if="loadingErrorProducts" :height="500" @retryAgain="getProductBySlug(slug)" />
 
-    <v-row v-if="!isLoadingProducts && !loadingErrorProducts && product" align="center">
+    <v-row v-if="!isLoadingProducts && !loadingErrorProducts && Object.keys(product).length" align="center">
       <!-- Header -->
       <v-col cols="12">
         <h1 class="text-h4">{{ product.name }}</h1>
@@ -16,7 +16,7 @@
         <h2 class="text-h5" style="color: var(--v-primary-base);">Was ich esse / trinke</h2>
         <div v-html="product.content"></div>
       </v-col>
-      <v-col cols="12" md="6" v-if="producer">
+      <v-col cols="12" md="6" v-if="Object.keys(producer).length">
         <h2 class="text-h5" style="color: var(--v-primary-base);">Was ich verteidige</h2>
         <div v-html="producer.content"></div>
       </v-col>
@@ -57,8 +57,8 @@ export default {
 
   data() {
     return {
-      product: null,
-      producer: null
+      product: {},
+      producer: {}
     };
   },
 

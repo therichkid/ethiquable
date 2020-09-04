@@ -3,7 +3,7 @@
     <LoadingSkeleton v-if="isLoading" />
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getPageBySlug(slug)" />
 
-    <v-row v-if="!isLoading && !loadingError && page" align="center">
+    <v-row v-if="!isLoading && !loadingError && Object.keys(page).length" align="center">
       <!-- Header -->
       <v-col cols="12">
         <h1 class="display-1">{{ page.title }}</h1>
@@ -50,7 +50,7 @@ export default {
 
   data() {
     return {
-      page: null
+      page: {}
     };
   },
 
