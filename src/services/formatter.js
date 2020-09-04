@@ -108,7 +108,9 @@ export default {
         name: decodeHtml(orig.title.rendered),
         excerpt: orig.excerpt.rendered,
         content: orig.content.rendered,
-        featuredImage: addFeaturedImage(orig)
+        featuredImage: addFeaturedImage(orig),
+        country: orig.acf.country,
+        ingredient: orig.acf.ingredient
       };
       producers.push(group);
     }
