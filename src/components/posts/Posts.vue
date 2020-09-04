@@ -4,16 +4,8 @@
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getPosts(page)" />
 
     <v-row v-if="!isLoading && !loadingError && posts.length">
-      <v-col class="d-flex" cols="12" sm="6" md="4">
-        <v-card
-          dark
-          hover
-          to="/shopfinder"
-          class="d-flex flex-column"
-          color="primary"
-          style="width: 100%;"
-          v-if="type === 'home'"
-        >
+      <v-col class="d-flex" cols="12" sm="6" md="4" v-if="type === 'home'">
+        <v-card dark hover to="/shopfinder" class="d-flex flex-column" color="primary" style="width: 100%;">
           <v-card-title class="justify-center">
             <h3 class="headline">Hier finden Sie uns:</h3>
           </v-card-title>
