@@ -5,10 +5,6 @@ const wpInstance = axios.create({
   baseURL: "http://admin.ethiquable.de/wp-json/",
   timeout: 7500
 });
-const n2gInstance = axios.create({
-  baseURL: "https://api.newsletter2go.com/",
-  timeout: 7500
-});
 const osmInstance = axios.create({
   baseURL: "https://nominatim.openstreetmap.org/",
   timeout: 7500
@@ -30,19 +26,14 @@ export default {
   },
 
   // Post requests with reCAPTCHA check
-  async postData(data, token, type, id) {
+  async postData(data, token, id) {
     // Get the path when reCAPTCHA is successful
-    const path = await verify(token, type, id);
+    const path = await verify(token, id);
     if (path) {
-      if (type === "form") {
-        await cf7PostRequest(data, path).catch(error => {
-          throw error;
-        });
-        return "Ihr Formular wurde erfolgreich versendet. Vielen Dank!";
-      } else if (type === "newsletter") {
-        await n2gPostRequest(data, path);
-        return "Registrierung erfolgreich! Sie erhalten in Kürze eine E-Mail.";
-      }
+      await cf7PostRequest(data, path).catch(error => {
+        throw error;
+      });
+      return "Ihr Formular wurde erfolgreich versendet. Vielen Dank!";
     } else {
       throw "Unbekannter Fehler.";
     }
@@ -50,11 +41,10 @@ export default {
 };
 
 // Verify if the user is human
-const verify = async (token, type, id) => {
+const verify = async (token, id) => {
   const response = await axios
     .post("/includes/verify.php", {
       token,
-      type,
       id
     })
     .catch(error => {
@@ -81,43 +71,5 @@ const cf7PostRequest = async (data, restParam) => {
   } else {
     // Error handling CF7
     throw response;
-  }
-};
-
-// Newsletter2Go
-const n2gPostRequest = async (fields, restParam) => {
-  const email = fields["email"];
-  const response = await n2gInstance
-    .post(restParam, {
-      recipient: {
-        email
-      }
-    })
-    .catch(error => {
-      throw error;
-    });
-  // console.log("Post Newsletter2Go Data Successful", response);
-  if (response.data.status === 201) {
-    // Success
-    return null;
-  } else {
-    let errorMessage;
-    if (response.data.status === 200) {
-      if (response.data.value.length) {
-        // Only one recipient for each request -> 1st value of Array
-        const errors = response.data.value[0].result.error;
-        if (errors.failed) {
-          if (errors.recipients.invalid.length) {
-            errorMessage = "Die eingegebene E-Mail-Addresse ist ungültig.";
-          } else if (errors.recipients.duplicate.length) {
-            errorMessage = "Die eingegebene E-Mail-Addresse ist bereits registriert.";
-          }
-        }
-      }
-    }
-    if (!errorMessage) {
-      errorMessage = "Unbekannter Fehler.";
-    }
-    throw errorMessage;
   }
 };

@@ -10,7 +10,7 @@ Vue.prototype.shared = shared;
 
 // reCAPTCHA
 import { VueReCaptcha } from "vue-recaptcha-v3";
-Vue.use(VueReCaptcha, { siteKey: "6LfQl6UUAAAAACpOBLqwIOQso7e1hGWdDiH_CbwJ" });
+Vue.use(VueReCaptcha, { siteKey: "6Lc55OEZAAAAANdKxPt83LRWXGNghC_gmcoPiscW" });
 
 // vue2-leaflet
 import { Icon } from "leaflet";
