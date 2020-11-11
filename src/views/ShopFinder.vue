@@ -34,7 +34,7 @@
             disable-filtering
             must-sort
             @click:row="setShopToActive"
-            style="cursor: pointer;"
+            style="cursor: pointer"
           >
           </v-data-table>
         </v-card>

@@ -23,7 +23,7 @@
 
     <SearchBar />
 
-    <v-toolbar-items slot="extension" v-if="$vuetify.breakpoint.lgAndUp" style="margin: 0 auto;">
+    <v-toolbar-items slot="extension" v-if="$vuetify.breakpoint.lgAndUp" style="margin: 0 auto">
       <template v-for="(item, i) in routerItems">
         <v-btn text light :key="i" v-bind="getToProps(item)" v-if="typeof item.to === 'string'">
           {{ item.title }}

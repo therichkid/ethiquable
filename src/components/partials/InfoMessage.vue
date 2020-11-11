@@ -1,15 +1,11 @@
 <template>
   <v-card v-if="info" dark :color="info.type" class="mb-4">
     <v-card-title :class="info.link && 'pb-0'">
-      <v-icon v-if="info.type === 'success' && $vuetify.breakpoint.smAndUp" class="mr-4">
-        mdi-check-circle
-      </v-icon>
-      <v-icon v-if="info.type === 'info' && $vuetify.breakpoint.smAndUp" class="mr-4">
-        mdi-information
-      </v-icon>
+      <v-icon v-if="info.type === 'success' && $vuetify.breakpoint.smAndUp" class="mr-4"> mdi-check-circle </v-icon>
+      <v-icon v-if="info.type === 'info' && $vuetify.breakpoint.smAndUp" class="mr-4"> mdi-information </v-icon>
       <h3
         :class="info.teaser && info.teaser.length < 100 ? 'headline' : 'subtitle-1'"
-        style="flex: 1; word-wrap: break-word; hyphens: auto; text-align: justify;"
+        style="flex: 1; word-wrap: break-word; hyphens: auto; text-align: justify"
       >
         {{ info.teaser }}
       </h3>

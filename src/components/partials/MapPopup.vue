@@ -4,7 +4,7 @@
     <!-- Address -->
     <div class="align-center mb-2">
       <v-icon color="primary" class="icon">mdi-map-marker</v-icon>
-      <span style="color: rgba(0, 0, 0, 0.6);" class="body-2 text">{{ marker.address }}</span>
+      <span style="color: rgba(0, 0, 0, 0.6)" class="body-2 text">{{ marker.address }}</span>
     </div>
   </l-popup>
 </template>

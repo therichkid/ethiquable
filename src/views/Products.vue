@@ -1,15 +1,27 @@
 <template>
   <v-container>
-    <h1 class="display-1 mb-2" style="word-wrap: break-word;" v-html="formattedCategory"></h1>
+    <h1 class="display-1 mb-2" style="word-wrap: break-word" v-html="formattedCategory"></h1>
 
     <LoadingSkeleton type="products" v-if="isLoading" />
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getProducts(category)" />
 
     <v-row v-if="!isLoading && !loadingError && products.length" no-gutters align="baseline">
       <v-col cols="6" sm="4" lg="3" v-for="product in products" :key="product.id">
-        <v-card flat hover tile :to="`/produkte/${product.slug}`" class="my-2" style="border-bottom: 6px solid var(--v-secondary-base);">
+        <v-card
+          flat
+          hover
+          tile
+          :to="`/produkte/${product.slug}`"
+          class="my-2"
+          style="border-bottom: 6px solid var(--v-secondary-base)"
+        >
           <v-spacer></v-spacer>
-          <v-img :src="product.featuredImage.source" :alt="product.featuredImage.title" max-height="300" contain></v-img>
+          <v-img
+            :src="product.featuredImage.source"
+            :alt="product.featuredImage.title"
+            max-height="300"
+            contain
+          ></v-img>
         </v-card>
       </v-col>
     </v-row>

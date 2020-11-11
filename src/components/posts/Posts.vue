@@ -4,16 +4,8 @@
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getPosts(page)" />
 
     <v-row v-if="!isLoading && !loadingError && posts.length">
-      <v-col class="d-flex" cols="12" sm="6" md="4">
-        <v-card
-          dark
-          hover
-          to="/shopfinder"
-          class="d-flex flex-column"
-          color="primary"
-          style="width: 100%;"
-          v-if="type === 'home'"
-        >
+      <v-col class="d-flex" cols="12" sm="6" md="4" v-if="type === 'home'">
+        <v-card dark hover to="/shopfinder" class="d-flex flex-column" color="primary" style="width: 100%">
           <v-card-title class="justify-center">
             <h3 class="headline">Hier finden Sie uns:</h3>
           </v-card-title>
@@ -21,10 +13,10 @@
             src="@/assets/map/shopfinder.jpg"
             maxHeight="500px"
             alt="Shop-Finder"
-            style="margin: 0 25px; border-radius: 5px;"
+            style="margin: 0 25px; border-radius: 5px"
           ></v-img>
           <v-card-text>
-            <div style="text-align: justify;">
+            <div style="text-align: justify">
               Finden Sie Geschäfte in Ihrer Nähe, bei denen Sie ETHIQUABLE-Produkte kaufen können.
             </div>
           </v-card-text>
@@ -37,13 +29,13 @@
       </v-col>
 
       <v-col class="d-flex" v-for="article in posts" :key="article.id" cols="12" sm="6" md="4">
-        <v-card hover :to="`/magazin/${article.slug}`" class="d-flex flex-column" style="width: 100%;">
+        <v-card hover :to="`/magazin/${article.slug}`" class="d-flex flex-column" style="width: 100%">
           <v-img :src="article.featuredImage.source" maxHeight="300px" :alt="article.featuredImage.title"> </v-img>
           <v-card-title>
             <h3 class="headline">{{ article.title }}</h3>
           </v-card-title>
           <v-card-text>
-            <div v-html="article.excerpt" style="text-align: justify;"></div>
+            <div v-html="article.excerpt" style="text-align: justify"></div>
           </v-card-text>
           <v-spacer></v-spacer>
           <v-card-actions>

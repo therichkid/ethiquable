@@ -1,5 +1,5 @@
 <template>
-  <div style="position: absolute; top: 0; right: 16px;">
+  <div style="position: absolute; top: 0; right: 16px">
     <v-menu v-if="!isHidden" v-model="isOpen" offset-y max-height="75%">
       <template v-slot:activator="scope">
         <v-text-field
@@ -15,7 +15,7 @@
           prepend-inner-icon="mdi-magnify"
           append-icon="mdi-close"
           @click:append="toggleSearchBar"
-          style="width: 55vw; max-width: 600px;"
+          style="width: 55vw; max-width: 600px"
         ></v-text-field>
       </template>
       <v-list>
@@ -103,8 +103,12 @@ export default {
       }
       this.isLoading = true;
       const perPage = this.includePosts && this.includeProducts ? 5 : 10;
-      const fetchPosts = this.includePosts ? this.$store.dispatch("fetchPostsBySearchTerm", { search: value, perPage }) : [];
-      const fetchProducts = this.includeProducts ? this.$store.dispatch("fetchProductsBySearchTerm", { search: value, perPage }) : [];
+      const fetchPosts = this.includePosts
+        ? this.$store.dispatch("fetchPostsBySearchTerm", { search: value, perPage })
+        : [];
+      const fetchProducts = this.includeProducts
+        ? this.$store.dispatch("fetchProductsBySearchTerm", { search: value, perPage })
+        : [];
       const [posts, products] = await Promise.all([fetchPosts, fetchProducts])
         .catch(error => console.error(error))
         .finally(() => {
