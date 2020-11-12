@@ -1,6 +1,6 @@
 <template>
-  <div v-if="teaser" style="text-align: center">
-    <h2 class="my-5" :class="teaser.length < 50 ? 'text-h4' : 'text-h5'" style="color: var(--v-secondary-base)">
+  <div v-if="teaser" class="text-center">
+    <h2 class="my-5" :class="teaser.length < 100 ? 'text-h4' : 'text-h5'" style="color: var(--v-secondary-base)">
       &#171; {{ teaser }} &#187;
     </h2>
   </div>

@@ -121,7 +121,7 @@ export default {
     addProps() {
       if (this.type === "home") {
         this.breakpointProps = {
-          cols: 6,
+          cols: 12,
           sm: 4,
           md: 3
         };

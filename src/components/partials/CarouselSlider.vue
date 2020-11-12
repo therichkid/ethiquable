@@ -3,7 +3,13 @@
     <LoadingSkeleton type="slider" v-if="isLoading" />
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getSlides()" />
 
-    <v-carousel hide-delimiters :cycle="true" interval="10000" v-if="!isLoading && !loadingError">
+    <v-carousel
+      hide-delimiters
+      :cycle="true"
+      interval="10000"
+      :height="$vuetify.breakpoint.smAndUp ? 500 : 250"
+      v-if="!isLoading && !loadingError"
+    >
       <v-carousel-item v-for="(slide, i) in slides" :key="i" :src="slide.featuredImage.source" v-bind="slide.linkProps">
         <v-row class="fill-height" justify="center" align="end">
           <v-col cols="12" class="slide-caption">
@@ -79,9 +85,7 @@ export default {
 
   created() {
     this.getSlides();
-  },
-
-  mounted() {}
+  }
 };
 </script>
 

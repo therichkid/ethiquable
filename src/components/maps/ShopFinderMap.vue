@@ -3,7 +3,7 @@
     <l-map :zoom="zoom" :center="center">
       <l-tile-layer :url="tileProvider.url" :attribution="tileProvider.attribution"></l-tile-layer>
       <l-geo-json :geojson="germany" :options="geojsonOptions" />
-      <l-marker-cluster :options="{ maxClusterRadius: 25 }">
+      <l-marker-cluster :options="{ maxClusterRadius: 15 }">
         <l-marker v-for="marker in markers" :key="marker.id" :lat-lng="marker.latlng">
           <l-icon :icon-size="[40, 40]" :icon-anchor="[20, 40]" :popup-anchor="[0, -30]">
             <div :class="{ bounce: marker === activeMarker }">

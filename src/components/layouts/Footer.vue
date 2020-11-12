@@ -2,8 +2,8 @@
   <v-footer dark color="primary">
     <v-container>
       <!-- Top organizations -->
-      <v-row style="overflow-x: auto">
-        <v-col cols="12" class="d-flex justify-center">
+      <v-row>
+        <v-col cols="12" class="text-center">
           <span v-for="(item, i) in organizations" :key="i">
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
@@ -290,6 +290,7 @@ export default {
       const data = {
         fullname: this.name.trim(),
         email: this.email.trim(),
+        subject: "Ich habe eine Frage",
         message: this.message
       };
       // Create token for reCAPTCHA
