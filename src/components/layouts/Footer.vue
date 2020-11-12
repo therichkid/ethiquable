@@ -277,14 +277,14 @@ export default {
   methods: {
     async sendForm() {
       const data = {
-        name: this.name.trim(),
+        fullname: this.name.trim(),
         email: this.email.trim(),
         message: this.message
       };
       // Create token for reCAPTCHA
       const token = await this.$recaptcha("login");
       await api
-        .postData(data, token, "TODO")
+        .postData(data, token, 4247)
         .then(response => {
           this.alertType = "success";
           this.alertMessage = response;

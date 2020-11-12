@@ -30,7 +30,7 @@
 
       <v-col class="d-flex" v-for="article in posts" :key="article.id" cols="12" sm="6" md="4">
         <v-card hover :to="`/magazin/${article.slug}`" class="d-flex flex-column" style="width: 100%">
-          <v-img :src="article.featuredImage.source" maxHeight="300px" :alt="article.featuredImage.title"> </v-img>
+          <v-img :src="article.featuredImage.source" maxHeight="200px" :alt="article.featuredImage.title"> </v-img>
           <v-card-title>
             <h3 class="headline">{{ article.title }}</h3>
           </v-card-title>
