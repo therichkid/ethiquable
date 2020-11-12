@@ -77,7 +77,7 @@ export default {
           color: "#4ac959"
         }
       ],
-      linkPrefix: "https://www.bayciv.de",
+      linkPrefix: "https://www.ethiquable.de",
       snackbar: false
     };
   },

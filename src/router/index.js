@@ -5,7 +5,9 @@ import Home from "../views/Home";
 import Posts from "../views/Posts";
 import Post from "../views/Post";
 import Page from "../views/Page";
+import Product from "../views/Product";
 import Products from "../views/Products";
+import Producers from "../views/Producers";
 import PageNotFound from "../views/PageNotFound";
 
 // Chunks
@@ -47,26 +49,27 @@ const routes = [
     },
     props: true
   },
-  // {
-  //   path: "/produkte/:slug",
-  //   name: "product",
-  //   component: Product,
-  //   meta: {
-  //     title: "Produkt"
-  //   }
-  // },
-  // {
-  //   path: "/uebersicht-weltkarte",
-  //   redirect: "/produzenten"
-  // },
-  // {
-  //   path: "/produzenten",
-  //   name: "producers",
-  //   component: Producers,
-  //   meta: {
-  //     title: "Produzenten"
-  //   }
-  // },
+  {
+    path: "/produkte/:slug",
+    name: "product",
+    component: Product,
+    meta: {
+      title: "Produkt"
+    },
+    props: true
+  },
+  {
+    path: "/uebersicht-weltkarte",
+    redirect: "/produzenten"
+  },
+  {
+    path: "/produzenten",
+    name: "producers",
+    component: Producers,
+    meta: {
+      title: "Produzenten"
+    }
+  },
   // {
   //   path: "/uebersicht-weltkarte/*",
   //   redirect: route => "/produzenten/" + route.path.split("/").pop().replace(".html", "")

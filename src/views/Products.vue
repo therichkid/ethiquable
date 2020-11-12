@@ -13,7 +13,11 @@
           tile
           :to="`/produkte/${product.slug}`"
           class="my-2"
+<<<<<<< HEAD
           style="border-bottom: 6px solid var(--v-secondary-base)"
+=======
+          style="border-bottom: 6px solid var(--v-secondary-base);"
+>>>>>>> 64f6cd83cb0b97b9e13184b6c2efc607b5421967
         >
           <v-spacer></v-spacer>
           <v-img

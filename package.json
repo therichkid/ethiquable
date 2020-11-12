@@ -9,7 +9,11 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+<<<<<<< HEAD
     "core-js": "^3.7.0",
+=======
+    "core-js": "^3.6.5",
+>>>>>>> 64f6cd83cb0b97b9e13184b6c2efc607b5421967
     "leaflet": "^1.7.1",
     "vue": "^2.6.12",
     "vue-recaptcha-v3": "^1.9.0",
@@ -20,10 +24,17 @@
     "vuex": "^3.5.1"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "@babel/preset-env": "^7.12.1",
     "@vue/cli-plugin-babel": "^4.5.8",
     "@vue/cli-plugin-eslint": "^4.5.8",
     "@vue/cli-service": "^4.5.8",
+=======
+    "@babel/preset-env": "^7.11.5",
+    "@vue/cli-plugin-babel": "^4.5.4",
+    "@vue/cli-plugin-eslint": "^4.5.4",
+    "@vue/cli-service": "^4.5.4",
+>>>>>>> 64f6cd83cb0b97b9e13184b6c2efc607b5421967
     "@vue/eslint-config-prettier": "^6.0.0",
     "babel-eslint": "^10.1.0",
     "babel-polyfill": "^6.26.0",
