@@ -13,11 +13,11 @@
     <!-- Body -->
     <v-row>
       <v-col cols="12" :md="producer && 6">
-        <h2 class="text-h5" style="color: var(--v-primary-base);">Was ich esse / trinke</h2>
+        <h2 class="text-h5" style="color: var(--v-primary-base)">Was ich esse / trinke</h2>
         <div v-html="product.content"></div>
       </v-col>
       <v-col cols="12" md="6" v-if="Object.keys(producer).length">
-        <h2 class="text-h5" style="color: var(--v-primary-base);">Was ich verteidige</h2>
+        <h2 class="text-h5" style="color: var(--v-primary-base)">Was ich verteidige</h2>
         <div v-html="producer.content"></div>
       </v-col>
     </v-row>

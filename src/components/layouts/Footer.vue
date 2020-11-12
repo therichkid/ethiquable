@@ -8,7 +8,7 @@
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
                 <a :href="item.link" target="_blank" rel="noopener noreferrer" v-on="on">
-                  <img height="80" width="auto" :src="item.img" class="mx-3" />
+                  <img height="80" width="auto" :src="item.img" :alt="item.label" class="mx-3" />
                 </a>
               </template>
               <span>{{ item.label }}</span>
@@ -66,7 +66,7 @@
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
                     <a :href="item.link" target="_blank" rel="noopener noreferrer" v-on="on">
-                      <img height="44" width="auto" :src="item.img" class="mx-1" />
+                      <img height="44" width="auto" :src="item.img" :alt="item.label" class="mx-1" />
                     </a>
                   </template>
                   <span>{{ item.label }}</span>
@@ -104,8 +104,18 @@
                 required
                 class="mb-2"
               ></v-textarea>
-              <v-btn class="secondary" :disabled="!valid || !email || !message" @click="sendForm">Senden</v-btn>
-              <div class="caption link mt-2">
+              <v-checkbox v-model="privacyPolicyAccepted">
+                <template v-slot:label>
+                  <span>Ich stimme der <router-link to="/datenschutz">Datenschutzerklärung</router-link> zu.</span>
+                </template>
+              </v-checkbox>
+              <v-btn
+                class="secondary"
+                :disabled="!valid || !email || !message || !privacyPolicyAccepted"
+                @click="sendForm"
+                >Senden</v-btn
+              >
+              <div class="caption mt-2">
                 Diese Website ist durch reCAPTCHA geschützt und es gelten die
                 <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer"
                   >Datenschutzbestimmungen</a
@@ -164,6 +174,7 @@ export default {
       email: "",
       emailRules: [v => /\S+@\S+\.\S+/.test(v) || !v || "Diese E-Mail ist ungültig!"],
       message: "",
+      privacyPolicyAccepted: false,
       dialog: false,
       alertMessage: "",
       alertType: "",
@@ -311,7 +322,8 @@ export default {
   display: block;
   padding-left: 60px;
 }
-.link >>> a {
-  color: white;
+.link >>> a,
+a {
+  color: white !important;
 }
 </style>
