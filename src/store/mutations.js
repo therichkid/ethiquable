@@ -57,5 +57,14 @@ export default {
   },
   storeProducers(state, producers) {
     state.producers = producers;
+  },
+  changeSlidesLoading(state, value) {
+    state.slidesLoading = value;
+  },
+  changeSlidesLoadingError(state, value) {
+    state.slidesLoadingError = value;
+  },
+  storeSlides(state, slides) {
+    state.slides = slides;
   }
 };

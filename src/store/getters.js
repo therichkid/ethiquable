@@ -49,5 +49,9 @@ export default {
       }
     }
     return [false, null];
+  },
+  getFetchedSlides: state => () => {
+    const slides = state.slides;
+    return slides && slides.length ? [true, slides] : [false, null];
   }
 };

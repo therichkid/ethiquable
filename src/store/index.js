@@ -26,7 +26,10 @@ export default new Vuex.Store({
     shopsLoadingError: false,
     producers: [],
     producersLoading: false,
-    producersLoadingError: false
+    producersLoadingError: false,
+    slides: [],
+    slidesLoading: false,
+    slidesLoadingError: false
   },
 
   getters,

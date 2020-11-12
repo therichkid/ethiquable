@@ -283,5 +283,35 @@ export default {
           context.commit("changeProducersLoading", false);
         });
     });
+  },
+  fetchSlides(context) {
+    context.commit("changeSlidesLoading", true);
+    context.commit("changeSlidesLoadingError", false);
+    const path = "wp/v2/slides";
+    const params = {
+      _embed: true,
+      per_page: 100
+    };
+    return new Promise((resolve, reject) => {
+      api
+        .fetchData(path, params)
+        .then(
+          response => {
+            let { data } = response;
+            const slides = formatter.formatSlides(data);
+            context.commit("storeSlides", slides);
+            context.commit("incrementFailedRequests", 0);
+            resolve(slides);
+          },
+          error => {
+            context.commit("changeSlidesLoadingError", true);
+            context.commit("incrementFailedRequests", 1);
+            reject(error);
+          }
+        )
+        .finally(() => {
+          context.commit("changeSlidesLoading", false);
+        });
+    });
   }
 };

@@ -1,9 +1,10 @@
 <template>
   <div>
     <v-container>
-      <InfoMessage />
+      <CarouselSlider />
 
-      <h1 class="display-1 mb-2">Neuigkeiten</h1>
+      <Teaser />
+
       <Posts :page="1" type="home" />
     </v-container>
     <div class="text-center">
@@ -14,12 +15,14 @@
 
 <script>
 import Posts from "@/components/posts/Posts";
-import InfoMessage from "@/components/partials/InfoMessage";
+import Teaser from "@/components/partials/Teaser";
+import CarouselSlider from "@/components/partials/CarouselSlider";
 
 export default {
   components: {
     Posts,
-    InfoMessage
+    Teaser,
+    CarouselSlider
   },
 
   methods: {

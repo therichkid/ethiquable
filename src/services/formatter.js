@@ -44,19 +44,11 @@ export default {
       formId: parseInt(orig.acf.formular_id, 10),
       formData: orig.acf.formular_code
     });
-    // Add info message specific fields
-    if (page.slug === "info-meldung") {
-      const typeRemap = {
-        Primär: "primary",
-        Sekundär: "secondary",
-        Erfolg: "success",
-        Info: "info"
-      };
+    // Add teaser specific fields
+    if (page.slug === "teaser") {
       Object.assign(page, {
-        type: typeRemap[orig.acf.typ] || "primary",
         teaser: orig.acf.teaser,
-        link: orig.acf.link,
-        buttonText: orig.acf["button-text"]
+        link: orig.acf.link
       });
     }
     return page;
@@ -88,13 +80,13 @@ export default {
   formatShops: input => {
     const shops = [];
     for (const orig of input) {
-      const group = {
+      const shop = {
         id: orig.id,
         name: decodeHtml(orig.title.rendered),
         address: addAddress(orig),
         latlng: [orig.acf.location.lat, orig.acf.location.lng]
       };
-      shops.push(group);
+      shops.push(shop);
     }
     return shops;
   },
@@ -103,7 +95,7 @@ export default {
   formatProducers: input => {
     const producers = [];
     for (const orig of input) {
-      const group = {
+      const producer = {
         id: orig.id,
         name: decodeHtml(orig.title.rendered),
         excerpt: orig.excerpt.rendered,
@@ -112,9 +104,25 @@ export default {
         country: orig.acf.country,
         ingredient: orig.acf.ingredient
       };
-      producers.push(group);
+      producers.push(producer);
     }
     return producers;
+  },
+
+  // * Slides
+  formatSlides: input => {
+    const slides = [];
+    for (const orig of input) {
+      const slide = {
+        id: orig.id,
+        title: decodeHtml(orig.title.rendered),
+        excerpt: orig.excerpt.rendered,
+        featuredImage: addFeaturedImage(orig, "slide"),
+        link: orig.acf.link
+      };
+      slides.push(slide);
+    }
+    return slides;
   }
 };
 
@@ -202,7 +210,7 @@ const addAddress = input => {
 };
 
 // Add a featured image to an article or a SHG
-const addFeaturedImage = input => {
+const addFeaturedImage = (input, type) => {
   const obj = {};
   if (
     input._embedded &&
@@ -214,7 +222,7 @@ const addFeaturedImage = input => {
     const featuredImage = input._embedded["wp:featuredmedia"][0];
     obj.title = featuredImage.title.rendered;
     // Pick medium large size if it exists
-    if (featuredImage.media_details.sizes && featuredImage.media_details.sizes.medium_large) {
+    if (type !== "slide" && featuredImage.media_details.sizes && featuredImage.media_details.sizes.medium_large) {
       obj.source = featuredImage.media_details.sizes.medium_large.source_url;
     } else {
       obj.source = featuredImage.source_url;
@@ -236,8 +244,7 @@ const addCategories = input => {
       if (taxonomy.taxonomy === "category" && taxonomy.slug !== "uncategorized") {
         categories.push({
           name: taxonomy.name,
-          slug: taxonomy.slug,
-          type: taxonomy.link.includes("selbsthilfegruppen") ? "shg" : ""
+          slug: taxonomy.slug
         });
       }
     }

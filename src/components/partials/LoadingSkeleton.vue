@@ -13,6 +13,13 @@
     </v-col>
   </v-row>
 
+  <!-- Slider -->
+  <v-row v-else-if="type === 'slider'">
+    <v-col cols="12">
+      <v-skeleton-loader type="image"></v-skeleton-loader>
+    </v-col>
+  </v-row>
+
   <!-- Post, page -->
   <v-row v-else>
     <v-col cols="12">

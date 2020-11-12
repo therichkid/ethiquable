@@ -31,5 +31,11 @@ export default {
       day = parseInt(date.slice(6), 10);
     }
     return [year, month, day];
+  },
+
+  stripHtml: str => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(str, "text/html");
+    return doc.body.textContent || "";
   }
 };
