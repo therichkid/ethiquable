@@ -64,8 +64,12 @@ export const ROUTER_ITEMS = [
         to: "/produkt-kategorien/aufstrich"
       },
       {
-        title: "Frucht",
-        to: "/produkt-kategorien/frucht"
+        title: "Fruchtdessert",
+        to: "/produkt-kategorien/fruchtdessert"
+      },
+      {
+        title: "Gebäck",
+        to: "/produkt-kategorien/gebaeck"
       }
     ]
   },

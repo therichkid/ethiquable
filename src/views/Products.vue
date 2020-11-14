@@ -20,15 +20,20 @@
         </v-card>
       </v-col>
     </v-row>
+
+    <NoContentYet v-if="!isLoading && !loadingError && !products.length" />
   </v-container>
 </template>
 
 <script>
 import LoadingSkeleton from "@/components/partials/LoadingSkeleton";
+import NoContentYet from "@/components/partials/NoContentYet";
 const LoadingError = () => import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
+
 export default {
   components: {
     LoadingSkeleton,
+    NoContentYet,
     LoadingError
   },
 
@@ -52,11 +57,9 @@ export default {
       return this.$store.state.productsLoadingError;
     },
     formattedCategory() {
-      if (this.category === "oel") {
-        return "Öl";
-      } else {
-        return this.shared.capitalize(this.category);
-      }
+      return this.shared.capitalize(
+        this.category.replace(/ae/g, "\u00e4").replace(/oe/g, "\u00f6").replace(/ue/g, "\u00fc")
+      );
     }
   },
 
@@ -105,7 +108,7 @@ export default {
         this.breakpointProps = {
           cols: 6,
           sm: 4,
-          lg: 2
+          lg: 3
         };
         this.imageProps = {
           maxHeight: 300,

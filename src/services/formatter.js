@@ -65,9 +65,12 @@ export default {
         id: orig.id,
         slug: orig.slug,
         name: decodeHtml(orig.title.rendered),
-        excerpt: orig.excerpt.rendered,
         content: orig.content.rendered,
+        subtitle: orig.acf.subtitle,
+        backgroundColor: orig.acf["background-color"],
+        shopLink: orig.acf["shop-link"],
         producerId: orig.acf.producer && orig.acf.producer.length ? orig.acf.producer[0] : null,
+        seals: orig.acf["seals"],
         categories: addCategories(orig),
         featuredImage: addFeaturedImage(orig)
       };
