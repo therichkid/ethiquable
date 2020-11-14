@@ -6,7 +6,7 @@
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getProducts(category)" />
 
     <v-row v-if="!isLoading && !loadingError && products.length" no-gutters align="baseline">
-      <v-col cols="6" sm="4" lg="3" v-for="product in products" :key="product.id">
+      <v-col v-for="product in products" :key="product.id" v-bind="breakpointProps">
         <v-card
           flat
           hover
@@ -16,12 +16,7 @@
           style="border-bottom: 6px solid var(--v-secondary-base)"
         >
           <v-spacer></v-spacer>
-          <v-img
-            :src="product.featuredImage.source"
-            :alt="product.featuredImage.title"
-            max-height="300"
-            contain
-          ></v-img>
+          <v-img :src="product.featuredImage.source" :alt="product.featuredImage.title" v-bind="imageProps"></v-img>
         </v-card>
       </v-col>
     </v-row>
@@ -43,7 +38,9 @@ export default {
 
   data() {
     return {
-      products: []
+      products: [],
+      breakpointProps: {},
+      imageProps: {}
     };
   },
 
@@ -65,20 +62,21 @@ export default {
 
   watch: {
     $route() {
-      this.getProducts(this.category);
+      this.getProducts();
+      this.addProps();
     }
   },
 
   methods: {
-    async getProducts(category) {
+    async getProducts() {
       let products = [];
-      const productsFetched = this.$store.getters.getFetchedProductsPerCategory(category);
+      const productsFetched = this.$store.getters.getFetchedProductsPerCategory(this.category);
       if (productsFetched[0]) {
         // Already fetched
         products = productsFetched[1];
       } else {
         // Not fetched yet
-        products = await this.$store.dispatch("fetchProducts", category).catch(error => {
+        products = await this.$store.dispatch("fetchProducts", this.category).catch(error => {
           console.error(error);
         });
       }
@@ -90,10 +88,39 @@ export default {
         }
         return 0;
       });
+    },
+    addProps() {
+      if (["kaffee", "schokolade", "oel"].includes(this.category)) {
+        this.breakpointProps = {
+          cols: 6,
+          sm: 4,
+          md: 3,
+          lg: 2
+        };
+        this.imageProps = {
+          maxHeight: 400,
+          aspectRatio: 9 / 16
+        };
+      } else {
+        this.breakpointProps = {
+          cols: 6,
+          sm: 4,
+          lg: 2
+        };
+        this.imageProps = {
+          maxHeight: 300,
+          contain: true
+        };
+      }
     }
   },
+
   created() {
-    this.getProducts(this.category);
+    this.getProducts();
+  },
+
+  mounted() {
+    this.addProps();
   }
 };
 </script>

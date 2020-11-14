@@ -89,6 +89,10 @@ export default {
   height: auto;
   max-width: 100%;
 }
+.wp-caption p {
+  font-size: 14px;
+  font-style: italic;
+}
 .alignleft {
   float: left;
   margin: 0 10px 0 0;
@@ -128,5 +132,60 @@ export default {
 }
 iframe {
   max-width: 100%;
+}
+/* ETHIQUABLE classes */
+.ethiquable-table {
+  width: 100%;
+  max-width: 500px;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 15px;
+}
+.ethiquable-table tr > th {
+  color: #fff;
+  background-color: #80a018;
+}
+.ethiquable-table tr > td {
+  color: #232323;
+}
+table.ethiquable-table > *:first-child > tr:first-child > th,
+table.ethiquable-table > *:first-child > tr:first-child > td {
+  border-top: 1px solid #7a7a7a;
+}
+.ethiquable-table tr > th,
+.ethiquable-table tr > td {
+  border-bottom: 1px solid #7a7a7a;
+  padding: 5px 10px;
+}
+table.ethiquable-table tr > th:first-child,
+table.ethiquable-table tr > td:first-child {
+  border-left: 1px solid #7a7a7a;
+}
+table.ethiquable-table tr > th:last-child,
+table.ethiquable-table tr > td:last-child {
+  border-right: 1px solid #7a7a7a;
+}
+table.ethiquable-table > *:first-child > tr:first-child > th:first-child,
+table.ethiquable-table > *:first-child > tr:first-child > td:first-child {
+  border-top-left-radius: 10px;
+}
+table.ethiquable-table > *:first-child > tr:first-child > th:last-child,
+table.ethiquable-table > *:first-child > tr:first-child > td:last-child {
+  border-top-right-radius: 10px;
+}
+table.ethiquable-table tr:last-child > td:first-child {
+  border-bottom-left-radius: 10px;
+}
+table.ethiquable-table tr:last-child > td:last-child {
+  border-bottom-right-radius: 10px;
+}
+.ethiquable-grid {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+.ethiquable-grid > * {
+  margin: 2px;
 }
 </style>

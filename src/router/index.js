@@ -127,7 +127,6 @@ const routes = [
     }
   },
   // Page redirects
-  { path: "/unser-ansatz", redirect: "/fair-trade" },
   { path: "/stellenangebote", redirect: "/jobs" },
   { path: "/disclaimer", redirect: "/impressum" },
   {

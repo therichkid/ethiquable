@@ -11,8 +11,12 @@ export const ROUTER_ITEMS = [
         to: "/ethiquable"
       },
       {
-        title: "Fair Trade",
-        to: "/fair-trade"
+        title: "Unser Ansatz",
+        to: "/unser-ansatz"
+      },
+      {
+        title: "Die Siegel",
+        to: "/die-siegel"
       },
       {
         title: "Jobs",

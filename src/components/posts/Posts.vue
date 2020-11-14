@@ -32,7 +32,7 @@
         <v-card hover :to="`/magazin/${article.slug}`" class="d-flex flex-column" style="width: 100%">
           <v-img
             :src="article.featuredImage.source"
-            :maxHeight="type === 'home' ? '150px' : '200px'"
+            :maxHeight="type === 'home' ? '200px' : '250px'"
             :alt="article.featuredImage.title"
           >
           </v-img>
