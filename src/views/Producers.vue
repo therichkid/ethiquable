@@ -123,9 +123,10 @@ export default {
         this.producers = producersFetched[1];
       } else {
         // Not fetched yet
-        this.producers = await this.$store.dispatch("fetchProducers").catch(error => {
-          console.error(error);
-        });
+        this.producers =
+          (await this.$store.dispatch("fetchProducers").catch(error => {
+            console.error(error);
+          })) || [];
       }
       this.addFilterData();
     },

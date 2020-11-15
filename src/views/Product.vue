@@ -1,9 +1,9 @@
 <template>
   <v-container>
     <LoadingSkeleton v-if="isLoadingProducts" />
-    <LoadingError v-else-if="loadingErrorProducts" :height="500" @retryAgain="getProductBySlug(slug)" />
+    <LoadingError v-if="loadingErrorProducts" :height="500" @retryAgain="getProductBySlug(slug)" />
 
-    <v-row v-else-if="!isLoadingProducts && !loadingErrorProducts && Object.keys(product).length">
+    <v-row v-if="!isLoadingProducts && !loadingErrorProducts && Object.keys(product).length">
       <!-- Header -->
       <v-col cols="12" class="header-container">
         <div class="header-triangle"></div>
@@ -85,7 +85,6 @@
         <!-- Product content -->
         <h2 class="text-h4 mt-4 mb-2" style="color: var(--v-primary-base)">Was ich esse / trinke</h2>
         <div v-html="product.content"></div>
-        <v-btn to="/does-not-exist">Weiterlesen</v-btn>
       </v-col>
 
       <!-- Right column -->

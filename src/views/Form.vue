@@ -44,13 +44,13 @@
             ></v-text-field>
             <!-- Text area -->
             <v-textarea
-              v-if="form.type === 'textarea'"
+              v-else-if="form.type === 'textarea'"
               :label="form.label"
               :rules="addFormRule(form)"
               v-model="form.value"
             ></v-textarea>
             <!-- Date picker -->
-            <div v-if="form.type === 'date'" class="mt-3">
+            <div v-else-if="form.type === 'date'" class="mt-3">
               <h3 v-if="form.label" class="subheading mb-2">{{ form.label }}</h3>
               <div>
                 <v-date-picker v-model="form.value" locale="de-DE" :first-day-of-week="1"></v-date-picker>
@@ -62,7 +62,7 @@
             </div>
             <!-- Select -->
             <v-select
-              v-if="form.type === 'select'"
+              v-else-if="form.type === 'select'"
               :label="form.label"
               :items="form.options"
               :chips="form.multiple"
@@ -72,7 +72,7 @@
               clearable
             ></v-select>
             <!-- Checkbox -->
-            <template v-if="form.type === 'checkbox'">
+            <template v-else-if="form.type === 'checkbox'">
               <v-checkbox
                 v-for="item in form.options"
                 :key="item"
@@ -84,7 +84,7 @@
             </template>
             <!-- Radio buttons -->
             <v-radio-group
-              v-if="form.type === 'radio'"
+              v-else-if="form.type === 'radio'"
               :label="form.label"
               :rules="addFormRule(form)"
               v-model="form.value"
@@ -180,9 +180,10 @@ export default {
         this.event = eventFetched[1];
       } else {
         // Not fetched yet
-        this.event = await this.$store.dispatch("fetchEventBySlug", slug).catch(error => {
-          console.error(error);
-        });
+        this.event =
+          (await this.$store.dispatch("fetchEventBySlug", slug).catch(error => {
+            console.error(error);
+          })) || {};
       }
       this.forms = this.formatFormData(this.event.formData);
       this.formId = this.event.formId;

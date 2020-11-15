@@ -11,7 +11,7 @@
           </v-list-item-icon>
         </v-list-item>
 
-        <v-list-group :prepend-icon="item.icon" :key="i" v-if="typeof item.to === 'object'">
+        <v-list-group :prepend-icon="item.icon" :key="i" v-else-if="typeof item.to === 'object'">
           <template v-slot:activator>
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </template>

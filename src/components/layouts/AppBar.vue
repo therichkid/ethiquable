@@ -30,7 +30,7 @@
           <v-icon right v-if="item.icon">{{ item.icon }}</v-icon>
         </v-btn>
 
-        <v-menu offset-y open-on-hover :key="i" v-if="typeof item.to === 'object'">
+        <v-menu offset-y open-on-hover :key="i" v-else-if="typeof item.to === 'object'">
           <template v-slot:activator="{ on }">
             <v-btn text light v-on="on">
               {{ item.title }}

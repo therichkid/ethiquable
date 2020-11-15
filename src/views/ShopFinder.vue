@@ -118,9 +118,10 @@ export default {
         this.shops = shopsFetched[1];
       } else {
         // Not fetched yet
-        this.shops = await this.$store.dispatch("fetchShops").catch(error => {
-          console.error(error);
-        });
+        this.shops =
+          (await this.$store.dispatch("fetchShops").catch(error => {
+            console.error(error);
+          })) || [];
       }
     },
     getCurrentLocation() {

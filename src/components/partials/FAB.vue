@@ -18,7 +18,7 @@
       </v-btn>
     </v-fab-transition>
     <!-- Pages with maps -->
-    <div class="fab-container" v-if="isRouteWithMap">
+    <div class="fab-container" v-else>
       <v-btn fab large dark color="secondary" class="mb-2" @click="scrollToTop()" aria-label="Nach oben scrollen">
         <v-icon>mdi-chevron-up</v-icon>
       </v-btn>
@@ -40,7 +40,7 @@ export default {
 
   computed: {
     isRouteWithMap() {
-      return ["shgs", "facilities"].includes(this.$route.name);
+      return ["shopfinder", "produzenten"].includes(this.$route.name);
     }
   },
 

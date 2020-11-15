@@ -79,9 +79,10 @@ export default {
         products = productsFetched[1];
       } else {
         // Not fetched yet
-        products = await this.$store.dispatch("fetchProducts", this.category).catch(error => {
-          console.error(error);
-        });
+        products =
+          (await this.$store.dispatch("fetchProducts", this.category).catch(error => {
+            console.error(error);
+          })) || [];
       }
       this.products = products.sort((a, b) => {
         if (a.name < b.name) {

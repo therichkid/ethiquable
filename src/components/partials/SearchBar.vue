@@ -45,7 +45,7 @@
         </v-list-item>
       </v-list>
     </v-menu>
-    <v-btn icon text v-if="isHidden" @click.stop="toggleSearchBar()" aria-label="Suche öffnen">
+    <v-btn icon text v-else @click.stop="toggleSearchBar()" aria-label="Suche öffnen">
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
   </div>

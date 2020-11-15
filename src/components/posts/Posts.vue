@@ -103,7 +103,7 @@ export default {
         posts = postsFetched[1];
       } else {
         // Not fetched yet
-        posts = await this.$store.dispatch("fetchPosts", page).catch(error => console.error(error));
+        posts = (await this.$store.dispatch("fetchPosts", page).catch(error => console.error(error))) || [];
       }
       if (this.type === "home") {
         posts = posts.slice(0, 3).forEach(post => {

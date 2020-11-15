@@ -8,7 +8,7 @@
       :cycle="true"
       interval="10000"
       :height="$vuetify.breakpoint.smAndUp ? 500 : 250"
-      v-if="!isLoading && !loadingError"
+      v-if="!isLoading && !loadingError && slides && slides.length"
     >
       <v-carousel-item v-for="(slide, i) in slides" :key="i" :src="slide.featuredImage.source" v-bind="slide.linkProps">
         <v-row class="fill-height" justify="center" align="end">
@@ -56,7 +56,7 @@ export default {
         slides = slidesFetched[1];
       } else {
         // Not fetched yet
-        slides = await this.$store.dispatch("fetchSlides").catch(error => console.error(error));
+        slides = (await this.$store.dispatch("fetchSlides").catch(error => console.error(error))) || [];
       }
       slides.forEach(slide => {
         slide.excerpt = this.shared.stripHtml(slide.excerpt);
