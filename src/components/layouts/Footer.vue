@@ -1,10 +1,10 @@
 <template>
   <v-footer dark color="primary">
     <v-container>
-      <!-- Top organizations -->
+      <!-- Top seals -->
       <v-row>
         <v-col cols="12" class="text-center">
-          <span v-for="(item, i) in organizations" :key="i">
+          <span v-for="(item, i) in seals" :key="i">
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
                 <a :href="item.link" target="_blank" rel="noopener noreferrer" v-on="on">
@@ -194,7 +194,7 @@ export default {
           text: "<a href='mailto:info@ethiquable.de'>info@ethiquable.de"
         }
       ],
-      organizations: [
+      seals: [
         {
           label: "Fair Band",
           img: require("@/assets/logos/fairband.png"),

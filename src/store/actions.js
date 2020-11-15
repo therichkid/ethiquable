@@ -284,6 +284,34 @@ export default {
         });
     });
   },
+  fetchProducerById(context, id) {
+    context.commit("changeProducersLoading", true);
+    context.commit("changeProducersLoadingError", false);
+    const path = `wp/v2/producers/${id}`;
+    const params = {
+      _embed: true
+    };
+    return new Promise((resolve, reject) => {
+      api
+        .fetchData(path, params)
+        .then(
+          response => {
+            let { data } = response;
+            const producers = formatter.formatProducers([data]);
+            context.commit("incrementFailedRequests", 0);
+            resolve(producers[0]);
+          },
+          error => {
+            context.commit("changeProducersLoadingError", true);
+            context.commit("incrementFailedRequests", 1);
+            reject(error);
+          }
+        )
+        .finally(() => {
+          context.commit("changeProducersLoading", false);
+        });
+    });
+  },
   fetchSlides(context) {
     context.commit("changeSlidesLoading", true);
     context.commit("changeSlidesLoadingError", false);

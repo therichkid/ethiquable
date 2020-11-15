@@ -1,9 +1,9 @@
 <template>
   <v-container>
     <LoadingSkeleton v-if="isLoadingProducts" />
-    <LoadingError v-if="loadingErrorProducts" :height="500" @retryAgain="getProductBySlug(slug)" />
+    <LoadingError v-else-if="loadingErrorProducts" :height="500" @retryAgain="getProductBySlug(slug)" />
 
-    <v-row v-if="!isLoadingProducts && !loadingErrorProducts && Object.keys(product).length">
+    <v-row v-else-if="!isLoadingProducts && !loadingErrorProducts && Object.keys(product).length">
       <!-- Header -->
       <v-col cols="12" class="header-container">
         <div class="header-triangle"></div>
@@ -40,12 +40,58 @@
 
     <!-- Body -->
     <v-row>
+      <!-- Left column -->
       <v-col cols="12" :md="Object.keys(producer).length && 6">
-        <h2 class="text-h5" style="color: var(--v-primary-base)">Was ich esse / trinke</h2>
+        <!-- Seals -->
+        <div class="mt-4 mb-2" v-if="product.seals && product.seals.length">
+          <template v-for="(item, i) in product.seals">
+            <v-tooltip bottom :key="i" v-if="item !== 'vegan' && sealMap[item]">
+              <template v-slot:activator="{ on }">
+                <router-link to="/die-siegel">
+                  <img
+                    height="60"
+                    width="auto"
+                    :src="sealMap[item].img"
+                    :alt="sealMap[item].label"
+                    v-on="on"
+                    :class="i > 0 ? 'mx-2' : 'mr-2'"
+                  />
+                </router-link>
+              </template>
+              <span>Mehr Infos zu unseren Siegeln</span>
+            </v-tooltip>
+            <div :key="i" v-else-if="item === 'vegan'"><b>Dieses Produkt ist vegan.</b></div>
+          </template>
+        </div>
+
+        <!-- Shop link -->
+        <div class="mt-4 mb-2" style="max-width: 500px" v-if="product.shopLink">
+          <v-btn
+            block
+            tile
+            large
+            :href="product.shopLink"
+            target="_blank"
+            rel="nofollow"
+            color="primary"
+            class="white--text"
+          >
+            Im E-Shop kaufen
+            <v-spacer></v-spacer>
+            <v-icon right>mdi-open-in-new</v-icon>
+          </v-btn>
+        </div>
+
+        <!-- Product content -->
+        <h2 class="text-h4 mt-4 mb-2" style="color: var(--v-primary-base)">Was ich esse / trinke</h2>
         <div v-html="product.content"></div>
+        <v-btn to="/does-not-exist">Weiterlesen</v-btn>
       </v-col>
+
+      <!-- Right column -->
       <v-col cols="12" md="6" v-if="Object.keys(producer).length">
-        <h2 class="text-h5" style="color: var(--v-primary-base)">Was ich verteidige</h2>
+        <!-- Producer -->
+        <h2 class="text-h4 mt-4 mb-2" style="color: var(--v-primary-base)">Was ich verteidige</h2>
         <div v-html="producer.content"></div>
       </v-col>
     </v-row>
@@ -96,7 +142,21 @@ export default {
         schokolade: "schokolade.png"
       },
       currentWindowWidth: 0,
-      rectangleHeight: 100
+      rectangleHeight: 100,
+      sealMap: {
+        bio: {
+          label: "Bio-Siegel",
+          img: require("@/assets/logos/bio.jpg")
+        },
+        fairtrade: {
+          label: "Fairtrade",
+          img: require("@/assets/logos/fairtrade.png")
+        },
+        spp: {
+          label: "SPP",
+          img: require("@/assets/logos/spp.png")
+        }
+      }
     };
   },
 
@@ -155,9 +215,10 @@ export default {
         this.producer = producerFetched[1];
       } else {
         // Not fetched yet
-        this.producer = await this.$store.dispatch("fetchProducerByParam", { param: "id", value: id }).catch(error => {
-          console.error(error);
-        });
+        this.producer =
+          (await this.$store.dispatch("fetchProducerById", id).catch(error => {
+            console.error(error);
+          })) || {};
       }
     },
     async getProductAndProducer() {
@@ -169,7 +230,7 @@ export default {
         this.product.categories && this.product.categories.length ? this.product.categories[0].slug : null;
       this.addProps(category);
       this.addCategoryImage(category);
-      // Wait a short time until the title is rendered
+      // Wait a short time until the title is rendered -> mobile chrome fix
       setTimeout(() => {
         this.calcRectangleHeight();
         this.currentWindowWidth = window.innerWidth;
@@ -179,7 +240,7 @@ export default {
       }
     },
     addProps(category) {
-      const size = this.$vuetify.breakpoint.xsOnly ? 125 : 250;
+      const size = window.innerWidth < 600 ? 125 : 250; // Can't use vuetify breakpoint here as it is updated too late
       if (["kaffee", "schokolade", "oel"].includes(category)) {
         const calcWidth = (9 / 16) * size;
         this.productImageProps = {
