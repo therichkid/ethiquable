@@ -55,8 +55,8 @@
 </template>
 
 <script>
-import ShopFinderMap from "@/components/maps/ShopFinderMap";
 import GeolocationSearch from "@/components/partials/GeolocationSearch";
+const ShopFinderMap = () => import(/* webpackChunkName: "map" */ "@/components/maps/ShopFinderMap");
 const LoadingError = () => import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
 import L from "leaflet";
 

@@ -100,7 +100,7 @@
             </h3>
             <div v-html="producer.content"></div>
             <v-btn
-              :to="{ path: `produzenten/${producer.slug}`, params: { id: producer.id } }"
+              :to="{ path: `/produzenten/${producer.slug}`, params: { id: producer.id } }"
               color="primary"
               v-if="producer.slug"
             >

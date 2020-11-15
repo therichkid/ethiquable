@@ -4,20 +4,12 @@
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getProducers()" />
 
     <v-row dense v-if="!loadingError">
-      <!-- Table -->
-      <v-col cols="12" sm="5" md="4">
+      <!-- Filter -->
+      <v-col cols="12" sm="6" lg="4">
         <v-card>
           <v-card-text>
-            <v-row dense>
-              <v-col cols="12">
-                <v-text-field
-                  v-model="search"
-                  prepend-inner-icon="mdi-magnify"
-                  label="Nach Produzenten suchen"
-                  clearable
-                  hide-details
-                ></v-text-field>
-              </v-col>
+            <v-row no-gutters>
+              <ProducersMap :selectedCountry="selectedCountry" @countrySelected="selectedCountry = $event" />
               <v-col cols="12">
                 <v-select
                   :items="countries"
@@ -27,6 +19,7 @@
                   label="Herkunftsland"
                   clearable
                   hide-details
+                  :loading="isLoading"
                 ></v-select>
               </v-col>
               <v-col cols="12">
@@ -36,31 +29,77 @@
                   label="Zutat aus Genossenschaft"
                   clearable
                   hide-details
+                  :loading="isLoading"
                 ></v-select>
-              </v-col>
-              <v-col cols="12">
-                <v-btn>Filter zurücksetzen</v-btn>
               </v-col>
             </v-row>
           </v-card-text>
         </v-card>
       </v-col>
 
-      <!-- Map -->
-      <v-col cols="12" sm="7" md="8">
-        <ShopFinderMap :markers="[]" :activeMarker="null" :currentLocation="null" :zoom="zoom" :center="center" />
+      <!-- Producers -->
+      <v-col cols="12" sm="6" lg="8">
+        <LoadingSkeleton type="producers" v-if="isLoading" />
+
+        <v-row v-if="!isLoading && !loadingError && filteredProducers.length" dense>
+          <v-col cols="6" md="4" lg="3" v-for="produzenten in filteredProducers" :key="produzenten.id" class="d-flex">
+            <v-card
+              hover
+              :to="`/produzenten/${produzenten.slug}`"
+              class="d-flex flex-column"
+              style="border-top: 6px solid var(--v-primary-base)"
+            >
+              <v-img
+                :src="produzenten.featuredImage.source"
+                :alt="produzenten.featuredImage.title"
+                max-height="150"
+                style="border-radius: 0"
+              >
+              </v-img>
+              <v-card-title class="pt-0">
+                <h3 class="text-subtitle-2" style="word-wrap: break-word; hyphens: auto">
+                  {{ produzenten.name }}
+                </h3>
+              </v-card-title>
+            </v-card>
+          </v-col>
+          <v-col cols="12" v-if="!showAllProducers && !selectedCountry && !selectedIngredient">
+            <v-banner
+              icon="mdi-lightbulb-on"
+              icon-color="#ffc107"
+              rounded
+              :single-line="$vuetify.breakpoint.lgAndUp"
+              elevation="2"
+              style="border-top: 6px solid #ffc107"
+            >
+              Verfeinere die Ergebnisse mit der Karte und dem Filter.
+              <template v-slot:actions>
+                <v-btn text @click="showAllProducers = true">
+                  Alle anzeigen
+                  <v-icon right>mdi-chevron-down</v-icon>
+                </v-btn>
+              </template>
+            </v-banner>
+          </v-col>
+        </v-row>
+
+        <NoContentYet type="search" v-if="!isLoading && !loadingError && !filteredProducers.length" />
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import ShopFinderMap from "@/components/maps/ShopFinderMap";
+import LoadingSkeleton from "@/components/partials/LoadingSkeleton";
+import NoContentYet from "@/components/partials/NoContentYet";
+const ProducersMap = () => import(/* webpackChunkName: "map" */ "@/components/maps/ProducersMap");
 const LoadingError = () => import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
 
 export default {
   components: {
-    ShopFinderMap,
+    LoadingSkeleton,
+    NoContentYet,
+    ProducersMap,
     LoadingError
   },
 
@@ -68,31 +107,11 @@ export default {
     return {
       producers: [],
       countries: [],
-      countryLabels: {
-        bolivia: "Bolivien",
-        china: "China",
-        ecuador: "Ecuador",
-        "el-salvador": "El Salvador",
-        "ivory-coast": "Elfenbeinküste",
-        haiti: "Haiti",
-        honduras: "Honduras",
-        india: "Indien",
-        congo: "Kongo",
-        mexico: "Mexiko",
-        nicaragua: "Nicaragua",
-        paraguay: "Paraguay",
-        peru: "Peru",
-        "south-africa": "Südafrika",
-        thailand: "Thailand",
-        tunesia: "Tunesien",
-        vietnam: "Vietnam"
-      },
+      countryNamesMap: {},
       ingredients: [],
-      search: null,
       selectedCountry: null,
       selectedIngredient: null,
-      zoom: 6,
-      center: [51.0, 11.0]
+      showAllProducers: false
     };
   },
 
@@ -103,15 +122,38 @@ export default {
     loadingError() {
       return this.$store.state.producersLoadingError;
     },
+    maxShownProducers() {
+      if (this.$vuetify.breakpoint.lgAndUp) {
+        return 12;
+      } else if (this.$vuetify.breakpoint.md) {
+        return 9;
+      }
+      return 6;
+    },
     filteredProducers() {
       const filteredProducers = [];
       for (const producer of this.producers) {
-        if (this.search && !producer.name.toLowerCase().includes(this.search.toLowerCase())) {
+        if (this.selectedCountry && producer.country !== this.selectedCountry) {
           continue;
+        }
+        if (this.selectedIngredient) {
+          const ingredients = (producer.ingredient && producer.ingredient.split(",")) || [];
+          let hasIngredient = false;
+          for (const ingredient of ingredients) {
+            if (ingredient.trim() === this.selectedIngredient) {
+              hasIngredient = true;
+            }
+          }
+          if (!hasIngredient) {
+            continue;
+          }
         }
         filteredProducers.push(producer);
       }
-      return filteredProducers;
+      if (!this.showAllProducers && filteredProducers.length > this.maxShownProducers) {
+        filteredProducers.splice(this.maxShownProducers);
+      }
+      return filteredProducers.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
     }
   },
 
@@ -132,21 +174,31 @@ export default {
     },
 
     addFilterData() {
+      const countries = [];
+      const ingredients = [];
       for (const producer of this.producers) {
-        if (producer.country && !this.countries.filter(country => country.value === producer.country).length) {
-          this.countries.push({
-            text: this.countryLabels[producer.country] || producer.country,
+        if (producer.country && !countries.filter(country => country.value === producer.country).length) {
+          countries.push({
+            text: this.countryNamesMap[producer.country] || producer.country,
             value: producer.country
           });
         }
-        if (!this.ingredients.includes(producer.ingredient)) {
-          this.ingredients.push(producer.ingredient);
+        if (producer.ingredient) {
+          producer.ingredient.split(",").forEach(item => {
+            const ingredient = item.trim();
+            if (!ingredients.includes(ingredient)) {
+              ingredients.push(ingredient);
+            }
+          });
         }
       }
+      this.countries = countries.sort((a, b) => a.text.toLowerCase().localeCompare(b.text.toLowerCase()));
+      this.ingredients = ingredients.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
     }
   },
 
   created() {
+    this.countryNamesMap = this.shared.createCountryNamesMap("key", "label");
     this.getProducers();
   }
 };

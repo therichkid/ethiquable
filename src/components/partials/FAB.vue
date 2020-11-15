@@ -40,7 +40,7 @@ export default {
 
   computed: {
     isRouteWithMap() {
-      return ["shopfinder", "produzenten"].includes(this.$route.name);
+      return ["shopfinder", "producers"].includes(this.$route.name);
     }
   },
 

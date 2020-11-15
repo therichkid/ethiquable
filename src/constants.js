@@ -91,3 +91,91 @@ export const ROUTER_ITEMS = [
     to: "https://www.ethiquable-shop.de/"
   }
 ];
+
+export const COUNTRY_NAMES = [
+  {
+    key: "bolivia",
+    label: "Bolivien",
+    admin: "Bolivia"
+  },
+  {
+    key: "china",
+    label: "China",
+    admin: "China"
+  },
+  {
+    key: "ecuador",
+    label: "Ecuador",
+    admin: "Ecuador"
+  },
+  {
+    key: "el-salvador",
+    label: "El Salvador",
+    admin: "El Salvador"
+  },
+  {
+    key: "ivory-coast",
+    label: "Elfenbeinküste",
+    admin: "Ivory Coast"
+  },
+  {
+    key: "haiti",
+    label: "Haiti",
+    admin: "Haiti"
+  },
+  {
+    key: "honduras",
+    label: "Honduras",
+    admin: "Honduras"
+  },
+  {
+    key: "india",
+    label: "Indien",
+    admin: "India"
+  },
+  {
+    key: "congo",
+    label: "Kongo",
+    admin: "Democratic Republic of the Congo"
+  },
+  {
+    key: "mexico",
+    label: "Mexiko",
+    admin: "Mexico"
+  },
+  {
+    key: "nicaragua",
+    label: "Nicaragua",
+    admin: "Nicaragua"
+  },
+  {
+    key: "paraguay",
+    label: "Paraguay",
+    admin: "Paraguay"
+  },
+  {
+    key: "peru",
+    label: "Peru",
+    admin: "Peru"
+  },
+  {
+    key: "south-africa",
+    label: "Südafrika",
+    admin: "South Africa"
+  },
+  {
+    key: "thailand",
+    label: "Thailand",
+    admin: "Thailand"
+  },
+  {
+    key: "tunisia",
+    label: "Tunesien",
+    admin: "Tunisia"
+  },
+  {
+    key: "vietnam",
+    label: "Vietnam",
+    admin: "Vietnam"
+  }
+];

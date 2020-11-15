@@ -6,8 +6,8 @@
     </v-col>
   </v-row>
 
-  <!-- Products -->
-  <v-row v-else-if="type === 'products'">
+  <!-- Products, producers -->
+  <v-row v-else-if="type === 'products' || type === 'producers'">
     <v-col v-for="i in amount" :key="i" cols="6" sm="4" lg="3">
       <v-skeleton-loader type="card"></v-skeleton-loader>
     </v-col>

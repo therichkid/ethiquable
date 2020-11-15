@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 
 import Home from "../views/Home";
+import ShopFinder from "../views/ShopFinder";
 import Posts from "../views/Posts";
 import Post from "../views/Post";
 import Page from "../views/Page";
@@ -9,9 +10,6 @@ import Product from "../views/Product";
 import Products from "../views/Products";
 import Producers from "../views/Producers";
 import PageNotFound from "../views/PageNotFound";
-
-// Chunks
-const ShopFinder = () => import(/* webpackChunkName: "map" */ "../views/ShopFinder");
 
 Vue.use(Router);
 

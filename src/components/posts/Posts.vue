@@ -29,11 +29,17 @@
       </v-col>
 
       <v-col class="d-flex" v-for="article in posts" :key="article.id" v-bind="breakpointProps">
-        <v-card hover :to="`/magazin/${article.slug}`" class="d-flex flex-column" style="width: 100%">
+        <v-card
+          hover
+          :to="`/magazin/${article.slug}`"
+          class="d-flex flex-column"
+          style="width: 100%; border-top: 6px solid var(--v-primary-base)"
+        >
           <v-img
             :src="article.featuredImage.source"
             :maxHeight="type === 'home' ? '200px' : '250px'"
             :alt="article.featuredImage.title"
+            style="border-radius: 0"
           >
           </v-img>
           <v-card-title>
@@ -107,7 +113,7 @@ export default {
       }
       if (this.type === "home") {
         posts = posts.slice(0, 3).forEach(post => {
-          const excerpt = this.shared.shortenTextLength(post.excerpt, 175);
+          const excerpt = this.shared.shortenTextLength(post.excerpt, 150);
           this.posts.push({ ...post, excerpt });
         });
       } else {

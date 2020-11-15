@@ -1,3 +1,5 @@
+import { COUNTRY_NAMES } from "@/constants";
+
 export default {
   capitalize: input => {
     const output = [];
@@ -40,5 +42,15 @@ export default {
   shortenTextLength: (str, number) => {
     const shortened = str.slice(0, number).split(" ").slice(0, -1).join(" ");
     return shortened.length < str.length ? shortened + " [&hellip;]" : shortened;
+  },
+
+  createCountryNamesMap: (key, value) => {
+    const map = {};
+    for (const item of COUNTRY_NAMES) {
+      if (item[key]) {
+        map[item[key]] = item[value];
+      }
+    }
+    return map;
   }
 };
