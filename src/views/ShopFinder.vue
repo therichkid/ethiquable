@@ -16,7 +16,7 @@
                 <v-text-field
                   v-model="search"
                   prepend-inner-icon="mdi-magnify"
-                  label="Nach Gruppen suchen"
+                  label="Nach Supermärkten suchen"
                   clearable
                   hide-details
                 ></v-text-field>
@@ -46,7 +46,7 @@
           :markers="filteredShops"
           :activeMarker="activeShop"
           :currentLocation="currentLocation"
-          :zoom="zoom"
+          :zoom.sync="zoom"
           :center="center"
         />
       </v-col>
@@ -141,8 +141,8 @@ export default {
             }
             this.center = this.currentLocation.center;
             setTimeout(() => {
-              this.zoom = 9;
-            }, 500);
+              this.zoom = 12;
+            }, 1000);
             this.table.sortBy = "distance";
           },
           error => {
@@ -161,15 +161,20 @@ export default {
     },
     setShopToActive(shop) {
       if (this.timeout) {
-        this.timeout = null;
+        clearTimeout(this.timeout);
       }
       this.activeShop = shop;
       this.center = shop.latlng;
+      if (this.zoom < 12) {
+        setTimeout(() => {
+          this.zoom = 12;
+        }, 1000);
+      }
       // Set the activeShop to null after the bouncing animation
       // Else the icon would bounce again after each filter change
       this.timeout = setTimeout(() => {
         this.activeShop = null;
-      }, 2250);
+      }, 750 * 5);
     },
     setCurrentLocationManually(latlng) {
       this.currentLocation = {
@@ -184,8 +189,8 @@ export default {
       }
       this.center = this.currentLocation.center;
       setTimeout(() => {
-        this.zoom = 9;
-      }, 500);
+        this.zoom = 12;
+      }, 1000);
       this.table.sortBy = "distance";
     }
   },

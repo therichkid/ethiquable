@@ -1,6 +1,6 @@
 <template>
   <div id="map">
-    <l-map :zoom="zoom" :center="center">
+    <l-map :zoom="zoom" :center="center" v-on:update:zoom="updateZoom($event)">
       <l-tile-layer :url="tileProvider.url" :attribution="tileProvider.attribution"></l-tile-layer>
       <l-geo-json :geojson="germany" :options="geojsonOptions" />
       <l-marker-cluster :options="{ maxClusterRadius: 15 }">
@@ -128,6 +128,9 @@ export default {
       }
       const text = name.charAt(0).toUpperCase();
       return `https://cdn.mapmarker.io/api/v1/font-awesome/v5/pin?text=${text}&size=40&background=${background}&color=${color}&hoffset=-1`;
+    },
+    updateZoom(event) {
+      this.$emit("update:zoom", event);
     }
   }
 };
@@ -159,6 +162,6 @@ export default {
   }
 }
 .bounce {
-  animation: bounce 0.75s 3;
+  animation: bounce 0.75s 5;
 }
 </style>
