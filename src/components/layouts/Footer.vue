@@ -147,13 +147,7 @@
         </v-col>
       </v-row>
 
-      <AlertModal
-        :dialog="dialog"
-        :alertType="alertType"
-        :alertMessage="alertMessage"
-        page="newsletter"
-        @dialog="dialog = false"
-      />
+      <AlertModal :dialog="dialog" :alertType="alertType" :alertMessage="alertMessage" @dialog="dialog = false" />
     </v-container>
   </v-footer>
 </template>

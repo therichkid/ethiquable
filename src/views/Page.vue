@@ -17,10 +17,7 @@
       </v-col>
 
       <!-- Actions -->
-      <v-col cols="12" v-if="page.formId && page.formData && page.formData.length">
-        <Form type="page" :formIdProp="page.formId" :formDataProp="page.formData" />
-      </v-col>
-      <v-col cols="12" v-else>
+      <v-col cols="12">
         <v-btn @click="goBack()">
           <v-icon>mdi-chevron-left</v-icon>
           <span>Zurück</span>
@@ -34,13 +31,11 @@
 import LoadingSkeleton from "@/components/partials/LoadingSkeleton";
 import SocialMedia from "@/components/partials/SocialMedia";
 const LoadingError = () => import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
-const Form = () => import(/* webpackChunkName: "form" */ "@/views/Form");
 
 export default {
   components: {
     LoadingSkeleton,
     LoadingError,
-    Form,
     SocialMedia
   },
 

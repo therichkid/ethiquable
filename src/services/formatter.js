@@ -39,11 +39,6 @@ export default {
       date: formatDate(null, orig.date),
       featuredImage: addFeaturedImage(orig)
     };
-    // Add form data
-    Object.assign(page, {
-      formId: parseInt(orig.acf.formular_id, 10),
-      formData: orig.acf.formular_code
-    });
     // Add teaser specific fields
     if (page.slug === "teaser") {
       Object.assign(page, {

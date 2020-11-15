@@ -6,7 +6,7 @@
         <v-spacer></v-spacer>
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
-            <v-btn icon @click="onCloseButtonClick()" dark v-on="on" aria-label="Schließen">
+            <v-btn icon @click="closeDialog()" dark v-on="on" aria-label="Schließen">
               <v-icon>mdi-close</v-icon>
             </v-btn>
           </template>
@@ -15,11 +15,7 @@
       </v-card-title>
       <v-card-text class="mt-2">{{ alertMessage }}</v-card-text>
       <v-card-actions>
-        <v-btn v-if="alertType === 'success' && page === 'form'" text to="/">
-          <v-icon>mdi-chevron-left</v-icon>
-          <span>Home</span>
-        </v-btn>
-        <v-btn v-else text @click="closeDialog">
+        <v-btn text @click="closeDialog()">
           <v-icon>mdi-chevron-left</v-icon>
           <span>Zurück</span>
         </v-btn>
@@ -33,20 +29,12 @@ export default {
   props: {
     dialog: Boolean,
     alertType: String,
-    alertMessage: String,
-    page: String
+    alertMessage: String
   },
 
   methods: {
     closeDialog() {
       this.$emit("dialog");
-    },
-    onCloseButtonClick() {
-      if (this.alertType === "success" && this.page === "form") {
-        this.$router.push("/");
-      } else {
-        this.closeDialog();
-      }
     }
   }
 };
