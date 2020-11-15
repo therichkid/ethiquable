@@ -47,7 +47,7 @@
           <template v-for="(item, i) in product.seals">
             <v-tooltip bottom :key="i" v-if="item !== 'vegan' && sealMap[item]">
               <template v-slot:activator="{ on }">
-                <router-link to="/die-siegel">
+                <router-link :to="`/die-siegel#${item}`">
                   <img
                     height="60"
                     width="auto"
@@ -58,7 +58,7 @@
                   />
                 </router-link>
               </template>
-              <span>Mehr Infos zu unseren Siegeln</span>
+              <span>Mehr Infos zum {{ sealMap[item].label }}-Siegel</span>
             </v-tooltip>
             <div :key="i" v-else-if="item === 'vegan'"><b>Dieses Produkt ist vegan.</b></div>
           </template>
@@ -144,7 +144,7 @@ export default {
       rectangleHeight: 100,
       sealMap: {
         bio: {
-          label: "Bio-Siegel",
+          label: "Bio",
           img: require("@/assets/logos/bio.jpg")
         },
         fairtrade: {
