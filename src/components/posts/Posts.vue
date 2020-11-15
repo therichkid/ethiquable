@@ -107,10 +107,7 @@ export default {
       }
       if (this.type === "home") {
         posts = posts.slice(0, 3).forEach(post => {
-          let excerpt = post.excerpt.slice(0, 150);
-          if (post.excerpt.length > 150) {
-            excerpt += "...";
-          }
+          const excerpt = this.shared.shortenTextLength(post.excerpt, 175);
           this.posts.push({ ...post, excerpt });
         });
       } else {

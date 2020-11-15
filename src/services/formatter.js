@@ -69,7 +69,8 @@ export default {
         subtitle: orig.acf.subtitle,
         backgroundColor: orig.acf["background-color"],
         shopLink: orig.acf["shop-link"],
-        producerId: orig.acf.producer && orig.acf.producer.length ? orig.acf.producer[0] : null,
+        producerIds: orig.acf["producer-ids"],
+        producerText: orig.acf["producer-text"],
         seals: orig.acf["seals"],
         categories: addCategories(orig),
         featuredImage: addFeaturedImage(orig)
@@ -100,6 +101,7 @@ export default {
     for (const orig of input) {
       const producer = {
         id: orig.id,
+        slug: orig.slug,
         name: decodeHtml(orig.title.rendered),
         excerpt: orig.excerpt.rendered,
         content: orig.content.rendered,
@@ -244,7 +246,7 @@ const addCategories = input => {
   if (input._embedded && input._embedded["wp:term"] && input._embedded["wp:term"][0]) {
     const taxonomies = input._embedded["wp:term"][0];
     for (const taxonomy of taxonomies) {
-      if (taxonomy.taxonomy === "category" && taxonomy.slug !== "uncategorized") {
+      if (taxonomy.taxonomy === "category" && !["uncategorized", "produkt", "rezept"].includes(taxonomy.slug)) {
         categories.push({
           name: taxonomy.name,
           slug: taxonomy.slug

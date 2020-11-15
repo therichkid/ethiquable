@@ -41,7 +41,7 @@
     <!-- Body -->
     <v-row>
       <!-- Left column -->
-      <v-col cols="12" :md="Object.keys(producer).length && 6">
+      <v-col cols="12" :md="producers.length && 6">
         <!-- Seals -->
         <div class="mt-4 mb-2" v-if="product.seals && product.seals.length">
           <template v-for="(item, i) in product.seals">
@@ -88,10 +88,27 @@
       </v-col>
 
       <!-- Right column -->
-      <v-col cols="12" md="6" v-if="Object.keys(producer).length">
-        <!-- Producer -->
+      <!-- Just don't show producers until it's loaded or there is an error -->
+      <v-col cols="12" md="6" v-if="producers.length">
+        <!-- Producers -->
         <h2 class="text-h4 mt-4 mb-2" style="color: var(--v-primary-base)">Was ich verteidige</h2>
-        <div v-html="producer.content"></div>
+        <v-row no-gutters v-for="(producer, i) in producers" :key="i">
+          <v-col cols="12">
+            <v-divider class="mt-4 mb-2" v-if="i > 0"></v-divider>
+            <h3 class="text-h5 mb-2" v-if="producer.name">
+              <b>{{ producer.name }}</b>
+            </h3>
+            <div v-html="producer.content"></div>
+            <v-btn
+              :to="{ path: `produzenten/${producer.slug}`, params: { id: producer.id } }"
+              color="primary"
+              v-if="producer.slug"
+            >
+              Weiterlesen
+              <v-icon right>mdi-chevron-right</v-icon>
+            </v-btn>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
 
@@ -131,7 +148,7 @@ export default {
   data() {
     return {
       product: {},
-      producer: {},
+      producers: [],
       productImageProps: {},
       categoryImage: null,
       categoryImageFilenames: {
@@ -166,12 +183,6 @@ export default {
     loadingErrorProducts() {
       return this.$store.state.productsLoadingError;
     },
-    isLoadingProducers() {
-      return this.$store.state.producersLoading;
-    },
-    loadingErrorProducers() {
-      return this.$store.state.producersLoadingError;
-    },
     failedRequests() {
       return this.$store.state.failedRequests;
     }
@@ -196,29 +207,45 @@ export default {
         this.product = productFetched[1];
       } else {
         // Not fetched yet
-        this.product = await this.$store.dispatch("fetchProductBySlug", slug).catch(error => {
-          console.error(error);
-        });
+        this.product = await this.$store.dispatch("fetchProductBySlug", slug).catch(error => console.error(error));
       }
       if (this.product) {
         document.title = this.product.name + " - " + document.title;
       }
     },
-    async getProducerById(id) {
-      if (!id) {
-        return;
+    async getProducers(ids, text) {
+      const producers = [];
+      // Get by id
+      const idsToFetch = [];
+      for (const id of ids) {
+        const producerFetched = this.$store.getters.getFetchedProducerByParam({ param: "id", value: id });
+        if (producerFetched[0]) {
+          // Already fetched
+          producers.push(producerFetched[1]);
+        } else {
+          // Not fetched yet
+          idsToFetch.push(id);
+        }
       }
-      const producerFetched = this.$store.getters.getFetchedProducerByParam({ param: "id", value: id });
-      if (producerFetched[0]) {
-        // Already fetched
-        this.producer = producerFetched[1];
-      } else {
-        // Not fetched yet
-        this.producer =
-          (await this.$store.dispatch("fetchProducerById", id).catch(error => {
-            console.error(error);
-          })) || {};
+      if (idsToFetch.length) {
+        const fetchedProducers =
+          (await this.$store.dispatch("fetchProducersById", idsToFetch).catch(error => console.error(error))) || [];
+        producers.push(...fetchedProducers);
       }
+      // Add manually added text to product
+      if (text) {
+        producers.push({
+          content: text
+        });
+      }
+      // TODO: add manually added producers
+      const totalContentLength = this.$vuetify.breakpoint.mdAndUp ? 6000 : 3000;
+      const contentLength = parseInt(totalContentLength / producers.length, 10);
+      producers.forEach(producer => {
+        // Don't shorten manually added producers
+        let content = producer.id ? this.shared.shortenTextLength(producer.content, contentLength) : producer.content;
+        this.producers.push({ ...producer, content });
+      });
     },
     async getProductAndProducer() {
       await this.getProductBySlug(this.slug);
@@ -234,8 +261,8 @@ export default {
         this.calcRectangleHeight();
         this.currentWindowWidth = window.innerWidth;
       }, 10);
-      if (this.product && this.product.producerId) {
-        await this.getProducerById(this.product.producerId);
+      if (this.product && this.product.producerIds && this.product.producerIds.length) {
+        await this.getProducers(this.product.producerIds, this.product.producerText);
       }
     },
     addProps(category) {

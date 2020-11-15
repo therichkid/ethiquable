@@ -68,7 +68,8 @@ const routes = [
     component: Producers,
     meta: {
       title: "Produzenten"
-    }
+    },
+    props: true
   },
   // {
   //   path: "/uebersicht-weltkarte/*",

@@ -1,5 +1,4 @@
 export default {
-  // * Capitalize
   capitalize: input => {
     const output = [];
     input = input.split(" ");
@@ -9,7 +8,6 @@ export default {
     return output.join(" ");
   },
 
-  // * Date
   getCurrentDate: delimiter => {
     if (!delimiter) {
       delimiter = "";
@@ -37,5 +35,10 @@ export default {
     const parser = new DOMParser();
     const doc = parser.parseFromString(str, "text/html");
     return doc.body.textContent || "";
+  },
+
+  shortenTextLength: (str, number) => {
+    const shortened = str.slice(0, number).split(" ").slice(0, -1).join(" ");
+    return shortened.length < str.length ? shortened + " [&hellip;]" : shortened;
   }
 };

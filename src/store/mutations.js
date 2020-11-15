@@ -58,6 +58,13 @@ export default {
   storeProducers(state, producers) {
     state.producers = producers;
   },
+  storeProducersById(state, producers) {
+    for (const producer of producers) {
+      if (!state.producersById[producer.id]) {
+        state.producersById[producer.id] = producer;
+      }
+    }
+  },
   changeSlidesLoading(state, value) {
     state.slidesLoading = value;
   },

@@ -284,10 +284,10 @@ export default {
         });
     });
   },
-  fetchProducerById(context, id) {
+  fetchProducersById(context, ids) {
     context.commit("changeProducersLoading", true);
     context.commit("changeProducersLoadingError", false);
-    const path = `wp/v2/producers/${id}`;
+    const path = `wp/v2/producers/?${ids.map(id => `include[]=${id}`).join("&")}`;
     const params = {
       _embed: true
     };
@@ -297,9 +297,10 @@ export default {
         .then(
           response => {
             let { data } = response;
-            const producers = formatter.formatProducers([data]);
+            const producers = formatter.formatProducers(data);
+            context.commit("storeProducersById", producers);
             context.commit("incrementFailedRequests", 0);
-            resolve(producers[0]);
+            resolve(producers);
           },
           error => {
             context.commit("changeProducersLoadingError", true);

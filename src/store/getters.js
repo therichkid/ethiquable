@@ -42,9 +42,15 @@ export default {
     const producers = state.producers;
     return producers && producers.length ? [true, producers] : [false, null];
   },
-  getFetchedProducerByParam: state => (param, value) => {
+  getFetchedProducerByParam: state => ({ param, value }) => {
     for (const producer of state.producers) {
       if (producer[param] === value) {
+        return [true, producer];
+      }
+    }
+    if (param === "id") {
+      const producer = state.producersById[value];
+      if (producer) {
         return [true, producer];
       }
     }
