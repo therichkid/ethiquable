@@ -150,10 +150,11 @@ export default {
         }
         filteredProducers.push(producer);
       }
+      filteredProducers.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
       if (!this.showAllProducers && filteredProducers.length > this.maxShownProducers) {
         filteredProducers.splice(this.maxShownProducers);
       }
-      return filteredProducers.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+      return filteredProducers;
     }
   },
 
