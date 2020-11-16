@@ -19,6 +19,7 @@ export default new Vuex.Store({
     pageLoading: false,
     pageLoadingError: false,
     productsPerCategory: {},
+    nonExistingCategoryPages: [],
     productsLoading: false,
     productsLoadingError: false,
     shops: [],

@@ -6,7 +6,7 @@
     <v-row dense v-if="!loadingError">
       <!-- Filter -->
       <v-col cols="12" sm="6" lg="4">
-        <v-card>
+        <v-card class="mt-1">
           <v-card-text>
             <v-row no-gutters>
               <ProducersMap :selectedCountry="selectedCountry" @countrySelected="selectedCountry = $event" />

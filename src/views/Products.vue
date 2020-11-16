@@ -5,6 +5,10 @@
     <LoadingSkeleton type="products" v-if="isLoading" />
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getProducts(category)" />
 
+    <v-row v-if="categoryPage">
+      <v-col cols="12" v-html="categoryPage.content"></v-col>
+    </v-row>
+
     <v-row v-if="!isLoading && !loadingError && products.length" no-gutters align="baseline">
       <v-col v-for="product in products" :key="product.id" v-bind="breakpointProps">
         <v-card
@@ -44,6 +48,7 @@ export default {
   data() {
     return {
       products: [],
+      categoryPage: null,
       breakpointProps: {},
       imageProps: {}
     };
@@ -66,6 +71,7 @@ export default {
   watch: {
     $route() {
       this.getProducts();
+      this.getCategoryPage();
       this.addProps();
     }
   },
@@ -92,6 +98,29 @@ export default {
         }
         return 0;
       });
+      if (this.formattedCategory) {
+        document.title = this.formattedCategory + " - " + document.title;
+      }
+    },
+    async getCategoryPage() {
+      const slug = this.category;
+      if (this.$store.state.nonExistingCategoryPages.includes(slug)) {
+        return;
+      }
+      const pageFetched = this.$store.getters.getFetchedPageBySlug(slug);
+      if (pageFetched[0]) {
+        // Already fetched
+        this.categoryPage = pageFetched[1];
+      } else {
+        // Not fetched yet
+        this.categoryPage = await this.$store.dispatch("fetchPageBySlug", slug).catch(error => {
+          console.error(error);
+        });
+      }
+      if (!this.categoryPage) {
+        // Add to store to not try to fetch this page again in this session
+        this.$store.state.nonExistingCategoryPages.push(slug);
+      }
     },
     addProps() {
       if (["kaffee", "schokolade", "oel"].includes(this.category)) {
@@ -121,6 +150,7 @@ export default {
 
   created() {
     this.getProducts();
+    this.getCategoryPage();
   },
 
   mounted() {

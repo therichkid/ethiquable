@@ -36,10 +36,8 @@
           ></v-img>
         </div>
       </v-col>
-    </v-row>
 
-    <!-- Body -->
-    <v-row>
+      <!-- Body -->
       <!-- Left column -->
       <v-col cols="12" :md="producers.length && 6">
         <!-- Seals -->

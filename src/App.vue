@@ -186,6 +186,7 @@ table.ethiquable-table tr:last-child > td:last-child {
   align-items: center;
 }
 .ethiquable-grid > * {
+  min-width: 0;
   margin: 2px;
 }
 .post-container .ethiquable-layout > .right {
