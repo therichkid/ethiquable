@@ -15,8 +15,7 @@ export default {
         content: orig.content.rendered,
         dateOrig: orig.date.slice(0, 10),
         date: formatDate(null, orig.date),
-        categories: addCategories(orig, false),
-        featuredImage: addFeaturedImage(orig)
+        featuredImage: addFeaturedImage(orig, "medium_large")
       };
       posts.push(article);
     }
@@ -33,11 +32,7 @@ export default {
       id: orig.id,
       slug: orig.slug,
       title: decodeHtml(orig.title.rendered),
-      author: orig._embedded.author[0].name,
-      content: orig.content.rendered,
-      dateOrig: orig.date.slice(0, 10),
-      date: formatDate(null, orig.date),
-      featuredImage: addFeaturedImage(orig)
+      content: orig.content.rendered
     };
     // Add teaser specific fields
     if (page.slug === "teaser") {
@@ -68,7 +63,7 @@ export default {
         producerText: orig.acf["producer-text"],
         seals: orig.acf["seals"],
         categories: addCategories(orig),
-        featuredImage: addFeaturedImage(orig)
+        featuredImage: addFeaturedImage(orig, "medium_large")
       };
       products.push(product);
     }
@@ -100,7 +95,7 @@ export default {
         name: decodeHtml(orig.title.rendered),
         excerpt: orig.excerpt.rendered,
         content: orig.content.rendered,
-        featuredImage: addFeaturedImage(orig),
+        featuredImage: addFeaturedImage(orig, "medium"),
         country: orig.acf.country,
         ingredient: orig.acf.ingredient
       };
@@ -117,7 +112,7 @@ export default {
         id: orig.id,
         title: decodeHtml(orig.title.rendered),
         excerpt: orig.excerpt.rendered,
-        featuredImage: addFeaturedImage(orig, "slide"),
+        featuredImage: addFeaturedImage(orig, "full"),
         link: orig.acf.link
       };
       slides.push(slide);
@@ -198,7 +193,7 @@ const checkDateFormat = (type, ...input) => {
   }
 };
 
-// Add the address to an event or a Selbsthilfegruppe
+// Add the address to a shop
 const addAddress = input => {
   let str = "";
   if (input.acf.location.address.includes("Deutschland")) {
@@ -209,8 +204,9 @@ const addAddress = input => {
   return str;
 };
 
-// Add a featured image to an article or a SHG
-const addFeaturedImage = (input, type) => {
+// Add a featured image
+// Available sizes: thumbnail, medium, medium_large, large, full
+const addFeaturedImage = (input, size) => {
   const obj = {};
   if (
     input._embedded &&
@@ -222,8 +218,8 @@ const addFeaturedImage = (input, type) => {
     const featuredImage = input._embedded["wp:featuredmedia"][0];
     obj.title = featuredImage.title.rendered;
     // Pick medium large size if it exists
-    if (type !== "slide" && featuredImage.media_details.sizes && featuredImage.media_details.sizes.medium_large) {
-      obj.source = featuredImage.media_details.sizes.medium_large.source_url;
+    if (size && featuredImage.media_details.sizes && featuredImage.media_details.sizes[size]) {
+      obj.source = featuredImage.media_details.sizes[size].source_url;
     } else {
       obj.source = featuredImage.source_url;
     }
