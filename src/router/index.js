@@ -8,6 +8,7 @@ import Post from "../views/Post";
 import Page from "../views/Page";
 import Product from "../views/Product";
 import Products from "../views/Products";
+import Producer from "../views/Producer";
 import Producers from "../views/Producers";
 import PageNotFound from "../views/PageNotFound";
 
@@ -66,21 +67,21 @@ const routes = [
     component: Producers,
     meta: {
       title: "Produzenten"
+    }
+  },
+  {
+    path: "/uebersicht-weltkarte/*",
+    redirect: route => "/produzenten/" + route.path.split("/").pop().replace(".html", "")
+  },
+  {
+    path: "/produzenten/:slug",
+    name: "producer",
+    component: Producer,
+    meta: {
+      title: "Produzent"
     },
     props: true
   },
-  // {
-  //   path: "/uebersicht-weltkarte/*",
-  //   redirect: route => "/produzenten/" + route.path.split("/").pop().replace(".html", "")
-  // },
-  // {
-  //   path: "/produzenten/:slug",
-  //   name: "producer",
-  //   component: Producer,
-  //   meta: {
-  //     title: "Produzent"
-  //   }
-  // },
   {
     path: "/magazin/page/:page?",
     name: "posts",

@@ -1,7 +1,7 @@
 <template>
   <!-- Posts -->
   <v-row v-if="type === 'posts'">
-    <v-col v-for="i in amount" :key="i" cols="12" sm="6">
+    <v-col v-for="i in amount" :key="i" cols="12" sm="6" md="4">
       <v-skeleton-loader type="image, article, actions"></v-skeleton-loader>
     </v-col>
   </v-row>

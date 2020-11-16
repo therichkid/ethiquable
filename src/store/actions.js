@@ -255,13 +255,13 @@ export default {
         });
     });
   },
-  fetchProducerByParam(context, { param, value }) {
+  fetchProducerBySlug(context, slug) {
     context.commit("changeProducersLoading", true);
     context.commit("changeProducersLoadingError", false);
     const path = "wp/v2/producers";
     const params = {
       _embed: true,
-      [param]: value
+      slug
     };
     return new Promise((resolve, reject) => {
       api

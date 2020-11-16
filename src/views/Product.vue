@@ -100,7 +100,7 @@
             </h3>
             <div v-html="producer.content"></div>
             <v-btn
-              :to="{ path: `/produzenten/${producer.slug}`, params: { id: producer.id } }"
+              :to="{ path: `/produzenten/${producer.slug}`, query: { id: producer.id } }"
               color="primary"
               v-if="producer.slug"
             >
@@ -238,7 +238,6 @@ export default {
           content: text
         });
       }
-      // TODO: add manually added producers
       const totalContentLength = this.$vuetify.breakpoint.mdAndUp ? 6000 : 3000;
       const contentLength = parseInt(totalContentLength / producers.length, 10);
       producers.forEach(producer => {

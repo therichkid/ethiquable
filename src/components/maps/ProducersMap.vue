@@ -9,7 +9,7 @@
 
 <script>
 import { LMap, LTileLayer, LGeoJson } from "vue2-leaflet";
-import countries from "@/assets/map/countries.geo.json";
+import countries from "@/assets/map/countries.geo.json"; // Created from https://geojson-maps.ash.ms/
 
 export default {
   components: {

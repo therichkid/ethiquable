@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1 class="text-h5 mb-2">Produzenten</h1>
+    <h1 class="display-1 mb-2">Produzenten</h1>
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getProducers()" />
 
     <v-row dense v-if="!loadingError">

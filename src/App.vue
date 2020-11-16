@@ -188,4 +188,25 @@ table.ethiquable-table tr:last-child > td:last-child {
 .ethiquable-grid > * {
   margin: 2px;
 }
+.post-container .ethiquable-layout > .right {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 8px;
+  text-align: center;
+}
+@media screen and (min-width: 768px) {
+  .post-container .ethiquable-layout {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .post-container .ethiquable-layout > .left,
+  .post-container .ethiquable-layout > .right {
+    padding: 8px;
+    margin: 0 8px;
+  }
+  .post-container .ethiquable-layout > .right {
+    flex-shrink: 1;
+    min-width: 250px;
+  }
+}
 </style>
