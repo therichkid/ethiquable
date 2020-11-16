@@ -210,4 +210,19 @@ table.ethiquable-table tr:last-child > td:last-child {
     min-width: 250px;
   }
 }
+/* Remove certain areas when printing the document */
+@media print {
+  nav,
+  header,
+  footer,
+  img,
+  iframe,
+  .v-btn--fab,
+  .v-tooltip__content {
+    display: none !important;
+  }
+  main {
+    padding: 0 !important;
+  }
+}
 </style>

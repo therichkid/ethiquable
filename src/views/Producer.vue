@@ -13,7 +13,7 @@
       <v-col cols="12" v-html="producer.content"></v-col>
       <!-- Social media -->
       <v-col cols="12">
-        <SocialMedia :link="'/produzenten/' + slug" :title="producer.name" />
+        <SocialMedia :title="producer.name" />
       </v-col>
 
       <!-- Actions -->

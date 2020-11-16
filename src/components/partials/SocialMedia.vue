@@ -21,20 +21,21 @@
     </span>
 
     <!-- Clipboard -->
-    <v-tooltip bottom v-if="type !== 'popup'">
+    <v-tooltip bottom>
       <template v-slot:activator="{ on }">
         <v-btn
           icon
           v-on="on"
           @click="copyToClipboard()"
-          class="ml-1 white--text"
+          class="white--text"
+          :class="$vuetify.breakpoint.mdAndUp ? 'mx-1' : 'ml-1'"
           style="background-color: #607d8b"
-          aria-label="In die Zwischenablage kopieren"
+          aria-label="Link in die Zwischenablage kopieren"
         >
-          <v-icon> mdi-content-copy </v-icon>
+          <v-icon>mdi-content-copy</v-icon>
         </v-btn>
       </template>
-      <span>In die Zwischenablage kopieren</span>
+      <span>Link in die Zwischenablage kopieren</span>
     </v-tooltip>
     <v-snackbar v-model="snackbar">
       Link erfolgreich in die Zwischenablage kopiert.
@@ -42,15 +43,30 @@
         <v-icon>mdi-close</v-icon>
       </v-btn>
     </v-snackbar>
+
+    <!-- Print -->
+    <v-tooltip bottom v-if="$vuetify.breakpoint.mdAndUp">
+      <template v-slot:activator="{ on }">
+        <v-btn
+          icon
+          v-on="on"
+          @click="printPage()"
+          class="ml-1 white--text"
+          style="background-color: #2196f3"
+          aria-label="Ohne Medienelemente drucken"
+        >
+          <v-icon>mdi-printer</v-icon>
+        </v-btn>
+      </template>
+      <span>Ohne Medienelemente drucken</span>
+    </v-tooltip>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    link: String,
-    title: String,
-    type: String
+    title: String
   },
 
   data() {
@@ -82,15 +98,9 @@ export default {
     };
   },
 
-  computed: {
-    url() {
-      return this.linkPrefix + this.link;
-    }
-  },
-
   methods: {
     createLink(network) {
-      const url = encodeURIComponent(this.url);
+      const url = encodeURIComponent(window.location);
       const title = encodeURIComponent(this.title);
       switch (network) {
         case "email":
@@ -106,7 +116,7 @@ export default {
     copyToClipboard() {
       // copy needs a dom element
       const el = document.createElement("textarea");
-      el.value = this.url;
+      el.value = window.location;
       // Make the element invisible to the user
       el.style.position = "absolute";
       el.style.left = "-9999px";
@@ -115,6 +125,9 @@ export default {
       document.execCommand("copy");
       document.body.removeChild(el);
       this.snackbar = true;
+    },
+    printPage() {
+      window.print();
     }
   }
 };

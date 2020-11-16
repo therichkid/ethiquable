@@ -13,7 +13,7 @@
       <v-col cols="12" v-html="page.content"></v-col>
       <!-- Social media -->
       <v-col cols="12">
-        <SocialMedia :link="'/' + slug" :title="page.title" />
+        <SocialMedia :title="page.title" />
       </v-col>
 
       <!-- Actions -->

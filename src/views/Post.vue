@@ -27,7 +27,7 @@
       <v-col cols="12" v-html="post.content"></v-col>
       <!-- Social media -->
       <v-col cols="12">
-        <SocialMedia :link="'/magazin/' + slug" :title="post.title" />
+        <SocialMedia :title="post.title" />
       </v-col>
 
       <!-- Actions -->

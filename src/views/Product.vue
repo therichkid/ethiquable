@@ -113,7 +113,7 @@
     <!-- Social media -->
     <v-row>
       <v-col cols="12">
-        <SocialMedia :link="'/produkte/' + slug" :title="product.name" />
+        <SocialMedia :title="product.name" />
       </v-col>
 
       <!-- Actions -->
