@@ -93,7 +93,6 @@ export default {
         id: orig.id,
         slug: orig.slug,
         name: decodeHtml(orig.title.rendered),
-        excerpt: orig.excerpt.rendered,
         content: orig.content.rendered,
         featuredImage: addFeaturedImage(orig, "medium"),
         country: orig.acf.country,
@@ -118,6 +117,29 @@ export default {
       slides.push(slide);
     }
     return slides;
+  },
+
+  // * Recipes
+  formatRecipes: input => {
+    if (!Array.isArray(input)) {
+      input = [input];
+    }
+    const recipes = [];
+    for (const orig of input) {
+      const recipe = {
+        id: orig.id,
+        slug: orig.slug,
+        title: decodeHtml(orig.title.rendered),
+        content: orig.content.rendered,
+        categories: addCategories(orig),
+        featuredImage: addFeaturedImage(orig, "medium_large"),
+        ingredients: addIngredients(orig),
+        portions: orig.acf.portions ? parseInt(orig.acf.portions, 10) : null,
+        effort: addEffort(orig)
+      };
+      recipes.push(recipe);
+    }
+    return recipes;
   }
 };
 
@@ -231,7 +253,7 @@ const addFeaturedImage = (input, size) => {
   return obj;
 };
 
-// Add categories to an event, article or group
+// Add categories to a product or a recipe
 const addCategories = input => {
   const categories = [];
   if (input._embedded && input._embedded["wp:term"] && input._embedded["wp:term"][0]) {
@@ -246,6 +268,28 @@ const addCategories = input => {
     }
   }
   return categories;
+};
+
+// Recipe formatters
+const addIngredients = input => {
+  const ingredients = [];
+  if (input.acf.ingredients && input.acf.ingredients.length) {
+    input.acf.ingredients.forEach(ingredient => {
+      ingredients.push({
+        ...ingredient,
+        quantity: ingredient.quantity ? parseInt(ingredient.quantity, 10) : null
+      });
+    });
+  }
+  return ingredients;
+};
+const addEffort = input => {
+  const orig = input.acf.effort;
+  const formatted = {};
+  Object.keys(orig).forEach(item => {
+    formatted[item] = orig[item] ? parseInt(orig[item], 10) : null;
+  });
+  return formatted;
 };
 
 const decodeHtml = str => {

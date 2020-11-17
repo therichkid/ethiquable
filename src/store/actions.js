@@ -342,5 +342,93 @@ export default {
           context.commit("changeSlidesLoading", false);
         });
     });
+  },
+  fetchRecipes(context) {
+    context.commit("changeRecipesLoading", true);
+    context.commit("changeRecipesLoadingError", false);
+    const path = "wp/v2/recipes";
+    const params = {
+      _embed: true,
+      per_page: 100
+    };
+    return new Promise((resolve, reject) => {
+      api
+        .fetchData(path, params)
+        .then(
+          response => {
+            let { data } = response;
+            const recipes = formatter.formatRecipes(data);
+            context.commit("storeRecipes", recipes);
+            context.commit("incrementFailedRequests", 0);
+            resolve(recipes);
+          },
+          error => {
+            context.commit("changeRecipesLoadingError", true);
+            context.commit("incrementFailedRequests", 1);
+            reject(error);
+          }
+        )
+        .finally(() => {
+          context.commit("changeRecipesLoading", false);
+        });
+    });
+  },
+  fetchRecipeBySlug(context, slug) {
+    context.commit("changeRecipesLoading", true);
+    context.commit("changeRecipesLoadingError", false);
+    const path = "wp/v2/recipes";
+    const params = {
+      _embed: true,
+      slug
+    };
+    return new Promise((resolve, reject) => {
+      api
+        .fetchData(path, params)
+        .then(
+          response => {
+            let { data } = response;
+            const recipes = formatter.formatRecipes(data);
+            context.commit("incrementFailedRequests", 0);
+            resolve(recipes[0]);
+          },
+          error => {
+            context.commit("changeRecipesLoadingError", true);
+            context.commit("incrementFailedRequests", 1);
+            reject(error);
+          }
+        )
+        .finally(() => {
+          context.commit("changeRecipesLoading", false);
+        });
+    });
+  },
+  fetchRecipeById(context, id) {
+    context.commit("changeRecipesLoading", true);
+    context.commit("changeRecipesLoadingError", false);
+    const path = `wp/v2/recipes/${id}`;
+    const params = {
+      _embed: true
+    };
+    return new Promise((resolve, reject) => {
+      api
+        .fetchData(path, params)
+        .then(
+          response => {
+            let { data } = response;
+            const recipe = formatter.formatRecipes(data)[0];
+            context.commit("storeRecipeById", recipe);
+            context.commit("incrementFailedRequests", 0);
+            resolve(recipe);
+          },
+          error => {
+            context.commit("changeRecipesLoadingError", true);
+            context.commit("incrementFailedRequests", 1);
+            reject(error);
+          }
+        )
+        .finally(() => {
+          context.commit("changeRecipesLoading", false);
+        });
+    });
   }
 };

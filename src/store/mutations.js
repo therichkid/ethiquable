@@ -73,5 +73,19 @@ export default {
   },
   storeSlides(state, slides) {
     state.slides = slides;
+  },
+  changeRecipesLoading(state, value) {
+    state.recipesLoading = value;
+  },
+  changeRecipesLoadingError(state, value) {
+    state.recipesLoadingError = value;
+  },
+  storeRecipes(state, recipes) {
+    state.recipes = recipes;
+  },
+  storeRecipeById(state, recipe) {
+    if (!state.recipesById[recipe.id]) {
+      state.recipesById[recipe.id] = recipe;
+    }
   }
 };

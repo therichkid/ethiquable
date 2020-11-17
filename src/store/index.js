@@ -31,7 +31,11 @@ export default new Vuex.Store({
     producersLoadingError: false,
     slides: [],
     slidesLoading: false,
-    slidesLoadingError: false
+    slidesLoadingError: false,
+    recipes: [],
+    recipesById: {},
+    recipesLoading: false,
+    recipesLoadingError: false
   },
 
   getters,

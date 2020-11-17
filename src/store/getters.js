@@ -59,5 +59,23 @@ export default {
   getFetchedSlides: state => () => {
     const slides = state.slides;
     return slides && slides.length ? [true, slides] : [false, null];
+  },
+  getFetchedRecipes: state => () => {
+    const recipes = state.recipes;
+    return recipes && recipes.length ? [true, recipes] : [false, null];
+  },
+  getFetchedRecipeByParam: state => ({ param, value }) => {
+    for (const recipe of state.recipes) {
+      if (recipe[param] === value) {
+        return [true, recipe];
+      }
+    }
+    if (param === "id") {
+      const recipe = state.recipesById[value];
+      if (recipe) {
+        return [true, recipe];
+      }
+    }
+    return [false, null];
   }
 };
