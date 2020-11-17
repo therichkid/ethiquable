@@ -134,26 +134,26 @@ iframe {
   max-width: 100%;
 }
 /* ETHIQUABLE classes */
-.ethiquable-table {
+table.ethiquable-table {
   width: 100%;
   max-width: 500px;
   border-collapse: separate;
   border-spacing: 0;
   font-size: 15px;
 }
-.ethiquable-table tr > th {
+table.ethiquable-table tr > th {
   color: #fff;
   background-color: #80a018;
 }
-.ethiquable-table tr > td {
+table.ethiquable-table tr > td {
   color: #232323;
 }
 table.ethiquable-table > *:first-child > tr:first-child > th,
 table.ethiquable-table > *:first-child > tr:first-child > td {
   border-top: 1px solid #7a7a7a;
 }
-.ethiquable-table tr > th,
-.ethiquable-table tr > td {
+table.ethiquable-table tr > th,
+table.ethiquable-table tr > td {
   border-bottom: 1px solid #7a7a7a;
   padding: 5px 10px;
 }

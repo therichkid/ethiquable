@@ -179,3 +179,16 @@ export const COUNTRY_NAMES = [
     admin: "Vietnam"
   }
 ];
+
+export const COLORS = [
+  "#1099b1",
+  "#ed7607",
+  "#45266d",
+  "#6ba774",
+  "#b1291d",
+  "#b4bc1b",
+  "#394391",
+  "#ec615a",
+  "#0a441d",
+  "#492619"
+];

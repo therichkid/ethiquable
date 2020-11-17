@@ -9,7 +9,7 @@
       <v-col cols="12" v-html="categoryPage.content"></v-col>
     </v-row>
 
-    <v-row v-if="!isLoading && !loadingError && products.length" no-gutters align="baseline">
+    <v-row v-if="!isLoading && !loadingError && products.length" no-gutters align="end">
       <v-col v-for="product in products" :key="product.id" v-bind="breakpointProps">
         <v-card
           flat
@@ -17,7 +17,7 @@
           tile
           :to="`/produkte/${product.slug}`"
           class="my-2"
-          style="border-bottom: 6px solid var(--v-secondary-base)"
+          style="height: 100%; border-bottom: 6px solid var(--v-secondary-base)"
         >
           <v-spacer></v-spacer>
           <v-img :src="product.featuredImage.source" :alt="product.featuredImage.title" v-bind="imageProps"></v-img>

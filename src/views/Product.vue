@@ -3,16 +3,14 @@
     <LoadingSkeleton v-if="isLoadingProducts" />
     <LoadingError v-if="loadingErrorProducts" :height="500" @retryAgain="getProductBySlug(slug)" />
 
-    <v-row v-if="!isLoadingProducts && !loadingErrorProducts && Object.keys(product).length">
+    <v-row v-if="!isLoadingProducts && !loadingErrorProducts && Object.keys(product).length" :style="productStyle">
       <!-- Header -->
       <v-col cols="12" class="header-container">
         <div class="header-triangle"></div>
         <div
           class="header-rectangle"
-          :style="{
-            height: rectangleHeight + 'px',
-            backgroundColor: product.backgroundColor || 'var(--v-primary-base)'
-          }"
+          style="background-color: var(--product-bg-color)"
+          :style="{ height: rectangleHeight + 'px' }"
         ></div>
         <div class="header-content px-5">
           <v-img
@@ -20,7 +18,7 @@
             :alt="product.featuredImage.title"
             v-bind="productImageProps"
           ></v-img>
-          <div class="px-5" style="flex-grow: 1" ref="headerText">
+          <div class="px-5" style="flex-grow: 1; color: var(--product-color)" ref="headerText">
             <h1 class="text-h4">{{ product.name }}</h1>
             <h2 class="text-subtitle-2" v-if="product.subtitle">
               <i>{{ product.subtitle }}</i>
@@ -62,8 +60,12 @@
           </template>
         </div>
 
+        <!-- Product content -->
+        <h2 class="text-h4 mt-4 mb-2" style="color: var(--v-primary-base)">Was ich esse / trinke</h2>
+        <div v-html="product.content" class="product-content"></div>
+
         <!-- Shop link -->
-        <div class="mt-4 mb-2" style="max-width: 500px" v-if="product.shopLink">
+        <div class="mt-4" style="max-width: 500px" v-if="product.shopLink">
           <v-btn
             block
             tile
@@ -71,25 +73,20 @@
             :href="product.shopLink"
             target="_blank"
             rel="nofollow"
-            color="primary"
-            class="white--text"
+            style="background-color: var(--product-bg-color); color: var(--product-color)"
           >
             Im E-Shop kaufen
             <v-spacer></v-spacer>
             <v-icon right>mdi-open-in-new</v-icon>
           </v-btn>
         </div>
-
-        <!-- Product content -->
-        <h2 class="text-h4 mt-4 mb-2" style="color: var(--v-primary-base)">Was ich esse / trinke</h2>
-        <div v-html="product.content"></div>
       </v-col>
 
       <!-- Right column -->
       <!-- Just don't show producers until it's loaded or there is an error -->
       <v-col cols="12" md="6" v-if="producers.length">
         <!-- Producers -->
-        <h2 class="text-h4 mt-4 mb-2" style="color: var(--v-primary-base)">Was ich verteidige</h2>
+        <h2 class="text-h4 mt-4 mb-2" style="color: var(--v-primary-base)">Das will ich</h2>
         <v-row no-gutters v-for="(producer, i) in producers" :key="i">
           <v-col cols="12">
             <v-divider class="mt-4 mb-2" v-if="i > 0"></v-divider>
@@ -99,7 +96,8 @@
             <div v-html="producer.content"></div>
             <v-btn
               :to="{ path: `/produzenten/${producer.slug}`, query: { id: producer.id } }"
-              color="primary"
+              style="background-color: var(--product-bg-color); color: var(--product-color)"
+              class="mt-2"
               v-if="producer.slug"
             >
               Weiterlesen
@@ -153,7 +151,14 @@ export default {
         kaffee: "kaffee.png",
         tee: "tee.png",
         kakao: "kakao.png",
-        schokolade: "schokolade.png"
+        schokolade: "schokolade.png",
+        zucker: "zucker.png",
+        getreide: null,
+        oel: "oel.png",
+        snack: "snack.png",
+        aufstrich: null,
+        fruchtdessert: "fruchtdessert.png",
+        gebaeck: "gebaeck.png"
       },
       currentWindowWidth: 0,
       rectangleHeight: 100,
@@ -183,6 +188,14 @@ export default {
     },
     failedRequests() {
       return this.$store.state.failedRequests;
+    },
+    productStyle() {
+      return {
+        "--product-bg-color": (this.product && this.product.backgroundColor) || "var(--v-primary-base)",
+        "--product-color":
+          (this.product && this.product.backgroundColor && this.shared.calcFontColor(this.product.backgroundColor)) ||
+          "#fff"
+      };
     }
   },
 
@@ -193,7 +206,7 @@ export default {
       }
     },
     $route() {
-      this.getProductAndProducer();
+      this.getProductAndProducers();
     }
   },
 
@@ -211,9 +224,8 @@ export default {
         document.title = this.product.name + " - " + document.title;
       }
     },
-    async getProducers(ids, text) {
+    async getProducersById(ids) {
       const producers = [];
-      // Get by id
       const idsToFetch = [];
       for (const id of ids) {
         const producerFetched = this.$store.getters.getFetchedProducerByParam({ param: "id", value: id });
@@ -230,21 +242,15 @@ export default {
           (await this.$store.dispatch("fetchProducersById", idsToFetch).catch(error => console.error(error))) || [];
         producers.push(...fetchedProducers);
       }
-      // Add manually added text to product
-      if (text) {
-        producers.push({
-          content: text
-        });
-      }
-      const totalContentLength = this.$vuetify.breakpoint.mdAndUp ? 6000 : 3000;
+      const totalContentLength = this.$vuetify.breakpoint.mdAndUp ? 5000 : 2500;
       const contentLength = parseInt(totalContentLength / producers.length, 10);
       producers.forEach(producer => {
-        // Don't shorten manually added producers
-        let content = producer.id ? this.shared.shortenTextLength(producer.content, contentLength) : producer.content;
+        // Shorten content on multiple producers
+        let content = this.shared.shortenTextLength(producer.content, contentLength);
         this.producers.push({ ...producer, content });
       });
     },
-    async getProductAndProducer() {
+    async getProductAndProducers() {
       await this.getProductBySlug(this.slug);
       if (!this.product) {
         return;
@@ -258,8 +264,16 @@ export default {
         this.calcRectangleHeight();
         this.currentWindowWidth = window.innerWidth;
       }, 10);
-      if (this.product && this.product.producerIds && this.product.producerIds.length) {
-        await this.getProducers(this.product.producerIds, this.product.producerText);
+      // Initialize producers
+      this.producers = [];
+      // Add text to producer view
+      if (this.product.producerText) {
+        this.producers.push({
+          content: this.product.producerText
+        });
+      }
+      if (this.product.producerIds && this.product.producerIds.length) {
+        await this.getProducersById(this.product.producerIds);
       }
     },
     addProps(category) {
@@ -308,7 +322,7 @@ export default {
   },
 
   created() {
-    this.getProductAndProducer();
+    this.getProductAndProducers();
   },
 
   mounted() {
@@ -350,5 +364,12 @@ export default {
   flex-direction: row;
   align-items: center;
   color: white;
+}
+.product-content >>> table.ethiquable-table tr > th {
+  background-color: var(--product-bg-color);
+  color: var(--product-color);
+}
+.product-content >>> table.ethiquable-table tr > td:last-child {
+  text-align: right;
 }
 </style>
