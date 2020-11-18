@@ -1,4 +1,4 @@
-import { COUNTRY_NAMES } from "@/constants";
+import { COLORS, COUNTRY_NAMES } from "@/constants";
 
 export default {
   capitalize: input => {
@@ -44,11 +44,18 @@ export default {
     return shortened.length < str.length ? shortened + " [&hellip;]" : shortened;
   },
 
-  createCountryNamesMap: (key, value) => {
+  createCountryMap: (key, values) => {
     const map = {};
     for (const item of COUNTRY_NAMES) {
       if (item[key]) {
-        map[item[key]] = item[value];
+        const inner = (map[item[key]] = {});
+        values.forEach(value => {
+          if (value === "color") {
+            inner.color = addCountryColor(item);
+          } else {
+            inner[value] = item[value];
+          }
+        });
       }
     }
     return map;
@@ -69,4 +76,19 @@ export default {
       return "#000";
     }
   }
+};
+
+const assignedContinents = [];
+const addCountryColor = country => {
+  if (country.continent) {
+    const idx = assignedContinents.indexOf(country.continent);
+    if (idx > -1 && COLORS[idx]) {
+      return COLORS[idx];
+    } else if (idx === -1 && COLORS[assignedContinents.length]) {
+      const color = COLORS[assignedContinents.length];
+      assignedContinents.push(country.continent);
+      return color;
+    }
+  }
+  return null;
 };

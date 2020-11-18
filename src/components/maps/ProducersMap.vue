@@ -38,7 +38,7 @@ export default {
         fillOpacity: 0.25,
         weight: 2,
         onEachFeature: (feature, layer) => {
-          const key = this.countryNamesMap[feature.properties.admin];
+          const key = this.countryMap[feature.properties.admin] && this.countryMap[feature.properties.admin].key;
           // Save a reference to each layer
           if (key) {
             this.geojsonRefMap[key] = layer;
@@ -52,10 +52,14 @@ export default {
               this.$emit("countrySelected", key);
             }
           });
+          const color = this.countryMap[feature.properties.admin] && this.countryMap[feature.properties.admin].color;
+          if (color) {
+            layer.setStyle({ color });
+          }
         }
       },
       geojsonRefMap: {},
-      countryNamesMap: {}
+      countryMap: {}
     };
   },
 
@@ -81,7 +85,7 @@ export default {
   },
 
   created() {
-    this.countryNamesMap = this.shared.createCountryNamesMap("admin", "key");
+    this.countryMap = this.shared.createCountryMap("admin", ["key", "color"]);
   }
 };
 </script>

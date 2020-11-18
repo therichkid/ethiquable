@@ -42,28 +42,28 @@
         <LoadingSkeleton type="producers" v-if="isLoading" />
 
         <v-row v-if="!isLoading && !loadingError && filteredProducers.length" dense>
-          <v-col cols="6" md="4" lg="3" v-for="produzenten in filteredProducers" :key="produzenten.id" class="d-flex">
+          <v-col cols="6" md="4" lg="3" v-for="producer in filteredProducers" :key="producer.id" class="d-flex">
             <v-card
               hover
-              :to="`/produzenten/${produzenten.slug}`"
+              :to="`/produzenten/${producer.slug}`"
               class="d-flex flex-column"
-              style="border-top: 6px solid var(--v-primary-base)"
+              :style="`border-top: 6px solid ${producer.color}`"
             >
               <v-img
-                :src="produzenten.featuredImage.source"
-                :alt="produzenten.featuredImage.title"
+                :src="producer.featuredImage.source"
+                :alt="producer.featuredImage.title"
                 max-height="150"
                 style="border-radius: 0"
               >
               </v-img>
               <v-card-title class="pt-0">
                 <h3 class="text-subtitle-2" style="word-wrap: break-word; hyphens: auto">
-                  {{ produzenten.name }}
+                  {{ producer.name }}
                 </h3>
               </v-card-title>
             </v-card>
           </v-col>
-          <v-col cols="12" v-if="!showAllProducers && !selectedCountry && !selectedIngredient">
+          <v-col cols="12" v-if="limitProducerLength && !selectedCountry && !selectedIngredient">
             <v-banner
               icon="mdi-lightbulb-on"
               icon-color="#ffc107"
@@ -74,7 +74,7 @@
             >
               Verfeinere die Ergebnisse mit der Karte und dem Filter.
               <template v-slot:actions>
-                <v-btn text @click="showAllProducers = true">
+                <v-btn text @click="showAllProducers()">
                   Alle anzeigen
                   <v-icon right>mdi-chevron-down</v-icon>
                 </v-btn>
@@ -107,11 +107,11 @@ export default {
     return {
       producers: [],
       countries: [],
-      countryNamesMap: {},
+      countryMap: {},
       ingredients: [],
       selectedCountry: null,
       selectedIngredient: null,
-      showAllProducers: false
+      limitProducerLength: true
     };
   },
 
@@ -151,7 +151,7 @@ export default {
         filteredProducers.push(producer);
       }
       filteredProducers.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
-      if (!this.showAllProducers && filteredProducers.length > this.maxShownProducers) {
+      if (this.limitProducerLength && filteredProducers.length > this.maxShownProducers) {
         filteredProducers.splice(this.maxShownProducers);
       }
       return filteredProducers;
@@ -171,16 +171,23 @@ export default {
             console.error(error);
           })) || [];
       }
+      // Add colors
+      this.producers.forEach(producer => {
+        if (this.countryMap[producer.country] && this.countryMap[producer.country].color) {
+          producer.color = this.countryMap[producer.country].color;
+        } else {
+          producer.color = "var(--v-primary-base)";
+        }
+      });
       this.addFilterData();
     },
-
     addFilterData() {
       const countries = [];
       const ingredients = [];
       for (const producer of this.producers) {
         if (producer.country && !countries.filter(country => country.value === producer.country).length) {
           countries.push({
-            text: this.countryNamesMap[producer.country] || producer.country,
+            text: (this.countryMap[producer.country] && this.countryMap[producer.country].label) || producer.country,
             value: producer.country
           });
         }
@@ -195,12 +202,22 @@ export default {
       }
       this.countries = countries.sort((a, b) => a.text.toLowerCase().localeCompare(b.text.toLowerCase()));
       this.ingredients = ingredients.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+    },
+    showAllProducers() {
+      this.limitProducerLength = false;
+      sessionStorage.setItem("showAllProducers", "true");
     }
   },
 
   created() {
-    this.countryNamesMap = this.shared.createCountryNamesMap("key", "label");
+    this.countryMap = this.shared.createCountryMap("key", ["label", "color"]);
     this.getProducers();
+  },
+
+  mounted() {
+    if (sessionStorage.getItem("showAllProducers") === "true") {
+      this.limitProducerLength = false;
+    }
   }
 };
 </script>

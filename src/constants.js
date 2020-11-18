@@ -96,87 +96,104 @@ export const COUNTRY_NAMES = [
   {
     key: "bolivia",
     label: "Bolivien",
-    admin: "Bolivia"
+    admin: "Bolivia",
+    continent: "latin-america"
   },
   {
     key: "china",
     label: "China",
-    admin: "China"
+    admin: "China",
+    continent: "asia"
   },
   {
     key: "ecuador",
     label: "Ecuador",
-    admin: "Ecuador"
+    admin: "Ecuador",
+    continent: "latin-america"
   },
   {
     key: "el-salvador",
     label: "El Salvador",
-    admin: "El Salvador"
+    admin: "El Salvador",
+    continent: "latin-america"
   },
   {
     key: "ivory-coast",
     label: "Elfenbeinküste",
-    admin: "Ivory Coast"
+    admin: "Ivory Coast",
+    continent: "africa"
   },
   {
     key: "haiti",
     label: "Haiti",
-    admin: "Haiti"
+    admin: "Haiti",
+    continent: "latin-america"
   },
   {
     key: "honduras",
     label: "Honduras",
-    admin: "Honduras"
+    admin: "Honduras",
+    continent: "latin-america"
   },
   {
     key: "india",
     label: "Indien",
-    admin: "India"
+    admin: "India",
+    continent: "asia"
   },
   {
     key: "congo",
     label: "Kongo",
-    admin: "Democratic Republic of the Congo"
+    admin: "Democratic Republic of the Congo",
+    continent: "africa"
   },
   {
     key: "mexico",
     label: "Mexiko",
-    admin: "Mexico"
+    admin: "Mexico",
+    continent: "latin-america"
   },
   {
     key: "nicaragua",
     label: "Nicaragua",
-    admin: "Nicaragua"
+    admin: "Nicaragua",
+    continent: "latin-america"
   },
   {
     key: "paraguay",
     label: "Paraguay",
-    admin: "Paraguay"
+    admin: "Paraguay",
+    continent: "latin-america"
   },
   {
     key: "peru",
     label: "Peru",
-    admin: "Peru"
+    admin: "Peru",
+    continent: "latin-america"
   },
   {
     key: "south-africa",
     label: "Südafrika",
-    admin: "South Africa"
+    admin: "South Africa",
+    continent: "africa"
   },
   {
     key: "thailand",
     label: "Thailand",
-    admin: "Thailand"
+    admin: "Thailand",
+    continent: "asia"
   },
   {
     key: "tunisia",
     label: "Tunesien",
-    admin: "Tunisia"
+    admin: "Tunisia",
+    continent: "africa"
   },
   {
     key: "vietnam",
     label: "Vietnam",
-    admin: "Vietnam"
+    admin: "Vietnam",
+    continent: "asia"
   }
 ];
 
