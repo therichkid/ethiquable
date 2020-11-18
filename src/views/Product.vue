@@ -25,12 +25,12 @@
             </h2>
           </div>
           <v-img
-            :src="categoryImage.source"
-            :alt="categoryImage.title"
+            :src="product.decorationImage.source"
+            :alt="product.decorationImage.title"
             max-height="150"
             max-width="150"
             contain
-            v-if="$vuetify.breakpoint.mdAndUp && categoryImage"
+            v-if="$vuetify.breakpoint.mdAndUp && product.decorationImage"
           ></v-img>
         </div>
       </v-col>
@@ -145,20 +145,6 @@ export default {
       product: {},
       producers: [],
       productImageProps: {},
-      categoryImage: null,
-      categoryImageFilenames: {
-        kaffee: "kaffee.png",
-        tee: "tee.png",
-        kakao: "kakao.png",
-        schokolade: "schokolade.png",
-        zucker: "zucker.png",
-        getreide: null,
-        oel: "oel.png",
-        snack: "snack.png",
-        aufstrich: null,
-        fruchtdessert: "fruchtdessert.png",
-        gebaeck: "gebaeck.png"
-      },
       currentWindowWidth: 0,
       rectangleHeight: 100,
       sealMap: {
@@ -257,7 +243,6 @@ export default {
       const category =
         this.product.categories && this.product.categories.length ? this.product.categories[0].slug : null;
       this.addProps(category);
-      this.addCategoryImage(category);
       // Wait a short time until the title is rendered -> mobile chrome fix
       setTimeout(() => {
         this.calcRectangleHeight();
@@ -290,17 +275,6 @@ export default {
           maxWidth: size,
           contain: true
         };
-      }
-    },
-    addCategoryImage(category) {
-      const filename = this.categoryImageFilenames[category];
-      if (filename) {
-        this.categoryImage = {
-          title: `Bild für die Kategorie ${category}`,
-          source: require(`@/assets/categories/${filename}`)
-        };
-      } else {
-        this.categoryImage = null;
       }
     },
     calcRectangleHeight() {

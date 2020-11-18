@@ -63,7 +63,8 @@ export default {
         producerText: orig.acf["producer-text"],
         seals: orig.acf["seals"],
         categories: addCategories(orig),
-        featuredImage: addFeaturedImage(orig, "medium_large")
+        featuredImage: addFeaturedImage(orig, "medium_large"),
+        decorationImage: addAcfImage(orig.acf["decoration-image"], "medium")
       };
       products.push(product);
     }
@@ -239,7 +240,6 @@ const addFeaturedImage = (input, size) => {
   ) {
     const featuredImage = input._embedded["wp:featuredmedia"][0];
     obj.title = featuredImage.title.rendered;
-    // Pick medium large size if it exists
     if (size && featuredImage.media_details.sizes && featuredImage.media_details.sizes[size]) {
       obj.source = featuredImage.media_details.sizes[size].source_url;
     } else {
@@ -250,6 +250,21 @@ const addFeaturedImage = (input, size) => {
     obj.title = "Placeholder Image";
     obj.source = require("../assets/placeholder.jpg");
   }
+  return obj;
+};
+
+const addAcfImage = (prop, size) => {
+  if (!prop) {
+    return null;
+  }
+  // Expect image object, fall back to url
+  const obj = {};
+  if (size && prop.sizes && prop.sizes[size]) {
+    obj.source = prop.sizes[size];
+  } else {
+    obj.source = prop.url || prop;
+  }
+  obj.title = prop.title;
   return obj;
 };
 
