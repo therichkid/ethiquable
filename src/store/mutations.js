@@ -40,6 +40,13 @@ export default {
     }
     state.productsPerCategory[category] = products;
   },
+  storeProductsById(state, products) {
+    for (const product of products) {
+      if (!state.productsById[product.id]) {
+        state.productsById[product.id] = product;
+      }
+    }
+  },
   changeShopsLoading(state, value) {
     state.shopsLoading = value;
   },

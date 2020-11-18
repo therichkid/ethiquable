@@ -174,6 +174,35 @@ export default {
         });
     });
   },
+  fetchProductsById(context, ids) {
+    context.commit("changeProductsLoading", true);
+    context.commit("changeProductsLoadingError", false);
+    const path = `wp/v2/products/?${ids.map(id => `include[]=${id}`).join("&")}`;
+    const params = {
+      _embed: true
+    };
+    return new Promise((resolve, reject) => {
+      api
+        .fetchData(path, params)
+        .then(
+          response => {
+            let { data } = response;
+            const producers = formatter.formatProducts(data);
+            context.commit("storeProductsById", producers);
+            context.commit("incrementFailedRequests", 0);
+            resolve(producers);
+          },
+          error => {
+            context.commit("changeProducersLoadingError", true);
+            context.commit("incrementFailedRequests", 1);
+            reject(error);
+          }
+        )
+        .finally(() => {
+          context.commit("changeProducersLoading", false);
+        });
+    });
+  },
   fetchProductsBySearchTerm(context, { search, perPage }) {
     const path = "wp/v2/products";
     const params = {
