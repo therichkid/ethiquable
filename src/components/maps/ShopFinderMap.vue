@@ -30,7 +30,7 @@
             />
           </l-icon>
           <l-popup>
-            <h3 class="headline">Ihr Standort!</h3>
+            <h3 class="text-h5">Ihr Standort!</h3>
           </l-popup>
         </l-marker>
       </div>

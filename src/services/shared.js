@@ -68,7 +68,7 @@ export default {
     const g = (rgb >> 8) & 0xff;
     const b = (rgb >> 0) & 0xff;
     const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-    if (luma <= 128) {
+    if (luma <= 150) {
       // Is dark
       return "#fff";
     } else {

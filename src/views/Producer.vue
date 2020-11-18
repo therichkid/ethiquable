@@ -110,4 +110,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+* >>> h3,
+* >>> h4,
+* >>> h5,
+* >>> h6 {
+  color: var(--v-primary-base);
+  text-transform: uppercase;
+}
+</style>

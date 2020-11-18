@@ -13,7 +13,7 @@
       <v-carousel-item v-for="(slide, i) in slides" :key="i" :src="slide.featuredImage.source" v-bind="slide.linkProps">
         <v-row class="fill-height" justify="center" align="end">
           <v-col cols="12" class="slide-caption">
-            <h4 class="text-h4">{{ slide.title }}</h4>
+            <h3 class="text-h4">{{ slide.title }}</h3>
             <span class="text-subtitle-1" v-if="slide.excerpt">{{ slide.excerpt }}</span>
           </v-col>
         </v-row>

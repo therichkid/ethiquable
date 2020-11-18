@@ -18,9 +18,9 @@
             :alt="product.featuredImage.title"
             v-bind="productImageProps"
           ></v-img>
-          <div class="px-5" style="flex-grow: 1; color: var(--product-color)" ref="headerText">
-            <h1 class="text-h4">{{ product.name }}</h1>
-            <h2 class="text-subtitle-2" v-if="product.subtitle">
+          <div class="px-5" style="flex-grow: 1" ref="headerText">
+            <h1 class="text-h4" style="color: var(--product-color)">{{ product.name }}</h1>
+            <h2 class="text-subtitle-2" style="color: var(--product-color)" v-if="product.subtitle">
               <i>{{ product.subtitle }}</i>
             </h2>
           </div>
@@ -61,8 +61,7 @@
         </div>
 
         <!-- Product content -->
-        <h2 class="text-h4 mt-4 mb-2" style="color: var(--v-primary-base)">Was ich esse / trinke</h2>
-        <div v-html="product.content" class="product-content"></div>
+        <div v-html="product.content" class="product-content mt-4"></div>
 
         <!-- Shop link -->
         <div class="mt-4" style="max-width: 500px" v-if="product.shopLink">
@@ -86,7 +85,7 @@
       <!-- Just don't show producers until it's loaded or there is an error -->
       <v-col cols="12" md="6" v-if="producers.length">
         <!-- Producers -->
-        <h2 class="text-h4 mt-4 mb-2" style="color: var(--v-primary-base)">Das will ich</h2>
+        <h2 class="text-h4 mt-4 mb-2">Das will ich</h2>
         <v-row no-gutters v-for="(producer, i) in producers" :key="i">
           <v-col cols="12">
             <v-divider class="mt-4 mb-2" v-if="i > 0"></v-divider>
@@ -336,6 +335,13 @@ export default {
 </script>
 
 <style scoped>
+* >>> h3,
+* >>> h4,
+* >>> h5,
+* >>> h6 {
+  color: var(--v-primary-base);
+  text-transform: uppercase;
+}
 .header-container {
   position: relative;
   width: 100%;

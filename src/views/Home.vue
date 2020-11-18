@@ -8,7 +8,7 @@
       <Posts :page="1" type="home" />
     </v-container>
     <div class="text-center">
-      <v-btn large color="primary" @click="loadMorePosts()" class="mb-2"> Mehr Neuigkeiten </v-btn>
+      <v-btn large color="secondary" @click="loadMorePosts()" class="mb-2"> Mehr Neuigkeiten </v-btn>
     </div>
   </div>
 </template>

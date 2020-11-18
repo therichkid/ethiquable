@@ -7,7 +7,7 @@
       <v-col class="d-flex" v-bind="breakpointProps" v-if="type === 'home'">
         <v-card dark hover to="/shopfinder" class="d-flex flex-column" color="primary" style="width: 100%">
           <v-card-title class="justify-center">
-            <h3 class="headline">Hier finden Sie uns:</h3>
+            <h3 class="text-h5">Hier finden Sie uns:</h3>
           </v-card-title>
           <v-img
             src="@/assets/map/shopfinder.jpg"
@@ -43,7 +43,7 @@
           >
           </v-img>
           <v-card-title>
-            <h3 class="headline">{{ article.title }}</h3>
+            <h3 class="text-h5">{{ article.title }}</h3>
           </v-card-title>
           <v-card-text>
             <div v-html="article.excerpt" style="text-align: justify"></div>

@@ -52,6 +52,11 @@ export default {
 </script>
 
 <style>
+h1,
+h2 {
+  color: var(--v-primary-base);
+  text-transform: uppercase;
+}
 .main-container {
   max-width: 1200px;
   min-height: 60vh;
@@ -200,10 +205,13 @@ table.ethiquable-table tr:last-child > td:last-child {
     flex-direction: row;
     align-items: flex-start;
   }
-  .post-container .ethiquable-layout > .left,
+  .post-container .ethiquable-layout > .left {
+    margin-right: 8px;
+    padding-right: 8px;
+  }
   .post-container .ethiquable-layout > .right {
-    padding: 8px;
-    margin: 0 8px;
+    margin-left: 8px;
+    padding-left: 8px;
   }
   .post-container .ethiquable-layout > .right {
     flex-shrink: 1;

@@ -1,9 +1,9 @@
 <template>
   <l-popup>
-    <h3 class="headline mb-2">{{ marker.name }}</h3>
+    <h3 class="text-h5 mb-2">{{ marker.name }}</h3>
     <!-- Address -->
     <div class="align-center mb-2">
-      <v-icon color="primary" class="icon">mdi-map-marker</v-icon>
+      <v-icon class="icon">mdi-map-marker</v-icon>
       <span style="color: rgba(0, 0, 0, 0.6)" class="body-2 text">{{ marker.address }}</span>
     </div>
   </l-popup>
@@ -29,6 +29,6 @@ export default {
 }
 .text {
   display: block;
-  padding-left: 40px;
+  padding-left: 30px;
 }
 </style>
