@@ -9,7 +9,7 @@
         <div class="header-triangle"></div>
         <div
           class="header-rectangle"
-          style="background-color: var(--product-bg-color)"
+          style="background-color: var(--product-bg-color-primary)"
           :style="{ height: rectangleHeight + 'px' }"
         ></div>
         <div class="header-content px-5">
@@ -19,8 +19,8 @@
             v-bind="productImageProps"
           ></v-img>
           <div class="px-5" style="flex-grow: 1" ref="headerText">
-            <h1 class="text-h4" style="color: var(--product-color)">{{ product.name }}</h1>
-            <h2 class="text-subtitle-2" style="color: var(--product-color)" v-if="product.subtitle">
+            <h1 class="text-h4" style="color: var(--product-text-color)">{{ product.name }}</h1>
+            <h2 class="text-subtitle-2" style="color: var(--product-text-color)" v-if="product.subtitle">
               <i>{{ product.subtitle }}</i>
             </h2>
           </div>
@@ -72,7 +72,7 @@
             :href="product.shopLink"
             target="_blank"
             rel="nofollow"
-            style="background-color: var(--product-bg-color); color: var(--product-color)"
+            style="background-color: var(--product-bg-color-secondary); color: var(--product-text-color)"
           >
             Im E-Shop kaufen
             <v-spacer></v-spacer>
@@ -95,7 +95,7 @@
             <div v-html="producer.content"></div>
             <v-btn
               :to="{ path: `/produzenten/${producer.slug}`, query: { id: producer.id } }"
-              style="background-color: var(--product-bg-color); color: var(--product-color)"
+              style="background-color: var(--product-bg-color-secondary); color: var(--product-text-color)"
               class="mt-2"
               v-if="producer.slug"
             >
@@ -176,8 +176,9 @@ export default {
     },
     productStyle() {
       return {
-        "--product-bg-color": (this.product && this.product.backgroundColor) || "var(--v-primary-base)",
-        "--product-color":
+        "--product-bg-color-primary": (this.product && this.product.backgroundColor) || "var(--v-primary-base)",
+        "--product-bg-color-secondary": (this.product && this.product.backgroundColor) || "var(--v-secondary-base)",
+        "--product-text-color":
           (this.product && this.product.backgroundColor && this.shared.calcFontColor(this.product.backgroundColor)) ||
           "#fff"
       };
@@ -346,8 +347,8 @@ export default {
   color: white;
 }
 .product-content >>> table.ethiquable-table tr > th {
-  background-color: var(--product-bg-color);
-  color: var(--product-color);
+  background-color: var(--product-bg-color-primary);
+  color: var(--product-text-color);
 }
 .product-content >>> table.ethiquable-table tr > td:last-child {
   text-align: right;
