@@ -136,7 +136,8 @@ export default {
             if (!this.table.headers.filter(header => header.value === "distance").length) {
               this.table.headers.splice(1, 0, {
                 text: "Distanz [km]",
-                value: "distance"
+                value: "distance",
+                align: "right"
               });
             }
             this.center = this.currentLocation.center;

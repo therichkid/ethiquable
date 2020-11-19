@@ -11,6 +11,7 @@ import Products from "../views/Products";
 import Producer from "../views/Producer";
 import Producers from "../views/Producers";
 import Recipes from "../views/Recipes";
+import Recipe from "../views/Recipe";
 import PageNotFound from "../views/PageNotFound";
 
 Vue.use(Router);
@@ -110,15 +111,15 @@ const routes = [
       title: "Rezepte"
     }
   },
-  // {
-  //   path: "/rezepte/:slug",
-  //   name: "recipe",
-  //   component: Recipe,
-  //   meta: {
-  //     title: "Rezept"
-  //   },
-  //   props: true
-  // },
+  {
+    path: "/rezepte/:slug",
+    name: "recipe",
+    component: Recipe,
+    meta: {
+      title: "Rezept"
+    },
+    props: true
+  },
   {
     path: "/404",
     name: "404",
