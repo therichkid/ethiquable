@@ -6,7 +6,7 @@
     <v-row v-if="!isLoading && !loadingError && Object.keys(recipe).length" align="center">
       <!-- Title -->
       <v-col cols="12">
-        <h1 class="display-1">{{ recipe.title }}</h1>
+        <h1 class="text-h4">{{ recipe.title }}</h1>
       </v-col>
 
       <!-- Image -->

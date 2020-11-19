@@ -6,7 +6,7 @@
     <v-row v-if="!isLoading && !loadingError && Object.keys(producer).length" align="center">
       <!-- Header -->
       <v-col cols="12">
-        <h1 class="display-1">{{ producer.name }}</h1>
+        <h1 class="text-h4">{{ producer.name }}</h1>
       </v-col>
 
       <!-- Body -->

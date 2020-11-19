@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1 class="display-1 mb-2">Rezepte</h1>
+    <h1 class="text-h4 mb-2">Rezepte</h1>
 
     <LoadingSkeleton type="recipes" v-if="isLoading" />
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getRecipes()" />

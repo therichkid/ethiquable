@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1 class="display-1 mb-2">Magazin</h1>
+    <h1 class="text-h4 mb-2">Magazin</h1>
     <Posts :page="page" @postPagesInit="postPages = $event" />
     <div class="text-center" v-if="postPages">
       <v-pagination v-model="page" :length="postPages" @input="changePage()"></v-pagination>
