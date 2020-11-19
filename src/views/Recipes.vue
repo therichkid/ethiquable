@@ -13,8 +13,9 @@
             v-for="category in categories"
             :key="category.name"
             :color="category.backgroundColor"
-            :text-color="category.color"
+            text-color="white"
             style="opacity: 0.25"
+            :style="{ textShadow: category.textShadow }"
           >
             {{ category.name }}
           </v-chip>
@@ -46,13 +47,14 @@
           >
           </v-img>
           <v-chip-group class="px-3" v-if="recipe.isNew || recipe.category">
-            <v-chip color="#ffc107" small v-if="recipe.isNew">
+            <v-chip color="#ffc107" text-color="white" small style="text-shadow: 1px 1px 2px black" v-if="recipe.isNew">
               <b>NEU</b>
             </v-chip>
             <v-chip
               :color="recipe.category.backgroundColor"
-              :text-color="recipe.category.color"
+              text-color="white"
               small
+              :style="{ textShadow: recipe.category.textShadow }"
               v-if="recipe.category"
             >
               {{ recipe.category.name }}
@@ -153,7 +155,7 @@ export default {
           const newProps = {
             name: category.name,
             backgroundColor: color || "var(--v-primary-base)",
-            color: color ? this.shared.calcFontColor(color) : "#fff"
+            textShadow: color && this.shared.isLightColor(color) ? "1px 1px 2px #000" : "none"
           };
           recipe.category = newProps;
           this.categories.push(newProps);

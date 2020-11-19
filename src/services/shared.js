@@ -61,7 +61,7 @@ export default {
     return map;
   },
 
-  calcFontColor: hexColor => {
+  isLightColor: hexColor => {
     const c = hexColor.substring(1); // Strip #
     const rgb = parseInt(c, 16); // Convert to decimal
     const r = (rgb >> 16) & 0xff;
@@ -70,10 +70,10 @@ export default {
     const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b;
     if (luma <= 150) {
       // Is dark
-      return "#fff";
+      return false;
     } else {
       // Is light
-      return "#000";
+      return true;
     }
   }
 };

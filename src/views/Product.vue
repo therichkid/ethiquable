@@ -19,8 +19,12 @@
             v-bind="productImageProps"
           ></v-img>
           <div class="px-5" style="flex-grow: 1" ref="headerText">
-            <h1 class="text-h4" style="color: var(--product-text-color)">{{ product.name }}</h1>
-            <h2 class="text-subtitle-2" style="color: var(--product-text-color)" v-if="product.subtitle">
+            <h1 class="text-h4 white--text" style="text-shadow: var(--product-text-shadow)">{{ product.name }}</h1>
+            <h2
+              class="text-subtitle-2 white--text"
+              style="text-shadow: var(--product-text-shadow)"
+              v-if="product.subtitle"
+            >
               <i>{{ product.subtitle }}</i>
             </h2>
           </div>
@@ -72,7 +76,8 @@
             :href="product.shopLink"
             target="_blank"
             rel="nofollow"
-            style="background-color: var(--product-bg-color-secondary); color: var(--product-text-color)"
+            dark
+            style="background-color: var(--product-bg-color-secondary); text-shadow: var(--product-text-shadow)"
           >
             Im E-Shop kaufen
             <v-spacer></v-spacer>
@@ -95,7 +100,8 @@
             <div v-html="producer.content"></div>
             <v-btn
               :to="{ path: `/produzenten/${producer.slug}`, query: { id: producer.id } }"
-              style="background-color: var(--product-bg-color-secondary); color: var(--product-text-color)"
+              dark
+              style="background-color: var(--product-bg-color-secondary); text-shadow: var(--product-text-shadow)"
               class="mt-2"
               v-if="producer.slug"
             >
@@ -178,9 +184,10 @@ export default {
       return {
         "--product-bg-color-primary": (this.product && this.product.backgroundColor) || "var(--v-primary-base)",
         "--product-bg-color-secondary": (this.product && this.product.backgroundColor) || "var(--v-secondary-base)",
-        "--product-text-color":
-          (this.product && this.product.backgroundColor && this.shared.calcFontColor(this.product.backgroundColor)) ||
-          "#fff"
+        "--product-text-shadow":
+          this.product && this.product.backgroundColor && this.shared.isLightColor(this.product.backgroundColor)
+            ? "1px 1px 2px #000"
+            : "none"
       };
     }
   },
@@ -348,7 +355,7 @@ export default {
 }
 .product-content >>> table.ethiquable-table tr > th {
   background-color: var(--product-bg-color-primary);
-  color: var(--product-text-color);
+  text-shadow: var(--product-text-shadow);
 }
 .product-content >>> table.ethiquable-table tr > td:last-child {
   text-align: right;
