@@ -90,7 +90,7 @@ export default {
             console.error(error);
           })) || [];
       }
-      this.products = products.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+      this.products = products.sort((a, b) => a.name.localeCompare(b.name, "de", { sensitivity: "base" }));
       if (this.formattedCategory) {
         document.title = this.formattedCategory + " - " + document.title;
       }

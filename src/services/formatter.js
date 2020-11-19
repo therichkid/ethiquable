@@ -136,7 +136,8 @@ export default {
         featuredImage: addFeaturedImage(orig, "medium_large"),
         ingredients: addIngredients(orig),
         portions: orig.acf.portions ? parseInt(orig.acf.portions, 10) : null,
-        effort: addEffort(orig)
+        effort: addEffort(orig),
+        isNew: checkIfNew(orig.date)
       };
       recipes.push(recipe);
     }
@@ -198,7 +199,6 @@ const formatDate = (type, date1, date2) => {
     return formattedDate;
   }
 };
-
 // To check if the input is valid (YYYY-mm-dd)
 const checkDateFormat = (type, ...input) => {
   let YYYY, mm, dd;
@@ -214,6 +214,13 @@ const checkDateFormat = (type, ...input) => {
   } else {
     return true;
   }
+};
+// Check if post date is not older than one month
+const checkIfNew = date => {
+  const time = new Date(date).getTime();
+  const now = new Date().getTime();
+  const oneMonth = 30 * 24 * 60 * 60 * 1000;
+  return now - time < oneMonth;
 };
 
 // Add the address to a shop

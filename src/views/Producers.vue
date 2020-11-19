@@ -35,6 +35,19 @@
             </v-row>
           </v-card-text>
         </v-card>
+        <v-alert
+          dismissible
+          icon="mdi-lightbulb-on"
+          color="#ffc107"
+          border="top"
+          colored-border
+          style="border-width: 6px"
+          elevation="2"
+          class="mt-2"
+          v-model="isInfoShown"
+        >
+          Verfeinere die Ergebnisse mit der Karte und dem Filter.
+        </v-alert>
       </v-col>
 
       <!-- Producers -->
@@ -62,24 +75,6 @@
                 </h3>
               </v-card-title>
             </v-card>
-          </v-col>
-          <v-col cols="12" v-if="limitProducerLength && !selectedCountry && !selectedIngredient">
-            <v-banner
-              icon="mdi-lightbulb-on"
-              icon-color="#ffc107"
-              rounded
-              :single-line="$vuetify.breakpoint.lgAndUp"
-              elevation="2"
-              style="border-top: 6px solid #ffc107"
-            >
-              Verfeinere die Ergebnisse mit der Karte und dem Filter.
-              <template v-slot:actions>
-                <v-btn text @click="showAllProducers()">
-                  Alle anzeigen
-                  <v-icon right>mdi-chevron-down</v-icon>
-                </v-btn>
-              </template>
-            </v-banner>
           </v-col>
         </v-row>
 
@@ -111,7 +106,7 @@ export default {
       ingredients: [],
       selectedCountry: null,
       selectedIngredient: null,
-      limitProducerLength: true
+      isInfoShown: true
     };
   },
 
@@ -121,14 +116,6 @@ export default {
     },
     loadingError() {
       return this.$store.state.producersLoadingError;
-    },
-    maxShownProducers() {
-      if (this.$vuetify.breakpoint.lgAndUp) {
-        return 12;
-      } else if (this.$vuetify.breakpoint.md) {
-        return 9;
-      }
-      return 6;
     },
     filteredProducers() {
       const filteredProducers = [];
@@ -150,11 +137,19 @@ export default {
         }
         filteredProducers.push(producer);
       }
-      filteredProducers.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
-      if (this.limitProducerLength && filteredProducers.length > this.maxShownProducers) {
-        filteredProducers.splice(this.maxShownProducers);
+      filteredProducers.sort((a, b) => a.name.localeCompare(b.name, "de", { sensitivity: "base" }));
+      if (this.isInfoShown && filteredProducers.length < this.producers.length) {
+        this.dismissInfo();
       }
       return filteredProducers;
+    }
+  },
+
+  watch: {
+    isInfoShown(value) {
+      if (value === false) {
+        sessionStorage.setItem("producersInfoDismissed", "true");
+      }
     }
   },
 
@@ -200,12 +195,11 @@ export default {
           });
         }
       }
-      this.countries = countries.sort((a, b) => a.text.toLowerCase().localeCompare(b.text.toLowerCase()));
-      this.ingredients = ingredients.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+      this.countries = countries.sort((a, b) => a.text.localeCompare(b.text, "de", { sensitivity: "base" }));
+      this.ingredients = ingredients.sort((a, b) => a.localeCompare(b, "de", { sensitivity: "base" }));
     },
-    showAllProducers() {
-      this.limitProducerLength = false;
-      sessionStorage.setItem("showAllProducers", "true");
+    dismissInfo() {
+      this.isInfoShown = false;
     }
   },
 
@@ -215,11 +209,15 @@ export default {
   },
 
   mounted() {
-    if (sessionStorage.getItem("showAllProducers") === "true") {
-      this.limitProducerLength = false;
+    if (sessionStorage.getItem("producersInfoDismissed") === "true") {
+      this.isInfoShown = false;
     }
   }
 };
 </script>
 
-<style></style>
+<style scoped>
+* >>> .v-alert__wrapper > i {
+  align-self: center;
+}
+</style>

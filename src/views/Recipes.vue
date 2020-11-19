@@ -23,7 +23,7 @@
       <v-col cols="12" sm="4" style="display: inline-flex; justify-content: end; align-items: center">
         <v-label>Sortierung:</v-label>
         <v-btn-toggle mandatory dense class="ml-2" v-model="sort">
-          <v-btn>Neu</v-btn>
+          <v-btn>Datum</v-btn>
           <v-btn>Name</v-btn>
         </v-btn-toggle>
       </v-col>
@@ -35,7 +35,7 @@
           :to="`/rezepte/${recipe.slug}`"
           class="d-flex flex-column"
           :style="{
-            'border-top': `6px solid ${(recipe.category && recipe.category.backgroundColor) || 'var(--v-primary-base)'}`
+            'border-top': `8px solid ${(recipe.category && recipe.category.backgroundColor) || 'var(--v-primary-base)'}`
           }"
         >
           <v-img
@@ -45,11 +45,19 @@
             style="border-radius: 0"
           >
           </v-img>
-          <div class="pt-1 px-3" v-if="recipe.category">
-            <v-chip :color="recipe.category.backgroundColor" :text-color="recipe.category.color" small>
+          <v-chip-group class="px-3" v-if="recipe.isNew || recipe.category">
+            <v-chip color="#ffc107" small v-if="recipe.isNew">
+              <b>NEU</b>
+            </v-chip>
+            <v-chip
+              :color="recipe.category.backgroundColor"
+              :text-color="recipe.category.color"
+              small
+              v-if="recipe.category"
+            >
               {{ recipe.category.name }}
             </v-chip>
-          </div>
+          </v-chip-group>
           <v-card-title class="pt-0">
             <h3 class="text-subtitle-2" style="word-wrap: break-word; hyphens: auto">
               {{ recipe.title }}
@@ -110,7 +118,7 @@ export default {
       }
       if (this.sort === 1) {
         // Sort by name
-        filteredRecipes = filteredRecipes.sort((a, b) => a.title.toLowerCase().localeCompare(b.title.toLowerCase()));
+        filteredRecipes = filteredRecipes.sort((a, b) => a.title.localeCompare(b.title, "de", { sensitivity: "base" }));
       }
       return filteredRecipes;
     }
