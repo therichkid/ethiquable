@@ -299,7 +299,7 @@ const addIngredients = input => {
     input.acf.ingredients.forEach(ingredient => {
       ingredients.push({
         ...ingredient,
-        quantity: ingredient.quantity ? parseInt(ingredient.quantity, 10) : null
+        quantity: ingredient.quantity ? parseFloat(ingredient.quantity) : null
       });
     });
   }
