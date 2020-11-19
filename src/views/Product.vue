@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <LoadingSkeleton v-if="isLoadingProducts" />
-    <LoadingError v-if="loadingErrorProducts" :height="500" @retryAgain="getProductBySlug(slug)" />
+    <LoadingError v-if="loadingErrorProducts" :height="500" @retryAgain="getProductAndProducers()" />
 
     <v-row v-if="!isLoadingProducts && !loadingErrorProducts && Object.keys(product).length" :style="productStyle">
       <!-- Header -->

@@ -1,0 +1,171 @@
+<template>
+  <v-container>
+    <h1 class="display-1 mb-2">Rezepte</h1>
+
+    <LoadingSkeleton type="recipes" v-if="isLoading" />
+    <LoadingError v-if="loadingError" :height="500" @retryAgain="getRecipes()" />
+
+    <v-row v-if="!isLoading && !loadingError" :dense="$vuetify.breakpoint.xsOnly">
+      <!-- Filter -->
+      <v-col cols="12" sm="8">
+        <v-chip-group multiple active-class="active-chip" v-model="activeCategories">
+          <v-chip
+            v-for="category in categories"
+            :key="category.name"
+            :color="category.backgroundColor"
+            :text-color="category.color"
+            style="opacity: 0.25"
+          >
+            {{ category.name }}
+          </v-chip>
+        </v-chip-group>
+      </v-col>
+      <v-col cols="12" sm="4" style="display: inline-flex; justify-content: end; align-items: center">
+        <v-label>Sortierung:</v-label>
+        <v-btn-toggle mandatory dense class="ml-2" v-model="sort">
+          <v-btn>Neu</v-btn>
+          <v-btn>Name</v-btn>
+        </v-btn-toggle>
+      </v-col>
+
+      <!-- Recipes -->
+      <v-col cols="6" sm="4" lg="3" v-for="recipe in filteredRecipes" :key="recipe.id" class="d-flex">
+        <v-card
+          hover
+          :to="`/rezepte/${recipe.slug}`"
+          class="d-flex flex-column"
+          :style="{
+            'border-top': `6px solid ${(recipe.category && recipe.category.backgroundColor) || 'var(--v-primary-base)'}`
+          }"
+        >
+          <v-img
+            :src="recipe.featuredImage.source"
+            :alt="recipe.featuredImage.title"
+            max-height="200"
+            style="border-radius: 0"
+          >
+          </v-img>
+          <div class="pt-1 px-3" v-if="recipe.category">
+            <v-chip :color="recipe.category.backgroundColor" :text-color="recipe.category.color" small>
+              {{ recipe.category.name }}
+            </v-chip>
+          </div>
+          <v-card-title class="pt-0">
+            <h3 class="text-subtitle-2" style="word-wrap: break-word; hyphens: auto">
+              {{ recipe.title }}
+            </h3>
+          </v-card-title>
+          <v-spacer></v-spacer>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-icon>mdi-chevron-right</v-icon>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+
+<script>
+import LoadingSkeleton from "@/components/partials/LoadingSkeleton";
+const LoadingError = () => import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
+import { COLORS } from "@/constants";
+
+export default {
+  components: {
+    LoadingSkeleton,
+    LoadingError
+  },
+
+  data() {
+    return {
+      recipes: [],
+      categories: [],
+      activeCategories: [],
+      sort: 0
+    };
+  },
+
+  computed: {
+    isLoading() {
+      return this.$store.state.recipesLoading;
+    },
+    loadingError() {
+      return this.$store.state.recipesLoadingError;
+    },
+    filteredRecipes() {
+      let filteredRecipes = [];
+      if (this.activeCategories.length === this.categories.length) {
+        filteredRecipes = [...this.recipes];
+      } else if (!this.activeCategories.length) {
+        filteredRecipes = [];
+      } else {
+        for (const recipe of this.recipes) {
+          for (const i of this.activeCategories) {
+            if (recipe.category && recipe.category.name === this.categories[i].name) {
+              filteredRecipes.push(recipe);
+            }
+          }
+        }
+      }
+      if (this.sort === 1) {
+        // Sort by name
+        filteredRecipes = filteredRecipes.sort((a, b) => a.title.toLowerCase().localeCompare(b.title.toLowerCase()));
+      }
+      return filteredRecipes;
+    }
+  },
+
+  methods: {
+    async getRecipes() {
+      const recipesFetched = this.$store.getters.getFetchedRecipes();
+      if (recipesFetched[0]) {
+        // Already fetched
+        this.recipes = recipesFetched[1];
+      } else {
+        // Not fetched yet
+        this.recipes =
+          (await this.$store.dispatch("fetchRecipes").catch(error => {
+            console.error(error);
+          })) || [];
+      }
+    },
+
+    createCategories() {
+      const colors = [...COLORS].reverse();
+      for (const recipe of this.recipes) {
+        if (!recipe.categories || !recipe.categories.length) {
+          continue;
+        }
+        const category = recipe.categories[0];
+        const filtered = this.categories.filter(item => item.name === category.name);
+        const existingProps = filtered && filtered.length && filtered[0];
+        if (!existingProps) {
+          const color = colors[this.categories.length];
+          const newProps = {
+            name: category.name,
+            backgroundColor: color || "var(--v-primary-base)",
+            color: color ? this.shared.calcFontColor(color) : "#fff"
+          };
+          recipe.category = newProps;
+          this.categories.push(newProps);
+          this.activeCategories.push(this.categories.length - 1);
+        } else {
+          recipe.category = existingProps;
+        }
+      }
+    }
+  },
+
+  async created() {
+    await this.getRecipes();
+    this.createCategories();
+  }
+};
+</script>
+
+<style scoped>
+.active-chip {
+  opacity: 1 !important;
+}
+</style>

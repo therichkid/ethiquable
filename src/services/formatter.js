@@ -301,9 +301,11 @@ const addIngredients = input => {
 const addEffort = input => {
   const orig = input.acf.effort;
   const formatted = {};
-  Object.keys(orig).forEach(item => {
-    formatted[item] = orig[item] ? parseInt(orig[item], 10) : null;
-  });
+  if (orig) {
+    Object.keys(orig).forEach(item => {
+      formatted[item] = orig[item] ? parseInt(orig[item], 10) : null;
+    });
+  }
   return formatted;
 };
 

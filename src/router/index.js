@@ -10,6 +10,7 @@ import Product from "../views/Product";
 import Products from "../views/Products";
 import Producer from "../views/Producer";
 import Producers from "../views/Producers";
+import Recipes from "../views/Recipes";
 import PageNotFound from "../views/PageNotFound";
 
 Vue.use(Router);
@@ -100,15 +101,15 @@ const routes = [
     },
     props: true
   },
-  // { path: "/?wpupg_grid=rezepte", redirect: "/rezepte" },
-  // {
-  //   path: "/rezepte",
-  //   name: "recipes",
-  //   component: Recipes,
-  //   meta: {
-  //     title: "Rezepte"
-  //   }
-  // },
+  { path: "/?wpupg_grid=rezepte", redirect: "/rezepte" },
+  {
+    path: "/rezepte",
+    name: "recipes",
+    component: Recipes,
+    meta: {
+      title: "Rezepte"
+    }
+  },
   // {
   //   path: "/rezepte/:slug",
   //   name: "recipe",

@@ -90,14 +90,7 @@ export default {
             console.error(error);
           })) || [];
       }
-      this.products = products.sort((a, b) => {
-        if (a.name < b.name) {
-          return -1;
-        } else if (a.name > b.name) {
-          return 1;
-        }
-        return 0;
-      });
+      this.products = products.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
       if (this.formattedCategory) {
         document.title = this.formattedCategory + " - " + document.title;
       }
