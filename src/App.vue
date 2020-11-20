@@ -73,11 +73,6 @@ h2 {
 .post-container p {
   text-align: justify;
 }
-.event-card {
-  width: 100%;
-  min-width: 200px;
-  max-width: 275px;
-}
 .v-card__title {
   word-break: break-word;
 }

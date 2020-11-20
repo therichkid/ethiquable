@@ -14,7 +14,13 @@
             <v-btn text to="/datenschutz">Weiterlesen</v-btn>
           </v-col>
           <v-col cols="auto" class="mr-1">
-            <v-checkbox v-model="hasUnderstood" label="Ich habe verstanden" hide-details class="my-0"></v-checkbox>
+            <v-checkbox
+              v-model="hasUnderstood"
+              label="Ich habe verstanden"
+              hide-details
+              color="success"
+              class="my-0"
+            ></v-checkbox>
           </v-col>
           <v-col cols="auto" class="ml-1">
             <v-btn :disabled="!hasUnderstood" @click="acceptCookies()" color="success">Akzeptieren </v-btn>

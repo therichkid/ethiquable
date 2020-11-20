@@ -26,9 +26,9 @@ export default {
   },
 
   // Post requests with reCAPTCHA check
-  async postData(data, token, id) {
+  async postData(data, token, type) {
     // Get the path when reCAPTCHA is successful
-    const path = await verify(token, id);
+    const path = await verify(token, type);
     if (path) {
       await cf7PostRequest(data, path).catch(error => {
         throw error;
@@ -41,11 +41,11 @@ export default {
 };
 
 // Verify if the user is human
-const verify = async (token, id) => {
+const verify = async (token, type) => {
   const response = await axios
     .post("/includes/verify.php", {
       token,
-      id
+      type
     })
     .catch(error => {
       console.error(error);

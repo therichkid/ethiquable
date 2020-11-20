@@ -12,6 +12,7 @@ import Producer from "../views/Producer";
 import Producers from "../views/Producers";
 import Recipes from "../views/Recipes";
 import Recipe from "../views/Recipe";
+import SpecializedTrade from "../views/SpecializedTrade";
 import PageNotFound from "../views/PageNotFound";
 
 Vue.use(Router);
@@ -119,6 +120,15 @@ const routes = [
       title: "Rezept"
     },
     props: true
+  },
+  { path: "/fachhandel.php", redirect: "/fachhandel" },
+  {
+    path: "/fachhandel",
+    name: "Fachhandel",
+    component: SpecializedTrade,
+    meta: {
+      title: "Fachhandel"
+    }
   },
   {
     path: "/404",

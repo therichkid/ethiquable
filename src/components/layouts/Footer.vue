@@ -284,13 +284,13 @@ export default {
       const data = {
         fullname: this.name.trim(),
         email: this.email.trim(),
-        subject: "Ich habe eine Frage",
+        subject: "Ich habe eine Frage / Anregung",
         message: this.message
       };
       // Create token for reCAPTCHA
       const token = await this.$recaptcha("login");
       await api
-        .postData(data, token, 4247)
+        .postData(data, token, "contact")
         .then(response => {
           this.alertType = "success";
           this.alertMessage = response;
