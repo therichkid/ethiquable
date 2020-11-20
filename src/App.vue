@@ -74,7 +74,7 @@ h2 {
   text-align: justify;
 }
 .v-card__title {
-  word-break: break-word;
+  word-wrap: break-word;
 }
 .v-banner__wrapper {
   border-bottom: none !important;

@@ -19,7 +19,9 @@
             v-bind="productImageProps"
           ></v-img>
           <div class="px-5" style="flex-grow: 1" ref="headerText">
-            <h1 class="text-h4 white--text" style="text-shadow: var(--product-text-shadow)">{{ product.name }}</h1>
+            <h1 class="text-h5 text-sm-h4 white--text" style="text-shadow: var(--product-text-shadow)">
+              {{ product.name }}
+            </h1>
             <h2
               class="text-subtitle-2 white--text"
               style="text-shadow: var(--product-text-shadow)"
@@ -67,8 +69,36 @@
         <!-- Product content -->
         <div v-html="product.content" class="product-content mt-4"></div>
 
+        <!-- Recipe -->
+        <v-card
+          hover
+          :to="{ path: `/rezepte/${recipe.slug}`, query: { id: recipe.id } }"
+          class="mt-4 mb-2"
+          style="border-top: 8px solid var(--product-bg-color-primary); max-width: 500px"
+          v-if="recipe"
+        >
+          <div class="d-flex">
+            <!-- Left -->
+            <v-avatar class="ma-3" size="125" tile>
+              <v-img :src="recipe.featuredImage.source" :alt="recipe.featuredImage.title"></v-img>
+            </v-avatar>
+            <!-- Right -->
+            <div class="d-flex flex-column flex-grow-1">
+              <v-card-text>
+                <div class="text-subtitle-2">Rezeptidee:</div>
+                <div class="text-h5">{{ recipe.title }}</div>
+              </v-card-text>
+              <v-spacer></v-spacer>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-icon>mdi-chevron-right</v-icon>
+              </v-card-actions>
+            </div>
+          </div>
+        </v-card>
+
         <!-- Shop link -->
-        <div class="mt-4" style="max-width: 500px" v-if="product.shopLink">
+        <div class="pt-4" style="max-width: 500px" v-if="product.shopLink">
           <v-btn
             block
             tile
@@ -150,6 +180,7 @@ export default {
     return {
       product: {},
       producers: [],
+      recipe: null,
       productImageProps: {},
       currentWindowWidth: 0,
       rectangleHeight: 100,
@@ -243,6 +274,16 @@ export default {
         this.producers.push({ ...producer, content });
       });
     },
+    async getRecipeById(id) {
+      const recipeFetched = this.$store.getters.getFetchedRecipeByParam({ param: "id", value: id });
+      if (recipeFetched[0]) {
+        // Already fetched
+        this.recipe = recipeFetched[1];
+      } else {
+        // Not fetched yet
+        this.recipe = await this.$store.dispatch("fetchRecipeById", id).catch(error => console.error(error));
+      }
+    },
     async getProductAndProducers() {
       await this.getProductBySlug(this.slug);
       if (!this.product) {
@@ -266,6 +307,9 @@ export default {
       }
       if (this.product.producerIds && this.product.producerIds.length) {
         await this.getProducersById(this.product.producerIds);
+      }
+      if (this.product.recipeId) {
+        await this.getRecipeById(this.product.recipeId);
       }
     },
     addProps(category) {

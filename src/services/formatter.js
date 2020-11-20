@@ -61,6 +61,7 @@ export default {
         shopLink: orig.acf["shop-link"],
         producerIds: orig.acf["producer-ids"],
         producerText: orig.acf["producer-text"],
+        recipeId: orig.acf["recipe-id"],
         seals: orig.acf["seals"],
         categories: addCategories(orig),
         featuredImage: addFeaturedImage(orig, "medium_large"),

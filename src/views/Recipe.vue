@@ -147,7 +147,6 @@ export default {
             : 0
         });
       }
-      console.log("Ing", calcIngredients);
       return calcIngredients;
     }
   },
