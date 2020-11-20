@@ -144,14 +144,10 @@ table.ethiquable-table {
   max-width: 500px;
   border-collapse: separate;
   border-spacing: 0;
-  font-size: 15px;
 }
 table.ethiquable-table tr > th {
   color: #fff;
-  background-color: #80a018;
-}
-table.ethiquable-table tr > td {
-  color: #232323;
+  background-color: var(--v-primary-base);
 }
 table.ethiquable-table > *:first-child > tr:first-child > th,
 table.ethiquable-table > *:first-child > tr:first-child > td {

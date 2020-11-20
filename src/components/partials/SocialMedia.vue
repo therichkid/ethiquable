@@ -1,7 +1,7 @@
 <template>
   <div class="text-right" style="min-height: 48px">
     <span v-for="network in networks" :key="network.name">
-      <v-tooltip bottom>
+      <v-tooltip top>
         <template v-slot:activator="{ on }">
           <v-btn
             icon
@@ -21,7 +21,7 @@
     </span>
 
     <!-- Clipboard -->
-    <v-tooltip bottom>
+    <v-tooltip top>
       <template v-slot:activator="{ on }">
         <v-btn
           icon
@@ -45,7 +45,7 @@
     </v-snackbar>
 
     <!-- Print -->
-    <v-tooltip bottom v-if="$vuetify.breakpoint.mdAndUp">
+    <v-tooltip top v-if="$vuetify.breakpoint.mdAndUp">
       <template v-slot:activator="{ on }">
         <v-btn
           icon
@@ -93,7 +93,6 @@ export default {
           color: "#4ac959"
         }
       ],
-      linkPrefix: "https://www.ethiquable.de",
       snackbar: false
     };
   },

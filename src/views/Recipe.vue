@@ -143,7 +143,7 @@ export default {
         calcIngredients.push({
           ...ingredient,
           quantity: ingredient.quantity
-            ? Math.round((this.portions / origPortions) * ingredient.quantity * 1000) / 1000
+            ? Math.round((this.portions / origPortions) * ingredient.quantity * 100) / 100
             : 0
         });
       }
