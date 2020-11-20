@@ -20,9 +20,9 @@
       </v-col>
 
       <!-- Ingredients -->
-      <v-col cols="12">
+      <v-col cols="12" v-if="recipe.portions || recipe.ingredients">
         <h3 class="text-h5 mb-2">Zutaten</h3>
-        <v-card class="mb-2" v-if="recipe.portions || recipe.ingredients">
+        <v-card class="mb-2">
           <v-card-text v-if="recipe.portions">
             <v-text-field
               type="number"

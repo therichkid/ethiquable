@@ -8,7 +8,7 @@
     <v-row v-if="!isLoading && !loadingError" :dense="$vuetify.breakpoint.xsOnly">
       <!-- Filter -->
       <v-col cols="12" sm="8">
-        <v-chip-group multiple active-class="active-chip" v-model="activeCategories">
+        <v-chip-group multiple mandatory active-class="active-chip" v-model="activeCategories">
           <v-chip
             v-for="category in categories"
             :key="category.name"
@@ -73,17 +73,21 @@
         </v-card>
       </v-col>
     </v-row>
+
+    <NoContentYet type="search" v-if="!isLoading && !loadingError && !filteredRecipes.length" />
   </v-container>
 </template>
 
 <script>
 import LoadingSkeleton from "@/components/partials/LoadingSkeleton";
+import NoContentYet from "@/components/partials/NoContentYet";
 const LoadingError = () => import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
 import { COLORS } from "@/constants";
 
 export default {
   components: {
     LoadingSkeleton,
+    NoContentYet,
     LoadingError
   },
 
@@ -92,6 +96,7 @@ export default {
       recipes: [],
       categories: [],
       activeCategories: [],
+      allCategoriesSelected: false,
       sort: 0
     };
   },
@@ -126,6 +131,22 @@ export default {
     }
   },
 
+  watch: {
+    activeCategories(value) {
+      if (value.length === this.categories.length) {
+        this.allCategoriesSelected = true;
+      } else if (value.length === this.categories.length - 1 && this.allCategoriesSelected) {
+        // All categories were previously selected
+        // User clicks on one category -> only set this category to active
+        const numArr = [...Array(this.categories.length).keys()]; // [0, 1, 2, ...]
+        this.activeCategories = numArr.filter(num => !this.activeCategories.includes(num));
+        this.allCategoriesSelected = false;
+      } else {
+        this.allCategoriesSelected = false;
+      }
+    }
+  },
+
   methods: {
     async getRecipes() {
       const recipesFetched = this.$store.getters.getFetchedRecipes();
@@ -142,28 +163,30 @@ export default {
     },
 
     createCategories() {
+      const categories = [];
       const colors = [...COLORS].reverse();
       for (const recipe of this.recipes) {
         if (!recipe.categories || !recipe.categories.length) {
           continue;
         }
         const category = recipe.categories[0];
-        const filtered = this.categories.filter(item => item.name === category.name);
+        const filtered = categories.filter(item => item.name === category.name);
         const existingProps = filtered && filtered.length && filtered[0];
         if (!existingProps) {
-          const color = colors[this.categories.length];
+          const color = colors[categories.length];
           const newProps = {
             name: category.name,
             backgroundColor: color || "var(--v-primary-base)",
             textShadow: color && this.shared.isLightColor(color) ? "1px 1px 2px #000" : "none"
           };
           recipe.category = newProps;
-          this.categories.push(newProps);
-          this.activeCategories.push(this.categories.length - 1);
+          categories.push(newProps);
+          this.activeCategories.push(categories.length - 1);
         } else {
           recipe.category = existingProps;
         }
       }
+      this.categories = categories.sort((a, b) => a.name.localeCompare(b.name, "de", { sensitivity: "base" }));
     }
   },
 
