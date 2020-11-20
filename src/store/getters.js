@@ -24,12 +24,18 @@ export default {
     const products = state.productsPerCategory[category];
     return products && products.length ? [true, products] : [false, null];
   },
-  getFetchedProductBySlug: state => slug => {
+  getFetchedProductByParam: state => ({ param, value }) => {
     for (const products of Object.values(state.productsPerCategory)) {
       for (const product of products) {
-        if (product.slug === slug) {
+        if (product[param] === value) {
           return [true, product];
         }
+      }
+    }
+    if (param === "id") {
+      const product = state.productsById[value];
+      if (product) {
+        return [true, product];
       }
     }
     return [false, null];

@@ -74,7 +74,7 @@ h2 {
   text-align: justify;
 }
 .v-card__title {
-  word-wrap: break-word;
+  word-break: break-word;
 }
 .v-banner__wrapper {
   border-bottom: none !important;
@@ -178,12 +178,17 @@ table.ethiquable-table tr:last-child > td:last-child {
 .ethiquable-grid {
   display: flex;
   width: 100%;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
 }
 .ethiquable-grid > * {
   min-width: 0;
   margin: 2px;
+}
+.ethiquable-grid img {
+  padding: 8px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px,
+    rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
 }
 .post-container .ethiquable-layout > .right {
   border: 1px solid rgba(0, 0, 0, 0.12);

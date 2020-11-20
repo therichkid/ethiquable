@@ -11,12 +11,20 @@
 
       <!-- Image -->
       <v-col cols="12">
-        <v-img :src="recipe.featuredImage.source" :alt="recipe.featuredImage.title" contain max-height="350px"></v-img>
+        <div class="mx-auto pa-3 elevation-2" style="width: max-content; max-width: 100%">
+          <v-img
+            :src="recipe.featuredImage.source"
+            :alt="recipe.featuredImage.title"
+            contain
+            max-width="500px"
+            height="auto"
+          ></v-img>
+        </div>
       </v-col>
 
       <!-- Teaser -->
-      <v-col cols="12">
-        <div v-html="teaser" v-if="teaser"></div>
+      <v-col cols="12" v-if="teaser">
+        <div v-html="teaser"></div>
       </v-col>
 
       <!-- Ingredients -->
@@ -201,7 +209,7 @@ export default {
       }
       const idx = this.recipe.content.search(/<ol|<ul/);
       if (idx > -1) {
-        this.teaser = this.recipe.content.slice(0, idx);
+        this.teaser = this.shared.stripHtml(this.recipe.content.slice(0, idx));
         this.instructions = this.recipe.content.slice(idx);
       } else {
         this.teaser = null;

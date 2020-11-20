@@ -19,7 +19,10 @@
             v-bind="productImageProps"
           ></v-img>
           <div class="px-5" style="flex-grow: 1" ref="headerText">
-            <h1 class="text-h5 text-sm-h4 white--text" style="text-shadow: var(--product-text-shadow)">
+            <h1
+              class="text-h5 text-sm-h4 white--text"
+              style="text-shadow: var(--product-text-shadow); word-wrap: anywhere"
+            >
               {{ product.name }}
             </h1>
             <h2
@@ -235,8 +238,19 @@ export default {
   },
 
   methods: {
-    async getProductBySlug(slug) {
-      const productFetched = this.$store.getters.getFetchedProductBySlug(slug);
+    async getProduct(slug) {
+      let productFetched = [false, null];
+      // Try first with id
+      if (this.$route.query.id) {
+        const id = parseInt(this.$route.query.id, 10);
+        productFetched = this.$store.getters.getFetchedProductByParam({ param: "id", value: id });
+        // Remove query from url
+        window.history.replaceState({}, null, this.$route.path);
+      }
+      // Then try with slug
+      if (!productFetched[0]) {
+        productFetched = this.$store.getters.getFetchedProductByParam({ param: "slug", value: slug });
+      }
       if (productFetched[0]) {
         // Already fetched
         this.product = productFetched[1];
@@ -285,7 +299,7 @@ export default {
       }
     },
     async getProductAndProducers() {
-      await this.getProductBySlug(this.slug);
+      await this.getProduct(this.slug);
       if (!this.product) {
         return;
       }
@@ -377,14 +391,14 @@ export default {
 }
 .header-triangle {
   position: absolute;
-  width: 100%;
+  width: calc(100% - 24px);
   height: 100%;
   background-image: linear-gradient(to right bottom, #e6e6e6 0%, #fefefe 50%, transparent 50%);
   z-index: 0;
 }
 .header-rectangle {
   position: absolute;
-  width: 100%;
+  width: calc(100% - 24px);
   background-color: #d5d5d5;
   z-index: 1;
 }

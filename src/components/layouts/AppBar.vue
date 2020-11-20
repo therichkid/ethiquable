@@ -1,27 +1,31 @@
 <template>
   <v-app-bar app dark prominent dense color="primary" src="@/assets/banner.png">
-    <v-app-bar-nav-icon
-      @click.stop="onMenuToggleClick()"
-      class="hidden-lg-and-up"
-      aria-label="Menü"
-    ></v-app-bar-nav-icon>
+    <v-row>
+      <v-col cols="1">
+        <v-app-bar-nav-icon
+          @click.stop="onMenuToggleClick()"
+          class="hidden-lg-and-up"
+          aria-label="Menü"
+        ></v-app-bar-nav-icon>
+      </v-col>
 
-    <v-spacer></v-spacer>
+      <v-col class="d-flex justify-space-around">
+        <router-link to="/">
+          <v-img
+            src="@/assets/logo.png"
+            height="auto"
+            width="275"
+            alt="ETHIQUABLE-Logo"
+            contain
+            :style="{ 'margin-top': $vuetify.breakpoint.lgAndUp ? '25px' : '5px' }"
+          ></v-img>
+        </router-link>
+      </v-col>
 
-    <router-link to="/">
-      <v-img
-        src="@/assets/logo.png"
-        height="auto"
-        width="275"
-        alt="ETHIQUABLE-Logo"
-        contain
-        :style="{ 'margin-top': $vuetify.breakpoint.lgAndUp ? '35px' : '15px' }"
-      ></v-img>
-    </router-link>
-
-    <v-spacer></v-spacer>
-
-    <SearchBar />
+      <v-col cols="1">
+        <SearchBar />
+      </v-col>
+    </v-row>
 
     <v-toolbar-items slot="extension" v-if="$vuetify.breakpoint.lgAndUp" style="margin: 0 auto">
       <template v-for="(item, i) in routerItems">
