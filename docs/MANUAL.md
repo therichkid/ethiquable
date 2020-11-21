@@ -64,7 +64,7 @@ Felder:
 
 - Text: Am besten das [producer-template.html](https://github.com/therichkid/ethiquable/blob/master/docs/producer-template.html) hernehmen. Beachte hierbei [HTML-Bausteine mit speziellen CSS-Klassen](#html-bausteine-mit-speziellen-css-klassen).
 - Land (Pflichtfeld)
-  - Für Filter und Karte
+  - Für Filter und Karte.
   - Falls ein Land nicht existiert in der Auswahl, mir Bescheid geben.
 - Zutat aus Genossenschaft: Für Filter.
 - Produkt/e

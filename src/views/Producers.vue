@@ -5,8 +5,14 @@
 
     <v-row dense v-if="!loadingError">
       <!-- Filter -->
-      <v-col cols="12" sm="6" lg="4">
-        <v-card class="mt-1">
+      <v-col
+        cols="12"
+        sm="6"
+        lg="4"
+        :class="$vuetify.breakpoint.smAndUp && 'sticky-filter'"
+        :style="{ top: $vuetify.breakpoint.lgAndUp ? '150px' : '100px' }"
+      >
+        <v-card class="my-1">
           <v-card-text>
             <v-row no-gutters>
               <ProducersMap :selectedCountry="selectedCountry" @countrySelected="selectedCountry = $event" />
@@ -43,7 +49,7 @@
           colored-border
           style="border-width: 6px"
           elevation="2"
-          class="mt-2"
+          class="mt-2 mb-1"
           v-model="isInfoShown"
         >
           Verfeinere die Ergebnisse mit der Karte und dem Filter.
@@ -217,6 +223,11 @@ export default {
 </script>
 
 <style scoped>
+.sticky-filter {
+  align-self: flex-start;
+  position: sticky;
+  top: 0;
+}
 * >>> .v-alert__wrapper > i {
   align-self: center;
 }
