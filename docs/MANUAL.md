@@ -62,7 +62,7 @@ http://dev.ethiquable.de/produzenten
 
 Felder:
 
-- Text: Am besten `producer-template.html` hernehmen. Beachte hierbei [HTML-Bausteine mit speziellen CSS-Klassen](#html-bausteine-mit-speziellen-css-klassen).
+- Text: Am besten das [producer-template.html](https://github.com/therichkid/ethiquable/blob/master/docs/producer-template.html) hernehmen. Beachte hierbei [HTML-Bausteine mit speziellen CSS-Klassen](#html-bausteine-mit-speziellen-css-klassen).
 - Land (Pflichtfeld)
   - Für Filter und Karte
   - Falls ein Land nicht existiert in der Auswahl, mir Bescheid geben.
@@ -126,7 +126,7 @@ Im WordPress-Menü links unter `Kontakt-Formulare` ist die Historie über alle a
 
 ## HTML-Bausteine mit speziellen CSS-Klassen
 
-Die folgenden Textbausteine haben CSS-Klassen für besondere Styles. Einfach die Elemente hier herauskopieren (`STRG` + `C`), in WordPress im Editor `Text` auswählen und dort einfügen (`STRG` + `V`). Für Produzenten am besten das `producer-template.html` in diesem Ordner hernehmen.
+Die folgenden Textbausteine haben CSS-Klassen für besondere Styles. Einfach die Elemente hier herauskopieren (`STRG` + `C`), in WordPress im Editor `Text` auswählen und dort einfügen (`STRG` + `V`). Für Produzenten am besten das [producer-template.html](https://github.com/therichkid/ethiquable/blob/master/docs/producer-template.html) hernehmen.
 
 `ethiquable-layout` mit `left` und `right`
 
