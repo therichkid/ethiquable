@@ -5,6 +5,7 @@
         <v-app-bar-nav-icon
           @click.stop="onMenuToggleClick()"
           class="hidden-lg-and-up"
+          style="z-index: 1; text-shadow: 1px 1px 2px black"
           aria-label="Menü"
         ></v-app-bar-nav-icon>
       </v-col>

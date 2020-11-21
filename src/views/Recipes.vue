@@ -21,7 +21,8 @@
           </v-chip>
         </v-chip-group>
       </v-col>
-      <v-col cols="12" sm="4" style="display: inline-flex; justify-content: end; align-items: center">
+      <v-col cols="12" sm="4" style="display: inline-flex; align-items: center">
+        <v-spacer></v-spacer>
         <v-label>Sortierung:</v-label>
         <v-btn-toggle mandatory dense class="ml-2" v-model="sort">
           <v-btn>Datum</v-btn>

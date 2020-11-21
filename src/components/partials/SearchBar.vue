@@ -1,5 +1,5 @@
 <template>
-  <div style="position: absolute; top: 0; right: 16px">
+  <div style="position: absolute; top: 12px; right: 16px">
     <v-menu v-if="!isHidden" v-model="isOpen" offset-y max-height="75%">
       <template v-slot:activator="scope">
         <v-text-field
@@ -45,7 +45,14 @@
         </v-list-item>
       </v-list>
     </v-menu>
-    <v-btn icon text v-else @click.stop="toggleSearchBar()" aria-label="Suche öffnen">
+    <v-btn
+      icon
+      text
+      v-else
+      @click.stop="toggleSearchBar()"
+      :style="{ textShadow: $vuetify.breakpoint.mdAndDown ? '1px 1px 2px black' : 'none' }"
+      aria-label="Suche öffnen"
+    >
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
   </div>
