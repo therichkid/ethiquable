@@ -187,19 +187,19 @@ export default {
         .then(
           response => {
             let { data } = response;
-            const producers = formatter.formatProducts(data);
-            context.commit("storeProductsById", producers);
+            const products = formatter.formatProducts(data);
+            context.commit("storeProductsById", products);
             context.commit("incrementFailedRequests", 0);
-            resolve(producers);
+            resolve(products);
           },
           error => {
-            context.commit("changeProducersLoadingError", true);
+            context.commit("changeProductsLoadingError", true);
             context.commit("incrementFailedRequests", 1);
             reject(error);
           }
         )
         .finally(() => {
-          context.commit("changeProducersLoading", false);
+          context.commit("changeProductsLoading", false);
         });
     });
   },

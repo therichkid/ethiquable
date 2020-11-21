@@ -1,9 +1,9 @@
 <template>
   <v-container>
-    <LoadingSkeleton v-if="isLoadingProducts" />
-    <LoadingError v-if="loadingErrorProducts" :height="500" @retryAgain="getProductAndProducers()" />
+    <LoadingSkeleton v-if="isLoading" />
+    <LoadingError v-if="loadingError" :height="500" @retryAgain="getProductAndProducers()" />
 
-    <v-row v-if="!isLoadingProducts && !loadingErrorProducts && Object.keys(product).length" :style="productStyle">
+    <v-row v-if="!isLoading && !loadingError && Object.keys(product).length" :style="productStyle">
       <!-- Header -->
       <v-col cols="12" class="header-container">
         <div class="header-triangle"></div>
@@ -120,7 +120,7 @@
       </v-col>
 
       <!-- Right column -->
-      <!-- Just don't show producers until it's loaded or there is an error -->
+      <!-- Just don't show producers until it's loaded or if there is an error -->
       <v-col cols="12" md="6" v-if="producers.length">
         <!-- Producers -->
         <h2 class="text-h4 mt-4 mb-2">Das will ich</h2>
@@ -205,10 +205,10 @@ export default {
   },
 
   computed: {
-    isLoadingProducts() {
+    isLoading() {
       return this.$store.state.productsLoading;
     },
-    loadingErrorProducts() {
+    loadingError() {
       return this.$store.state.productsLoadingError;
     },
     failedRequests() {

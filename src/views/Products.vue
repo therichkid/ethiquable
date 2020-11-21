@@ -9,15 +9,15 @@
       <v-col cols="12" v-html="categoryPage.content"></v-col>
     </v-row>
 
-    <v-row v-if="!isLoading && !loadingError && products.length" no-gutters align="end">
-      <v-col v-for="product in products" :key="product.id" v-bind="breakpointProps">
+    <v-row v-if="!isLoading && !loadingError && products.length" no-gutters>
+      <v-col v-for="product in products" :key="product.id" v-bind="breakpointProps" class="d-flex">
         <v-card
           flat
           hover
           tile
           :to="`/produkte/${product.slug}`"
-          class="my-2"
-          style="height: 100%; border-bottom: 6px solid var(--v-secondary-base)"
+          class="d-flex flex-column my-2"
+          style="border-bottom: 6px solid var(--v-secondary-base); width: 100%"
         >
           <v-spacer></v-spacer>
           <v-img :src="product.featuredImage.source" :alt="product.featuredImage.title" v-bind="imageProps"></v-img>

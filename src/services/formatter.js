@@ -98,7 +98,8 @@ export default {
         content: orig.content.rendered,
         featuredImage: addFeaturedImage(orig, "medium"),
         country: orig.acf.country,
-        ingredient: orig.acf.ingredient
+        ingredient: orig.acf.ingredient,
+        productIds: orig.acf["product-ids"]
       };
       producers.push(producer);
     }
