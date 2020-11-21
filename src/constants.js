@@ -100,6 +100,12 @@ export const COUNTRY_NAMES = [
     continent: "latin-america"
   },
   {
+    key: "cambodia",
+    label: "Kambodscha",
+    admin: "Cambodia",
+    continent: "asia"
+  },
+  {
     key: "china",
     label: "China",
     admin: "China",
@@ -116,6 +122,12 @@ export const COUNTRY_NAMES = [
     label: "El Salvador",
     admin: "El Salvador",
     continent: "latin-america"
+  },
+  {
+    key: "ethiopia",
+    label: "Äthiopien",
+    admin: "Ethiopia",
+    continent: "africa"
   },
   {
     key: "ivory-coast",
@@ -145,6 +157,12 @@ export const COUNTRY_NAMES = [
     key: "congo",
     label: "Kongo",
     admin: "Democratic Republic of the Congo",
+    continent: "africa"
+  },
+  {
+    key: "madagascar",
+    label: "Madagaskar",
+    admin: "Madagascar",
     continent: "africa"
   },
   {
@@ -178,10 +196,22 @@ export const COUNTRY_NAMES = [
     continent: "africa"
   },
   {
+    key: "sri-lanka",
+    label: "Sri Lanka",
+    admin: "Sri Lanka",
+    continent: "asia"
+  },
+  {
     key: "thailand",
     label: "Thailand",
     admin: "Thailand",
     continent: "asia"
+  },
+  {
+    key: "togo",
+    label: "Togo",
+    admin: "Togo",
+    continent: "africa"
   },
   {
     key: "tunisia",
