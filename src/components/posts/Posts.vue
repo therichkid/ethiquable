@@ -64,7 +64,7 @@
 <script>
 import LoadingSkeleton from "@/components/partials/LoadingSkeleton";
 import NoContentYet from "@/components/partials/NoContentYet";
-const LoadingError = () => import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
+import LoadingError from "@/components/partials/LoadingError";
 
 export default {
   components: {

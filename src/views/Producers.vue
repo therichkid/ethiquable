@@ -94,7 +94,7 @@
 import LoadingSkeleton from "@/components/partials/LoadingSkeleton";
 import NoContentYet from "@/components/partials/NoContentYet";
 const ProducersMap = () => import(/* webpackChunkName: "map" */ "@/components/maps/ProducersMap");
-const LoadingError = () => import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
+import LoadingError from "@/components/partials/LoadingError";
 
 export default {
   components: {
