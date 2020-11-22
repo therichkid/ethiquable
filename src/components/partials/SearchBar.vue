@@ -11,7 +11,7 @@
           solo
           hide-details
           autofocus
-          :light="!$vuetify.theme.dark"
+          light
           prepend-inner-icon="mdi-magnify"
           append-icon="mdi-close"
           @click:append="toggleSearchBar"
