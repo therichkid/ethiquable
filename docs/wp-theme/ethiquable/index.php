@@ -47,6 +47,11 @@
   <body <?php body_class(); ?>
     >
     <?php wp_body_open(); ?>
+    <noscript>
+      <strong>
+        We're sorry but ETHIQUABLE doesn't work properly without JavaScript enabled. Please enable it to continue.
+      </strong>
+    </noscript>
     <div id="app"></div>
     <?php wp_footer(); ?>
   </body>

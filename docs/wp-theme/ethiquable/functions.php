@@ -8,6 +8,15 @@ function remove_redirects() {
 }
 add_action( 'init', 'remove_redirects' );
 
+// Convert 404s thrown by WP to 202 Accepted
+function convert_404_headers( $status_header, $header ) {
+  if ( (int) $header == 404 ) {
+    return status_header( 202 );
+  }
+  return $status_header;
+}
+add_filter( 'status_header', 'convert_404_headers', 10, 2 );
+
 // Add scripts
 function add_vue_scripts() {
   wp_enqueue_script( 'app', get_stylesheet_directory_uri() . '/dist/app.js', array( 'jquery' ), filemtime( get_stylesheet_directory() . '/dist/app.js' ), true );
