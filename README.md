@@ -85,3 +85,11 @@ npm run lint
 ### Customize configuration
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## Web Deployment
+
+The `dist` folder should recide within a WordPress theme folder. A starter template is provided in `docs/wp-theme`.
+
+1. Copy `docs/wp-theme/ethiquable` to the `wp-content/themes/` folder on the server and activate this theme in WordPress.
+2. `npm run build`
+3. Copy `dist` to the `wp-content/themes/ethiquable/` folder on the server.

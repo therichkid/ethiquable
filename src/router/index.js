@@ -153,7 +153,7 @@ const routes = [
 const router = new Router({
   routes,
   mode: "history",
-  base: process.env.BASE_URL,
+  base: "/", // process.env.BASE_URL
   scrollBehavior(to, from, savedPosition) {
     if (to.hash) {
       // Give the anchor some time to load

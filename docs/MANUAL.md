@@ -13,6 +13,8 @@
   - [HTML-Bausteine mit speziellen CSS-Klassen](#html-bausteine-mit-speziellen-css-klassen)
   - [Aufgaben, wofür ihr mich konsultieren müsst](#aufgaben-wofür-ihr-mich-konsultieren-müsst)
 
+Admin-Panel: http://admin.ethiquable.de/wp-admin/
+
 ## Post-Typen und deren Bearbeitung
 
 ### Beiträge
