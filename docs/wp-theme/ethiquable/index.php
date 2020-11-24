@@ -28,9 +28,6 @@
     <meta itemprop="image" content="/wp-content/themes/ethiquable/dist/img/og_image.jpg" />
     <link rel="icon" href="/wp-content/themes/ethiquable/dist/img/favicon.ico" />
     <title>ETHIQUABLE</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css" />
     <script>
       if (/MSIE|Trident/.test(window.navigator.userAgent)) {
         document.write('<script src="https://unpkg.com/css-vars-ponyfill@2/dist/css-vars-ponyfill.min.js"><\/script>');

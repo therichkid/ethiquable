@@ -21,6 +21,8 @@ add_filter( 'status_header', 'convert_404_headers', 10, 2 );
 function add_vue_scripts() {
   wp_enqueue_script( 'app', get_stylesheet_directory_uri() . '/dist/app.js', array( 'jquery' ), filemtime( get_stylesheet_directory() . '/dist/app.js' ), true );
   wp_enqueue_script( 'map', get_stylesheet_directory_uri() . '/dist/map.js', array( 'jquery' ), filemtime( get_stylesheet_directory() . '/dist/map.js' ), true );
+  wp_enqueue_style( 'app', get_stylesheet_directory_uri() . '/dist/app.css', null, filemtime( get_stylesheet_directory() . '/dist/app.css' ) );
+  wp_enqueue_style( 'map', get_stylesheet_directory_uri() . '/dist/map.css', null, filemtime( get_stylesheet_directory() . '/dist/map.css' ) );
 }
 add_action( 'wp_enqueue_scripts', 'add_vue_scripts' );
 
