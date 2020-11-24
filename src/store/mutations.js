@@ -72,6 +72,9 @@ export default {
       }
     }
   },
+  changeProducersFilter(state, { key, value }) {
+    state.producersFilter[key] = value;
+  },
   changeSlidesLoading(state, value) {
     state.slidesLoading = value;
   },
@@ -94,5 +97,8 @@ export default {
     if (!state.recipesById[recipe.id]) {
       state.recipesById[recipe.id] = recipe;
     }
+  },
+  changeRecipesFilter(state, { key, value }) {
+    state.recipesFilter[key] = value;
   }
 };

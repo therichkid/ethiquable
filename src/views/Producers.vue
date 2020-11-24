@@ -152,10 +152,14 @@ export default {
   },
 
   watch: {
+    selectedCountry(value) {
+      this.$store.commit("changeProducersFilter", { key: "country", value });
+    },
+    selectedIngredient(value) {
+      this.$store.commit("changeProducersFilter", { key: "ingredient", value });
+    },
     isInfoShown(value) {
-      if (value === false) {
-        sessionStorage.setItem("producersInfoDismissed", "true");
-      }
+      this.$store.commit("changeProducersFilter", { key: "infoDismissed", value: !value });
     }
   },
 
@@ -215,9 +219,10 @@ export default {
   },
 
   mounted() {
-    if (sessionStorage.getItem("producersInfoDismissed") === "true") {
-      this.isInfoShown = false;
-    }
+    const { country, ingredient, infoDismissed } = this.$store.state.producersFilter;
+    this.selectedCountry = country;
+    this.selectedIngredient = ingredient;
+    this.isInfoShown = !infoDismissed;
   }
 };
 </script>

@@ -30,13 +30,22 @@ export default new Vuex.Store({
     producersById: {},
     producersLoading: false,
     producersLoadingError: false,
+    producersFilter: {
+      country: "",
+      ingredient: "",
+      infoDismissed: false
+    },
     slides: [],
     slidesLoading: false,
     slidesLoadingError: false,
     recipes: [],
     recipesById: {},
     recipesLoading: false,
-    recipesLoadingError: false
+    recipesLoadingError: false,
+    recipesFilter: {
+      sort: 0,
+      activeCategories: []
+    }
   },
 
   getters,

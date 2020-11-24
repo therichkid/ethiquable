@@ -118,7 +118,7 @@ export default {
       } else {
         for (const recipe of this.recipes) {
           for (const i of this.activeCategories) {
-            if (recipe.category && recipe.category.name === this.categories[i].name) {
+            if (recipe.category && this.categories[i] && recipe.category.name === this.categories[i].name) {
               filteredRecipes.push(recipe);
             }
           }
@@ -145,6 +145,10 @@ export default {
       } else {
         this.allCategoriesSelected = false;
       }
+      this.$store.commit("changeRecipesFilter", { key: "activeCategories", value: this.activeCategories });
+    },
+    sort(value) {
+      this.$store.commit("changeRecipesFilter", { key: "sort", value });
     }
   },
 
@@ -165,6 +169,7 @@ export default {
 
     createCategories() {
       const categories = [];
+      const activeCategories = [];
       const colors = [...COLORS].reverse();
       for (const recipe of this.recipes) {
         if (!recipe.categories || !recipe.categories.length) {
@@ -182,18 +187,27 @@ export default {
           };
           recipe.category = newProps;
           categories.push(newProps);
-          this.activeCategories.push(categories.length - 1);
+          activeCategories.push(categories.length - 1);
         } else {
           recipe.category = existingProps;
         }
       }
       this.categories = categories.sort((a, b) => a.name.localeCompare(b.name, "de", { sensitivity: "base" }));
+      if (this.$store.state.recipesFilter.activeCategories.length) {
+        this.activeCategories = this.$store.state.recipesFilter.activeCategories;
+      } else {
+        this.activeCategories = activeCategories;
+      }
     }
   },
 
   async created() {
     await this.getRecipes();
     this.createCategories();
+  },
+
+  mounted() {
+    this.sort = this.$store.state.recipesFilter.sort;
   }
 };
 </script>
