@@ -14,7 +14,7 @@ export default {
         excerpt: orig.excerpt.rendered,
         content: orig.content.rendered,
         dateOrig: orig.date.slice(0, 10),
-        date: formatDate(null, orig.date),
+        date: formatDate(orig.date),
         featuredImage: addFeaturedImage(orig, "medium_large")
       };
       posts.push(article);
@@ -65,7 +65,8 @@ export default {
         seals: orig.acf["seals"],
         categories: addCategories(orig),
         featuredImage: addFeaturedImage(orig, "medium_large"),
-        decorationImage: addAcfImage(orig.acf["decoration-image"], "medium")
+        decorationImage: addAcfImage(orig.acf["decoration-image"], "medium"),
+        isNew: checkIfNew(orig.date)
       };
       products.push(product);
     }
@@ -149,73 +150,11 @@ export default {
 
 // * Helper functions
 // Date
-const formatDate = (type, date1, date2) => {
-  const daysOfWeek = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
-  const monthsOfYear = [
-    { short: "Jan.", long: "Januar" },
-    { short: "Feb", long: "Februar" },
-    { short: "Mär.", long: "März" },
-    { short: "Apr.", long: "April" },
-    { short: "Mai", long: "Mai" },
-    { short: "Jun.", long: "Juni" },
-    { short: "Jul.", long: "Juli" },
-    { short: "Aug.", long: "August" },
-    { short: "Sep.", long: "September" },
-    { short: "Okt", long: "Oktober" },
-    { short: "Nov.", long: "November" },
-    { short: "Dez.", long: "Dezember" }
-  ];
-  // Expects date format as String as it comes from WordPress DB: YYYY-mm-dd
-  const YYYY = parseInt(date1.slice(0, 4), 10);
-  const mm1 = parseInt(date1.slice(5, 7), 10) - 1;
-  const dd1 = parseInt(date1.slice(8, 10), 10);
-  if (!checkDateFormat("split", YYYY, mm1, dd1)) {
-    throw "Invalid Date Format detected!";
+const formatDate = date => {
+  if (Intl.DateTimeFormat) {
+    return Intl.DateTimeFormat("de-DE", { day: "numeric", month: "short", year: "numeric" }).format(new Date(date));
   }
-  let mm2;
-  let dd2;
-  const parsedDate1 = new Date(YYYY, mm1, dd1);
-  let day = daysOfWeek[parsedDate1.getDay()];
-  let month = monthsOfYear[mm1].short;
-  const formattedDate = `${dd1.toString()}. ${month} ${YYYY}`;
-  if (type === "event") {
-    if (date2) {
-      mm2 = parseInt(date2.slice(5, 7), 10) - 1;
-      dd2 = parseInt(date2.slice(8, 10), 10);
-      if (!checkDateFormat("split", YYYY, mm2, dd2)) {
-        throw "Invalid Date Format detected!";
-      }
-      const parsedDate2 = new Date(YYYY, mm2, dd2);
-      if (parsedDate2 !== parsedDate1) {
-        day += ` bis ${daysOfWeek[parsedDate2.getDay()]}`;
-        if (mm2 !== mm1) {
-          month += ` bis ${monthsOfYear[mm2].short}`;
-        }
-      }
-    }
-    if (YYYY !== new Date().getFullYear()) {
-      month += ` ${YYYY}`;
-    }
-    return [formattedDate, dd2 ? `${dd1} - ${dd2}` : dd1.toString(), `${month}, ${day}`];
-  } else {
-    return formattedDate;
-  }
-};
-// To check if the input is valid (YYYY-mm-dd)
-const checkDateFormat = (type, ...input) => {
-  let YYYY, mm, dd;
-  if (type === "raw") {
-    YYYY = parseInt(input[0].slice(0, 4), 10);
-    mm = parseInt(input[0].slice(5, 7), 10) - 1;
-    dd = parseInt(input[0].slice(8, 10), 10);
-  } else if (type === "split") {
-    [YYYY, mm, dd] = input;
-  }
-  if ([YYYY, mm, dd].includes(NaN)) {
-    return false;
-  } else {
-    return true;
-  }
+  return date;
 };
 // Check if post date is not older than one month
 const checkIfNew = date => {

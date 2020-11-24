@@ -20,7 +20,13 @@
           style="border-bottom: 6px solid var(--v-secondary-base); width: 100%"
         >
           <v-spacer></v-spacer>
-          <v-img :src="product.featuredImage.source" :alt="product.featuredImage.title" v-bind="imageProps"></v-img>
+          <v-img :src="product.featuredImage.source" :alt="product.featuredImage.title" v-bind="imageProps">
+            <v-chip-group class="mt-1 ml-3" v-if="product.isNew">
+              <v-chip color="#ffc107" text-color="white" small style="text-shadow: 1px 1px 2px black">
+                <b>NEU</b>
+              </v-chip>
+            </v-chip-group>
+          </v-img>
         </v-card>
       </v-col>
     </v-row>
