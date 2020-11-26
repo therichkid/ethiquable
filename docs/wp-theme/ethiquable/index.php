@@ -27,6 +27,29 @@
     <meta itemprop="image" content="/wp-content/themes/ethiquable/dist/img/og_image.jpg" />
     <link rel="icon" href="/wp-content/themes/ethiquable/dist/img/favicon.ico" />
     <title>ETHIQUABLE</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <link
+      rel="preload"
+      as="style"
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css"
+      media="print"
+      onload="this.media='all'"
+    />
     <script>
       if (/MSIE|Trident/.test(window.navigator.userAgent)) {
         document.write('<script src="https://unpkg.com/css-vars-ponyfill@2/dist/css-vars-ponyfill.min.js"><\/script>');
@@ -35,9 +58,6 @@
         });
       }
     </script>
-    <link href="/wp-content/themes/ethiquable/dist/map.css" rel="prefetch">
-    <link href="/wp-content/themes/ethiquable/dist/app.css" rel="preload" as="style">
-    <link href="/wp-content/themes/ethiquable/dist/app.css" rel="stylesheet">
     <?php wp_head(); ?>
   </head>
   <body <?php body_class(); ?>
