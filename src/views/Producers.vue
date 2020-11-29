@@ -144,7 +144,7 @@ export default {
     filteredCountries() {
       let countries = [];
       if (!this.selectedIngredient) {
-        countries = this.countries;
+        countries = [...this.countries];
       } else {
         for (const producer of this.producers) {
           if (producer.ingredient && producer.ingredient.includes(this.selectedIngredient)) {
@@ -160,7 +160,7 @@ export default {
     filteredIngredients() {
       let ingredients = [];
       if (!this.selectedCountry) {
-        ingredients = this.ingredients;
+        ingredients = [...this.ingredients];
       } else {
         for (const producer of this.producers) {
           if (!producer.ingredient) {
