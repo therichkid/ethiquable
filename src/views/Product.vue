@@ -200,7 +200,8 @@ export default {
           label: "SPP",
           img: require("@/assets/logos/spp.png")
         }
-      }
+      },
+      timeout: null
     };
   },
 
@@ -351,7 +352,11 @@ export default {
     resizeHandler() {
       if (window.innerWidth !== this.currentWindowWidth) {
         this.addProps();
-        this.calcRectangleHeight();
+        // Wait a tiny bit until the DOM is updated and the ref is returning the correct height
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+          this.calcRectangleHeight();
+        }, 250);
       }
       this.currentWindowWidth = window.innerWidth;
     },
