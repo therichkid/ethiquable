@@ -10,7 +10,7 @@
       </v-col>
 
       <!-- Image -->
-      <v-col cols="12">
+      <v-col cols="12" class="image-wrapper">
         <div class="mx-auto pa-3 elevation-2" style="width: max-content; max-width: 100%">
           <v-img
             :src="recipe.featuredImage.source"
@@ -244,5 +244,10 @@ export default {
 * >>> h6 {
   color: var(--v-primary-base);
   text-transform: uppercase;
+}
+@media print {
+  .image-wrapper {
+    display: none;
+  }
 }
 </style>

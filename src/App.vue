@@ -221,6 +221,7 @@ table.ethiquable-table tr:last-child > td:last-child {
   footer,
   img,
   iframe,
+  .v-image,
   .v-btn--fab,
   .v-tooltip__content {
     display: none !important;
