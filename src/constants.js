@@ -248,12 +248,12 @@ export const COUNTRY_NAMES = [
 export const COLORS = [
   "#1099b1",
   "#ed7607",
+  "#b4bc1b",
   "#45266d",
   "#6ba774",
   "#b1291d",
-  "#b4bc1b",
+  "#0a441d",
   "#394391",
   "#ec615a",
-  "#0a441d",
   "#492619"
 ];

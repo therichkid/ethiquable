@@ -33,7 +33,7 @@
           hover
           :to="`/magazin/${article.slug}`"
           class="d-flex flex-column"
-          style="width: 100%; border-top: 8px solid var(--v-primary-base)"
+          style="width: 100%; border-top: 6px solid var(--v-primary-base)"
         >
           <v-img
             :src="article.featuredImage.source"

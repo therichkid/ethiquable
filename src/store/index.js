@@ -43,8 +43,7 @@ export default new Vuex.Store({
     recipesLoading: false,
     recipesLoadingError: false,
     recipesFilter: {
-      sort: 0,
-      activeCategories: []
+      activeCategory: 0
     }
   },
 

@@ -7,27 +7,22 @@
 
     <v-row v-if="!isLoading && !loadingError" :dense="$vuetify.breakpoint.xsOnly">
       <!-- Filter -->
-      <v-col cols="12" sm="8">
-        <v-chip-group multiple mandatory active-class="active-chip" v-model="activeCategories">
+      <v-col cols="12" v-if="categories.length">
+        <v-chip-group mandatory show-arrows v-model="activeCategory">
+          <v-chip color="primary" :outlined="activeCategory !== 0" :text-color="activeCategory === 0 ? 'white' : null">
+            <b>Alle</b>
+          </v-chip>
           <v-chip
-            v-for="category in categories"
-            :key="category.name"
+            v-for="(category, i) in categories"
+            :key="i"
             :color="category.backgroundColor"
-            text-color="white"
-            style="opacity: 0.25"
-            :style="{ textShadow: category.textShadow }"
+            :outlined="activeCategory !== i + 1"
+            :text-color="activeCategory === i + 1 ? 'white' : null"
+            :style="{ textShadow: activeCategory === i + 1 ? category.textShadow : null }"
           >
-            {{ category.name }}
+            <b>{{ category.name }}</b>
           </v-chip>
         </v-chip-group>
-      </v-col>
-      <v-col cols="12" sm="4" style="display: inline-flex; align-items: center">
-        <v-spacer></v-spacer>
-        <v-label>Sortierung:</v-label>
-        <v-btn-toggle mandatory dense class="ml-2" v-model="sort">
-          <v-btn>Datum</v-btn>
-          <v-btn>Name</v-btn>
-        </v-btn-toggle>
       </v-col>
 
       <!-- Recipes -->
@@ -37,7 +32,7 @@
           :to="`/rezepte/${recipe.slug}`"
           class="d-flex flex-column"
           :style="{
-            'border-top': `8px solid ${(recipe.category && recipe.category.backgroundColor) || 'var(--v-primary-base)'}`
+            'border-top': `6px solid ${(recipe.category && recipe.category.backgroundColor) || 'var(--v-primary-base)'}`
           }"
         >
           <v-img
@@ -96,9 +91,7 @@ export default {
     return {
       recipes: [],
       categories: [],
-      activeCategories: [],
-      allCategoriesSelected: false,
-      sort: 0
+      activeCategory: null
     };
   },
 
@@ -111,44 +104,26 @@ export default {
     },
     filteredRecipes() {
       let filteredRecipes = [];
-      if (this.activeCategories.length === this.categories.length) {
+      if (this.activeCategory === 0) {
         filteredRecipes = [...this.recipes];
-      } else if (!this.activeCategories.length) {
-        filteredRecipes = [];
       } else {
         for (const recipe of this.recipes) {
-          for (const i of this.activeCategories) {
-            if (recipe.category && this.categories[i] && recipe.category.name === this.categories[i].name) {
-              filteredRecipes.push(recipe);
-            }
+          if (
+            recipe.category &&
+            this.categories[this.activeCategory - 1] &&
+            recipe.category.name === this.categories[this.activeCategory - 1].name
+          ) {
+            filteredRecipes.push(recipe);
           }
         }
-      }
-      if (this.sort === 1) {
-        // Sort by name
-        filteredRecipes = filteredRecipes.sort((a, b) => a.title.localeCompare(b.title, "de", { sensitivity: "base" }));
       }
       return filteredRecipes;
     }
   },
 
   watch: {
-    activeCategories(value) {
-      if (value.length === this.categories.length) {
-        this.allCategoriesSelected = true;
-      } else if (value.length === this.categories.length - 1 && this.allCategoriesSelected) {
-        // All categories were previously selected
-        // User clicks on one category -> only set this category to active
-        const numArr = [...Array(this.categories.length).keys()]; // [0, 1, 2, ...]
-        this.activeCategories = numArr.filter(num => !this.activeCategories.includes(num));
-        this.allCategoriesSelected = false;
-      } else {
-        this.allCategoriesSelected = false;
-      }
-      this.$store.commit("changeRecipesFilter", { key: "activeCategories", value: this.activeCategories });
-    },
-    sort(value) {
-      this.$store.commit("changeRecipesFilter", { key: "sort", value });
+    activeCategory(value) {
+      this.$store.commit("changeRecipesFilter", { key: "activeCategory", value });
     }
   },
 
@@ -169,7 +144,6 @@ export default {
 
     createCategories() {
       const categories = [];
-      const activeCategories = [];
       const colors = [...COLORS].reverse();
       for (const recipe of this.recipes) {
         if (!recipe.categories || !recipe.categories.length) {
@@ -187,17 +161,11 @@ export default {
           };
           recipe.category = newProps;
           categories.push(newProps);
-          activeCategories.push(categories.length - 1);
         } else {
           recipe.category = existingProps;
         }
       }
       this.categories = categories.sort((a, b) => a.name.localeCompare(b.name, "de", { sensitivity: "base" }));
-      if (this.$store.state.recipesFilter.activeCategories.length) {
-        this.activeCategories = this.$store.state.recipesFilter.activeCategories;
-      } else {
-        this.activeCategories = activeCategories;
-      }
     }
   },
 
@@ -207,13 +175,9 @@ export default {
   },
 
   mounted() {
-    this.sort = this.$store.state.recipesFilter.sort;
+    this.activeCategory = this.$store.state.recipesFilter.activeCategory;
   }
 };
 </script>
 
-<style scoped>
-.active-chip {
-  opacity: 1 !important;
-}
-</style>
+<style></style>

@@ -77,7 +77,7 @@
           hover
           :to="{ path: `/rezepte/${recipe.slug}`, query: { id: recipe.id } }"
           class="mt-4 mb-2"
-          style="border-top: 8px solid var(--product-bg-color-primary); max-width: 500px"
+          style="border-top: 6px solid var(--product-bg-color-primary); max-width: 500px"
           v-if="recipe"
         >
           <div class="d-flex">
