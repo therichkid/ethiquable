@@ -48,7 +48,7 @@
               <tbody>
                 <tr v-for="ingredient in ingredients" :key="ingredient.name">
                   <td class="text-right">
-                    {{ ingredient.quantity > 0 ? ingredient.quantity : "" }}
+                    <span v-html="ingredient.quantity"></span>
                     {{ ingredient.unit && ` ${ingredient.unit}` }}
                   </td>
                   <td>
@@ -71,7 +71,7 @@
       </v-col>
 
       <!-- Effort -->
-      <v-chip-group v-if="efforts.length" class="mx-2">
+      <v-chip-group v-if="efforts.length" column class="mx-2">
         <v-chip v-for="effort in efforts" :key="effort.name">
           <v-icon left color="primary">mdi-clock-outline</v-icon>
           {{ effort.name }}: {{ effort.time }} Min.
@@ -101,6 +101,7 @@
 </template>
 
 <script>
+import frac from "frac";
 import LoadingSkeleton from "@/components/partials/LoadingSkeleton";
 import SocialMedia from "@/components/partials/SocialMedia";
 import LoadingError from "@/components/partials/LoadingError";
@@ -142,20 +143,14 @@ export default {
       return this.$store.state.failedRequests;
     },
     ingredients() {
-      const origPortions = this.recipe.portions;
-      if (!this.portions || this.portions === origPortions) {
-        return this.recipe.ingredients;
-      }
-      const calcIngredients = [];
+      const ingredients = [];
       for (const ingredient of this.recipe.ingredients) {
-        calcIngredients.push({
+        ingredients.push({
           ...ingredient,
-          quantity: ingredient.quantity
-            ? Math.round((this.portions / origPortions) * ingredient.quantity * 100) / 100
-            : 0
+          quantity: ingredient.quantity ? this.calcQuantity(ingredient.quantity) : ""
         });
       }
-      return calcIngredients;
+      return ingredients;
     }
   },
 
@@ -225,6 +220,18 @@ export default {
           this.efforts.push({ name, time });
         }
       });
+    },
+    calcQuantity(quantity) {
+      const portionsFrac = this.portions && this.recipe.portions ? this.portions / this.recipe.portions : 1;
+      const [quot, num, den] = frac(portionsFrac * quantity, 9, true);
+      let str = "";
+      if (quot) {
+        str += quot;
+      }
+      if (num && den) {
+        str += ` <sup>${num}</sup>&frasl;<sub>${den}</sub>`;
+      }
+      return str;
     },
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");

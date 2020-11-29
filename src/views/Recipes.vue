@@ -41,19 +41,15 @@
             max-height="200"
             style="border-radius: 0"
           >
+            <v-chip-group class="mt-1 ml-3" v-if="recipe.isNew">
+              <v-chip color="#ffc107" text-color="white" small style="text-shadow: 1px 1px 2px black">
+                <b>NEU</b>
+              </v-chip>
+            </v-chip-group>
           </v-img>
-          <v-chip-group class="px-3" v-if="recipe.isNew || recipe.category">
-            <v-chip color="#ffc107" text-color="white" small style="text-shadow: 1px 1px 2px black" v-if="recipe.isNew">
-              <b>NEU</b>
-            </v-chip>
-            <v-chip
-              :color="recipe.category.backgroundColor"
-              text-color="white"
-              small
-              :style="{ textShadow: recipe.category.textShadow }"
-              v-if="recipe.category"
-            >
-              {{ recipe.category.name }}
+          <v-chip-group class="px-3" v-if="recipe.category && activeCategory === 0">
+            <v-chip :color="recipe.category.backgroundColor" outlined small>
+              <b>{{ recipe.category.name }}</b>
             </v-chip>
           </v-chip-group>
           <v-card-title class="pt-0">
