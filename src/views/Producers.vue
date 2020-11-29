@@ -18,7 +18,7 @@
               <ProducersMap :selectedCountry="selectedCountry" @countrySelected="selectedCountry = $event" />
               <v-col cols="12">
                 <v-select
-                  :items="countries"
+                  :items="filteredCountries"
                   item-text="text"
                   item-value="value"
                   v-model="selectedCountry"
@@ -30,7 +30,7 @@
               </v-col>
               <v-col cols="12">
                 <v-select
-                  :items="ingredients"
+                  :items="filteredIngredients"
                   v-model="selectedIngredient"
                   label="Zutat aus Genossenschaft"
                   clearable
@@ -130,24 +130,53 @@ export default {
           continue;
         }
         if (this.selectedIngredient) {
-          const ingredients = (producer.ingredient && producer.ingredient.split(",")) || [];
-          let hasIngredient = false;
-          for (const ingredient of ingredients) {
-            if (ingredient.trim() === this.selectedIngredient) {
-              hasIngredient = true;
-            }
-          }
-          if (!hasIngredient) {
+          if (!producer.ingredient.includes(this.selectedIngredient)) {
             continue;
           }
         }
         filteredProducers.push(producer);
       }
-      filteredProducers.sort((a, b) => a.name.localeCompare(b.name, "de", { sensitivity: "base" }));
       if (this.isInfoShown && filteredProducers.length < this.producers.length) {
         this.dismissInfo();
       }
-      return filteredProducers;
+      return filteredProducers.sort((a, b) => a.name.localeCompare(b.name, "de", { sensitivity: "base" }));
+    },
+    filteredCountries() {
+      let countries = [];
+      if (!this.selectedIngredient) {
+        countries = this.countries;
+      } else {
+        for (const producer of this.producers) {
+          if (producer.ingredient && producer.ingredient.includes(this.selectedIngredient)) {
+            const orig = this.countries.find(country => country.value === producer.country);
+            if (orig && !countries.includes(orig)) {
+              countries.push(orig);
+            }
+          }
+        }
+      }
+      return countries.sort((a, b) => a.text.localeCompare(b.text, "de", { sensitivity: "base" }));
+    },
+    filteredIngredients() {
+      let ingredients = [];
+      if (!this.selectedCountry) {
+        ingredients = this.ingredients;
+      } else {
+        for (const producer of this.producers) {
+          if (!producer.ingredient) {
+            continue;
+          }
+          if (producer.country === this.selectedCountry) {
+            producer.ingredient.split(",").forEach(item => {
+              const ingredient = item.trim();
+              if (!ingredients.includes(ingredient)) {
+                ingredients.push(ingredient);
+              }
+            });
+          }
+        }
+      }
+      return ingredients.sort((a, b) => a.localeCompare(b, "de", { sensitivity: "base" }));
     }
   },
 
@@ -205,8 +234,8 @@ export default {
           });
         }
       }
-      this.countries = countries.sort((a, b) => a.text.localeCompare(b.text, "de", { sensitivity: "base" }));
-      this.ingredients = ingredients.sort((a, b) => a.localeCompare(b, "de", { sensitivity: "base" }));
+      this.countries = countries;
+      this.ingredients = ingredients;
     },
     dismissInfo() {
       this.isInfoShown = false;
