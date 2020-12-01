@@ -29,6 +29,7 @@
             <v-list-item-title v-html="product.title.rendered"></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-divider></v-divider>
         <v-subheader>
           Rezepte
           <v-spacer></v-spacer>
@@ -39,7 +40,6 @@
             <v-list-item-title v-html="recipe.title.rendered"></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-divider></v-divider>
       </v-list>
     </v-menu>
     <v-btn
