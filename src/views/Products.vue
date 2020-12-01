@@ -6,7 +6,7 @@
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getProducts(category)" />
 
     <v-row v-if="categoryPage">
-      <v-col cols="12" v-html="categoryPage.content"></v-col>
+      <v-col cols="12" v-html="categoryPage.content" class="pb-0"></v-col>
     </v-row>
 
     <v-row v-if="!isLoading && !loadingError && products.length" no-gutters>

@@ -77,7 +77,7 @@ Felder:
 - Text: Am besten den Text von einem bereits bestehendem, aktuellen Produzenten oder das [producer-template.html](https://github.com/therichkid/ethiquable/blob/master/docs/producer-template.html) hernehmen. Beachte hierbei [HTML-Bausteine mit speziellen CSS-Klassen](#html-bausteine-mit-speziellen-css-klassen). Allgemeine Tipps zur Bearbeitung:
   - Bilder im `ethiquable-grid` austauschen: In WordPress im Editor den `Visuell`-Modus auswählen, ein bestehendes Bild anklicken &rarr; `Bearbeiten` &rarr; `Ersetzen`.
   - Fließtext: Erst das Innere vom Haupttext, dann das Innere von "In aller Kürze" und dann das Innere von "Vor Ort" austauschen.
-  - HTML-Struktur im `Text-Modus` überprüfen. Hierbei beachten, dass die `div`-Elemente mit den speziellen Klassen `ethiquable-layout`, `left`, `right` und `ethiquable-grid` den richtigen Text umspannen (`<div>...</div>`) und nur jeweils einmal auftauchen:
+  - HTML-Struktur im `Text`-Modus überprüfen. Hierbei beachten, dass die `div`-Elemente mit den speziellen Klassen `ethiquable-layout`, `left`, `right` und `ethiquable-grid` den richtigen Text umspannen (`<div>...</div>`) und nur jeweils einmal auftauchen:
 
 ```html
 <div class="ethiquable-layout">

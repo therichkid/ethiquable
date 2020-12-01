@@ -6,7 +6,7 @@
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getRecipes()" />
 
     <v-row v-if="recipePage">
-      <v-col cols="12" v-html="recipePage.content"></v-col>
+      <v-col cols="12" v-html="recipePage.content" class="pb-0"></v-col>
     </v-row>
 
     <v-row v-if="!isLoading && !loadingError" :dense="$vuetify.breakpoint.xsOnly">
