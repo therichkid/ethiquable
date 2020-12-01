@@ -40,6 +40,7 @@ export default new Vuex.Store({
     slidesLoadingError: false,
     recipes: [],
     recipesById: {},
+    nonExistingRecipePage: false,
     recipesLoading: false,
     recipesLoadingError: false,
     recipesFilter: {

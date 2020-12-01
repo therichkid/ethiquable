@@ -5,6 +5,10 @@
     <LoadingSkeleton type="recipes" v-if="isLoading" />
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getRecipes()" />
 
+    <v-row v-if="recipePage">
+      <v-col cols="12" v-html="recipePage.content"></v-col>
+    </v-row>
+
     <v-row v-if="!isLoading && !loadingError" :dense="$vuetify.breakpoint.xsOnly">
       <!-- Filter -->
       <v-col cols="12" v-if="categories.length">
@@ -99,6 +103,7 @@ export default {
   data() {
     return {
       recipes: [],
+      recipePage: null,
       categories: [{ name: "Vorspeise" }, { name: "Hauptgericht" }, { name: "Dessert" }, { name: "Getränk" }],
       activeCategory: null
     };
@@ -156,7 +161,26 @@ export default {
           })) || [];
       }
     },
-
+    async getRecipePage() {
+      const slug = "rezepte";
+      if (this.$store.state.nonExistingRecipePage) {
+        return;
+      }
+      const pageFetched = this.$store.getters.getFetchedPageBySlug(slug);
+      if (pageFetched[0]) {
+        // Already fetched
+        this.recipePage = pageFetched[1];
+      } else {
+        // Not fetched yet
+        this.recipePage = await this.$store.dispatch("fetchPageBySlug", slug).catch(error => {
+          console.error(error);
+        });
+      }
+      if (!this.recipePage) {
+        // Add to store to not try to fetch this page again in this session
+        this.$store.state.nonExistingRecipePage = true;
+      }
+    },
     createCategories() {
       const colors = [...COLORS].reverse();
       // Add colors to the default categories
@@ -194,6 +218,7 @@ export default {
 
   async created() {
     await this.getRecipes();
+    this.getRecipePage();
     this.createCategories();
   },
 
