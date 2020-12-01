@@ -74,10 +74,12 @@ http://dev.ethiquable.de/produzenten
 
 Felder:
 
-- Text: Am besten den Text von einem bereits bestehendem, aktuellen Produzenten oder das [producer-template.html](https://github.com/therichkid/ethiquable/blob/master/docs/producer-template.html) hernehmen. Beachte hierbei [HTML-Bausteine mit speziellen CSS-Klassen](#html-bausteine-mit-speziellen-css-klassen). Allgemeine Tipps zur Bearbeitung:
-  - Bilder im `ethiquable-grid` austauschen: In WordPress im Editor den `Visuell`-Modus auswählen, ein bestehendes Bild anklicken &rarr; `Bearbeiten` &rarr; `Ersetzen`.
-  - Fließtext: Erst das Innere vom Haupttext, dann das Innere von "In aller Kürze" und dann das Innere von "Vor Ort" austauschen.
-  - HTML-Struktur im `Text`-Modus überprüfen. Hierbei beachten, dass die `div`-Elemente mit den speziellen Klassen `ethiquable-layout`, `left`, `right` und `ethiquable-grid` den richtigen Text umspannen (`<div>...</div>`) und nur jeweils einmal auftauchen:
+- Text: Am besten den Text von einem bereits bestehendem, aktuellen Produzenten oder das [producer-template.html](https://github.com/therichkid/ethiquable/blob/master/docs/producer-template.html) hernehmen. Im Editor werden farbige Umrandungen angezeigt. Beachte hierbei [HTML-Bausteine mit speziellen CSS-Klassen](#html-bausteine-mit-speziellen-css-klassen). Allgemeine Tipps zur Bearbeitung:
+  - Es sollte immer nur ein Rahmen der selben Farbe geben.
+  - Der gesamte Text sollte innerhalb des <span style="color: #607d8b">**grauen**</span> Rahmen sein.
+  - Bilder im `ethiquable-grid` austauschen: In WordPress im Editor den `Visuell`-Modus auswählen, ein bestehendes Bild anklicken &rarr; `Bearbeiten` &rarr; `Ersetzen`. Darauf achten, dass alle Bilder im <span style="color: #2196f3">**blauen**</span> Rahmen sind.
+  - Fließtext: Der Haupttext sollte sich im <span style="color: #f44336">**roten**</span> Rahmen befinden, "In aller Kürze" und "Vor Ort" sollte darunter im <span style="color: #ff9800">**orangenen**</span> Rahmen sein.
+  - Alternativ: HTML-Struktur im `Text`-Modus überprüfen. Hierbei beachten, dass die `div`-Elemente mit den speziellen Klassen `ethiquable-layout`, `left`, `right` und `ethiquable-grid` den richtigen Text umspannen (`<div>...</div>`) und nur jeweils einmal auftauchen:
 
 ```html
 <div class="ethiquable-layout">
@@ -166,9 +168,11 @@ Im WordPress-Menü links unter `Kontakt-Formulare` ist die Historie über alle a
 
 ## HTML-Bausteine mit speziellen CSS-Klassen
 
-Die folgenden Textbausteine haben CSS-Klassen für besondere Styles. Einfach die Elemente hier herauskopieren (`STRG` + `C`), in WordPress im Editor `Text` auswählen und dort einfügen (`STRG` + `V`). Für Produzenten am besten das [producer-template.html](https://github.com/therichkid/ethiquable/blob/master/docs/producer-template.html) hernehmen.
+Die folgenden Textbausteine haben CSS-Klassen für besondere Styles. Die Textbausteine werden im WordPress-Editor im `Visuell`-Modus farblich umrandet. Einfach die Elemente hier herauskopieren (`STRG` + `C`), in WordPress im Editor `Text` auswählen und dort einfügen (`STRG` + `V`). Für Produzenten am besten das [producer-template.html](https://github.com/therichkid/ethiquable/blob/master/docs/producer-template.html) hernehmen.
 
 `ethiquable-layout` mit `left` und `right`
+
+Farbliche Hervorhebung: <span style="color: #607d8b">**grau**</span>, <span style="color: #f44336">**rot**</span>, <span style="color: #ff9800">**orange**</span>
 
 Zwei Spalten mit Inhalt nebeneinander, wobei die linke den meisten Platz einnimmt und die rechte schmal ist. Ist für Handys optimiert.
 
@@ -205,6 +209,8 @@ Erzeugt eine Tabelle, z.B. für Nährwerte. Die Kopfzeile wird gefärbt. Standar
 ```
 
 `ethiquable-grid`
+
+Farbliche Hervorhebung: <span style="color: #2196f3">**blau**</span>
 
 Mehrere Bilder nebeneinander anzeigen. Erzeugt zusätzlich einen Rahmen um jedes Bild (Polaroid-Effekt).
 

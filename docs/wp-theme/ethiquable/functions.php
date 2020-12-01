@@ -60,4 +60,7 @@ function disable_emojis_tinymce($plugins) {
 
 // Add featured images
 add_theme_support('post-thumbnails');
+
+// Add helper lines for TinyMCE editor
+add_editor_style('editor-style.css');
 ?>
