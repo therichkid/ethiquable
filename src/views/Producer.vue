@@ -146,7 +146,7 @@ export default {
           (await this.$store.dispatch("fetchProductsById", idsToFetch).catch(error => console.error(error))) || [];
         products.push(...fetchedProducts);
       }
-      this.products = products;
+      this.products = products.sort((a, b) => a.name.localeCompare(b.name, "de", { sensitivity: "base" }));
     },
     async getProducerAndProducts() {
       await this.getProducer(this.slug);

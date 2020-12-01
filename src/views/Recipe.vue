@@ -22,9 +22,13 @@
         </div>
       </v-col>
 
+      <v-col cols="12">
+        <RecipeProps :recipe="recipe" color="primary" />
+      </v-col>
+
       <!-- Teaser -->
       <v-col cols="12" v-if="teaser">
-        <div v-html="teaser"></div>
+        <div v-html="teaser" style="font-weight: 700"></div>
       </v-col>
 
       <!-- Ingredients -->
@@ -105,12 +109,14 @@ import frac from "frac";
 import LoadingSkeleton from "@/components/partials/LoadingSkeleton";
 import SocialMedia from "@/components/partials/SocialMedia";
 import LoadingError from "@/components/partials/LoadingError";
+import RecipeProps from "@/components/partials/RecipeProps";
 
 export default {
   components: {
     LoadingSkeleton,
     LoadingError,
-    SocialMedia
+    SocialMedia,
+    RecipeProps
   },
 
   props: {

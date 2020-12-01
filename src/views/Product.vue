@@ -90,6 +90,7 @@
               <v-card-text>
                 <div class="text-subtitle-2">Rezeptidee:</div>
                 <div class="text-h5">{{ recipe.title }}</div>
+                <RecipeProps :recipe="recipe" class="pt-2" />
               </v-card-text>
               <v-spacer></v-spacer>
               <v-card-actions>
@@ -167,12 +168,14 @@
 import LoadingSkeleton from "@/components/partials/LoadingSkeleton";
 import SocialMedia from "@/components/partials/SocialMedia";
 import LoadingError from "@/components/partials/LoadingError";
+import RecipeProps from "@/components/partials/RecipeProps";
 
 export default {
   components: {
     LoadingSkeleton,
     LoadingError,
-    SocialMedia
+    SocialMedia,
+    RecipeProps
   },
 
   props: {

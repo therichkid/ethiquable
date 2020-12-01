@@ -10,7 +10,7 @@ export default {
         id: orig.id,
         slug: orig.slug,
         title: decodeHtml(orig.title.rendered),
-        author: orig._embedded.author[0].name,
+        author: orig.acf["different-author"] || orig._embedded.author[0].name,
         excerpt: orig.excerpt.rendered,
         content: orig.content.rendered,
         dateOrig: orig.date.slice(0, 10),
@@ -140,6 +140,8 @@ export default {
         ingredients: addIngredients(orig),
         portions: orig.acf.portions ? parseInt(orig.acf.portions, 10) : null,
         effort: addEffort(orig),
+        difficulty: orig.acf.difficulty,
+        recipeType: orig.acf["recipe-type"],
         isNew: checkIfNew(orig.date)
       };
       recipes.push(recipe);

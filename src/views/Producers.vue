@@ -47,7 +47,6 @@
           color="#ffc107"
           border="top"
           colored-border
-          style="border-width: 6px"
           elevation="2"
           class="mt-2 mb-1"
           v-model="isInfoShown"

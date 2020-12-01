@@ -8,17 +8,24 @@
     <v-row v-if="!isLoading && !loadingError" :dense="$vuetify.breakpoint.xsOnly">
       <!-- Filter -->
       <v-col cols="12" v-if="categories.length">
-        <v-chip-group mandatory show-arrows v-model="activeCategory">
+        <v-chip-group mandatory column v-model="activeCategory">
           <v-chip color="primary" :outlined="activeCategory !== 0" :text-color="activeCategory === 0 ? 'white' : null">
             <b>Alle</b>
+          </v-chip>
+          <v-chip
+            color="secondary"
+            :outlined="activeCategory !== 1"
+            :text-color="activeCategory === 1 ? 'white' : null"
+          >
+            <b>Vegan</b>
           </v-chip>
           <v-chip
             v-for="(category, i) in categories"
             :key="i"
             :color="category.backgroundColor"
-            :outlined="activeCategory !== i + 1"
-            :text-color="activeCategory === i + 1 ? 'white' : null"
-            :style="{ textShadow: activeCategory === i + 1 ? category.textShadow : null }"
+            :outlined="activeCategory !== i + 2"
+            :text-color="activeCategory === i + 2 ? 'white' : null"
+            :style="{ textShadow: activeCategory === i + 2 ? category.textShadow : null }"
           >
             <b>{{ category.name }}</b>
           </v-chip>
@@ -26,11 +33,12 @@
       </v-col>
 
       <!-- Recipes -->
-      <v-col cols="6" sm="4" lg="3" v-for="recipe in filteredRecipes" :key="recipe.id" class="d-flex">
+      <v-col cols="12" sm="6" md="4" lg="3" v-for="recipe in filteredRecipes" :key="recipe.id" class="d-flex">
         <v-card
           hover
           :to="`/rezepte/${recipe.slug}`"
           class="d-flex flex-column"
+          style="width: 100%"
           :style="{
             'border-top': `6px solid ${(recipe.category && recipe.category.backgroundColor) || 'var(--v-primary-base)'}`
           }"
@@ -38,7 +46,7 @@
           <v-img
             :src="recipe.featuredImage.source"
             :alt="recipe.featuredImage.title"
-            max-height="200"
+            height="225"
             style="border-radius: 0"
           >
             <v-chip-group class="mt-1 ml-3" v-if="recipe.isNew">
@@ -53,10 +61,13 @@
             </v-chip>
           </v-chip-group>
           <v-card-title class="pt-0">
-            <h3 class="text-subtitle-2" style="word-wrap: break-word; hyphens: auto">
+            <h3 class="text-subtitle-1 text-sm-h6" style="word-wrap: break-word; hyphens: auto">
               {{ recipe.title }}
             </h3>
           </v-card-title>
+          <v-card-text class="pb-2">
+            <RecipeProps :recipe="recipe" />
+          </v-card-text>
           <v-spacer></v-spacer>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -74,19 +85,21 @@
 import LoadingSkeleton from "@/components/partials/LoadingSkeleton";
 import NoContentYet from "@/components/partials/NoContentYet";
 import LoadingError from "@/components/partials/LoadingError";
+import RecipeProps from "@/components/partials/RecipeProps";
 import { COLORS } from "@/constants";
 
 export default {
   components: {
     LoadingSkeleton,
     NoContentYet,
-    LoadingError
+    LoadingError,
+    RecipeProps
   },
 
   data() {
     return {
       recipes: [],
-      categories: [],
+      categories: [{ name: "Vorspeise" }, { name: "Hauptgericht" }, { name: "Dessert" }, { name: "Getränk" }],
       activeCategory: null
     };
   },
@@ -102,12 +115,18 @@ export default {
       let filteredRecipes = [];
       if (this.activeCategory === 0) {
         filteredRecipes = [...this.recipes];
+      } else if (this.activeCategory === 1) {
+        for (const recipe of this.recipes) {
+          if (recipe.recipeType && recipe.recipeType.toLowerCase() === "vegan") {
+            filteredRecipes.push(recipe);
+          }
+        }
       } else {
         for (const recipe of this.recipes) {
           if (
             recipe.category &&
-            this.categories[this.activeCategory - 1] &&
-            recipe.category.name === this.categories[this.activeCategory - 1].name
+            this.categories[this.activeCategory - 2] &&
+            recipe.category.name === this.categories[this.activeCategory - 2].name
           ) {
             filteredRecipes.push(recipe);
           }
@@ -139,29 +158,37 @@ export default {
     },
 
     createCategories() {
-      const categories = [];
       const colors = [...COLORS].reverse();
+      // Add colors to the default categories
+      this.categories.forEach((category, i) => {
+        category.backgroundColor = colors[i] || "var(--v-primary-base)";
+        category.textShadow = colors[i] && this.shared.isLightColor(colors[i]) ? "1px 1px 2px #000" : "none";
+      });
+      const newCategories = [];
       for (const recipe of this.recipes) {
         if (!recipe.categories || !recipe.categories.length) {
           continue;
         }
         const category = recipe.categories[0];
-        const filtered = categories.filter(item => item.name === category.name);
+        const filtered = [...this.categories, ...newCategories].filter(item => item.name === category.name);
         const existingProps = filtered && filtered.length && filtered[0];
         if (!existingProps) {
-          const color = colors[categories.length];
+          const color = colors[this.categories.length + newCategories.length];
           const newProps = {
             name: category.name,
             backgroundColor: color || "var(--v-primary-base)",
             textShadow: color && this.shared.isLightColor(color) ? "1px 1px 2px #000" : "none"
           };
           recipe.category = newProps;
-          categories.push(newProps);
+          newCategories.push(newProps);
         } else {
           recipe.category = existingProps;
         }
       }
-      this.categories = categories.sort((a, b) => a.name.localeCompare(b.name, "de", { sensitivity: "base" }));
+      this.categories = [
+        ...this.categories,
+        ...newCategories.sort((a, b) => a.name.localeCompare(b.name, "de", { sensitivity: "base" }))
+      ];
     }
   },
 
