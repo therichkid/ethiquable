@@ -21,7 +21,14 @@ Admin-Panel: http://admin.ethiquable.de/wp-admin/
 
 http://dev.ethiquable.de/magazin und Startseite.
 
-Straight forward.
+Felder:
+
+- Abweichender Autor
+  - Ausfüllen, falls der Autor des Textes vom WordPress-Benutzer abweicht, sonst leerlassen.
+- Textauszug
+  - Taucht auf der Übersichtsseite auf.
+  - Text sollte möglichst kurz sein.
+  - Muss erst in WordPress aktiviert werden: `Ansicht anpassen` (rechts oben) &rarr; `Textauszug`.
 
 Kategorien und Tags müssen nicht gesetzt werden, da sie ignoriert werden.
 
@@ -29,9 +36,12 @@ Kategorien und Tags müssen nicht gesetzt werden, da sie ignoriert werden.
 
 Straight forward.
 
-Spezielle Seite **Teaser**: Ändert den großen Schriftzug auf der Startseite.
+Spezielle Seiten:
 
-Falls eine Seite existiert, die genauso heißt wie eine Produktkategorie, z.B. `Kaffee`, dann wird diese in der Produktübersicht über der Produktliste angezeigt. Aber noch einmal kurz überprüfen, dass der `Permalink` auch `http://admin.ethiquable.de/kaffee/` heißt (und nicht `.../kaffee-1/` o.ä.).
+- **Teaser**: Ändert den großen Schriftzug auf der Startseite.
+- **Fachhandel**: Ändert den Text für die Seite unter "Händler-Login". Der Text bis zum Formular kann geändert werden. Das Formular selbst wird automatisch erzeugt. Die Links haben hier ein automatisches Styling.
+- **Produktkategorien**: Falls eine Seite existiert, die genauso heißt wie eine Produktkategorie, z.B. `Kaffee`, dann wird diese in der Produktübersicht über der Produktliste angezeigt. Aber noch einmal kurz überprüfen, dass der `Permalink` auch `http://admin.ethiquable.de/kaffee/` heißt (und nicht `.../kaffee-1/` o.ä.).
+- **Rezepte**: Wie _Produktkategorien_.
 
 ### Produkte
 
@@ -40,7 +50,7 @@ Felder:
 - Titel
   - **NICHT** komplett in Großbuchstaben schreiben. Alle Überschriften werden dann automatisch in Großbuchstaben umgewandelt.
 - Kategorie
-  - **Nicht vergessen!** Sonst taucht wird das Produkt nicht angezeigt.
+  - **Nicht vergessen!** Sonst wird das Produkt nicht angezeigt.
   - Falls eine neue Produktkategorie hinzugefügt werden soll, mir Bescheid geben.
 - Beitragsbild
   - Sollte einen transparenten Hintergrund haben (`.png`): https://onlinepngtools.com/create-transparent-png
@@ -64,7 +74,33 @@ http://dev.ethiquable.de/produzenten
 
 Felder:
 
-- Text: Am besten das [producer-template.html](https://github.com/therichkid/ethiquable/blob/master/docs/producer-template.html) hernehmen. Beachte hierbei [HTML-Bausteine mit speziellen CSS-Klassen](#html-bausteine-mit-speziellen-css-klassen).
+- Text: Am besten den Text von einem bereits bestehendem, aktuellen Produzenten oder das [producer-template.html](https://github.com/therichkid/ethiquable/blob/master/docs/producer-template.html) hernehmen. Beachte hierbei [HTML-Bausteine mit speziellen CSS-Klassen](#html-bausteine-mit-speziellen-css-klassen). Allgemeine Tipps zur Bearbeitung:
+  - Bilder im `ethiquable-grid` austauschen: In WordPress im Editor den `Visuell`-Modus auswählen, ein bestehendes Bild anklicken &rarr; `Bearbeiten` &rarr; `Ersetzen`.
+  - Fließtext: Erst das Innere vom Haupttext, dann das Innere von "In aller Kürze" und dann das Innere von "Vor Ort" austauschen.
+  - HTML-Struktur im `Text-Modus` überprüfen. Hierbei beachten, dass die `div`-Elemente mit den speziellen Klassen `ethiquable-layout`, `left`, `right` und `ethiquable-grid` den richtigen Text umspannen (`<div>...</div>`) und nur jeweils einmal auftauchen:
+
+```html
+<div class="ethiquable-layout">
+  <div class="left">
+    <div class="ethiquable-grid">
+      <img ... />
+      ...
+    </div>
+    Haupttext ...
+  </div>
+  <div class="right">
+    <div style="...">
+      <h2>In aller Kürze</h2>
+      <ul>
+        ...
+      </ul>
+    </div>
+    <h2>Vor Ort</h2>
+    ...
+  </div>
+</div>
+```
+
 - Land (Pflichtfeld)
   - Für Filter und Karte.
   - Falls ein Land nicht existiert in der Auswahl, mir Bescheid geben.
@@ -87,6 +123,8 @@ Felder:
   - Shop-Link: Wenn ausgefüllt, wird die Zutat mit dem Shop verlinkt.
 - Portionen: Wenn ausgefüllt, können die Zutatenmengen pro Portion berechnet werden.
 - Zeitaufwand
+- Schwierigkeit
+- Rezepttyp (vegan, vegetarisch)
 - Textfeld:
   - Optional einen kleinen **Einführungstext** schreiben.
   - Dann die **Zubereitung** unbedingt in einer Liste. Am besten `Nummerierte Liste`, aber auch `Aufzählungsliste` geht.
