@@ -22,4 +22,3 @@ yarn-error.log*
 
 public/.htaccess
 public/includes/**/*
-public/img/bestellformular-fachhandel.pdf

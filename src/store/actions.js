@@ -63,24 +63,6 @@ export default {
         });
     });
   },
-  fetchPostsBySearchTerm(context, { search, perPage }) {
-    const path = "wp/v2/posts";
-    const params = {
-      search,
-      per_page: perPage
-    };
-    return new Promise((resolve, reject) => {
-      api.fetchData(path, params).then(
-        response => {
-          const { data } = response;
-          resolve(data);
-        },
-        error => {
-          reject(error);
-        }
-      );
-    });
-  },
   fetchPageBySlug(context, slug) {
     context.commit("changePageLoading", true);
     context.commit("changePageLoadingError", false);
@@ -458,6 +440,24 @@ export default {
         .finally(() => {
           context.commit("changeRecipesLoading", false);
         });
+    });
+  },
+  fetchRecipesBySearchTerm(context, { search, perPage }) {
+    const path = "wp/v2/recipes";
+    const params = {
+      search,
+      per_page: perPage
+    };
+    return new Promise((resolve, reject) => {
+      api.fetchData(path, params).then(
+        response => {
+          const { data } = response;
+          resolve(data);
+        },
+        error => {
+          reject(error);
+        }
+      );
     });
   }
 };

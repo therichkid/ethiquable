@@ -7,7 +7,7 @@
           @keydown="scope.value = true"
           v-model="model"
           :loading="isLoading"
-          placeholder="Nach Neuigkeiten & Produkten suchen"
+          placeholder="Nach Produkten & Rezepten suchen"
           solo
           hide-details
           autofocus
@@ -20,20 +20,6 @@
       </template>
       <v-list>
         <v-subheader>
-          Neuigkeiten
-          <v-spacer></v-spacer>
-          <v-switch dense v-model="includePosts"></v-switch>
-        </v-subheader>
-        <v-list-item v-for="post in items.posts" :key="post.id" :to="`/magazin/${post.slug}`">
-          <v-list-item-content>
-            <v-list-item-title v-html="post.title.rendered"></v-list-item-title>
-          </v-list-item-content>
-          <v-list-item-action>
-            <v-list-item-action-text>{{ formatDate(post, "post") }}</v-list-item-action-text>
-          </v-list-item-action>
-        </v-list-item>
-        <v-divider></v-divider>
-        <v-subheader>
           Produkte
           <v-spacer></v-spacer>
           <v-switch dense v-model="includeProducts"></v-switch>
@@ -43,6 +29,17 @@
             <v-list-item-title v-html="product.title.rendered"></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-subheader>
+          Rezepte
+          <v-spacer></v-spacer>
+          <v-switch dense v-model="includeRecipes"></v-switch>
+        </v-subheader>
+        <v-list-item v-for="recipe in items.recipes" :key="recipe.id" :to="`/rezepte/${recipe.slug}`">
+          <v-list-item-content>
+            <v-list-item-title v-html="recipe.title.rendered"></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-divider></v-divider>
       </v-list>
     </v-menu>
     <v-btn
@@ -62,13 +59,13 @@
 export default {
   data() {
     return {
-      items: { posts: [], products: [] },
+      items: { recipes: [], products: [] },
       isLoading: false,
       isHidden: true,
       isOpen: false,
       model: null,
-      includePosts: true,
       includeProducts: true,
+      includeRecipes: true,
       timeout: null,
       isInit: false
     };
@@ -78,10 +75,10 @@ export default {
     model(value) {
       this.search(value);
     },
-    includePosts() {
+    includeProducts() {
       this.search(this.model);
     },
-    includeProducts() {
+    includeRecipes() {
       this.search(this.model);
     }
   },
@@ -109,35 +106,31 @@ export default {
         return;
       }
       this.isLoading = true;
-      const perPage = this.includePosts && this.includeProducts ? 5 : 10;
-      const fetchPosts = this.includePosts
-        ? this.$store.dispatch("fetchPostsBySearchTerm", { search: value, perPage })
-        : [];
+      const perPage = this.includeProducts && this.includeRecipes ? 5 : 10;
       const fetchProducts = this.includeProducts
         ? this.$store.dispatch("fetchProductsBySearchTerm", { search: value, perPage })
         : [];
-      const [posts, products] = await Promise.all([fetchPosts, fetchProducts])
+      const fetchRecipes = this.includeRecipes
+        ? this.$store.dispatch("fetchRecipesBySearchTerm", { search: value, perPage })
+        : [];
+      const [products, recipes] = await Promise.all([fetchProducts, fetchRecipes])
         .catch(error => console.error(error))
         .finally(() => {
           this.isLoading = false;
         });
       // Re-open menu on mobile...
       // ...if there are search results now but none before
-      const cond1 = (posts.length || products.length) && !this.items.posts.length && !this.items.products.length;
+      const cond1 = (products.length || recipes.length) && !this.items.products.length && !this.items.recipes.length;
       // ...or if there were search results before but none now
-      const cond2 = (this.items.posts.length || this.items.products.length) && !posts.length && !products.length;
+      const cond2 = (this.items.products.length || this.items.recipes.length) && !products.length && !recipes.length;
       if (this.$vuetify.breakpoint.smAndDown && (cond1 || cond2)) {
         this.isOpen = false;
       }
       setTimeout(() => {
         this.isOpen = true;
       });
-      this.items.posts = posts;
       this.items.products = products;
-    },
-    formatDate(item) {
-      const date = item.date;
-      return date.slice(8, 10) + "." + date.slice(5, 7) + "." + date.slice(2, 4);
+      this.items.recipes = recipes;
     }
   }
 };
