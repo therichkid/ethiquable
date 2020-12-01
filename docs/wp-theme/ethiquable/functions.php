@@ -62,5 +62,8 @@ function disable_emojis_tinymce($plugins) {
 add_theme_support('post-thumbnails');
 
 // Add helper lines for TinyMCE editor
-add_editor_style('editor-style.css');
+function add_editor_styles() {
+  add_editor_style('editor-style.css');
+}
+add_action('admin_init', 'add_editor_styles');
 ?>
