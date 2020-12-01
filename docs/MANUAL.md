@@ -75,10 +75,10 @@ http://dev.ethiquable.de/produzenten
 Felder:
 
 - Text: Am besten den Text von einem bereits bestehendem, aktuellen Produzenten oder das [producer-template.html](https://github.com/therichkid/ethiquable/blob/master/docs/producer-template.html) hernehmen. Im Editor werden farbige Umrandungen angezeigt. Beachte hierbei [HTML-Bausteine mit speziellen CSS-Klassen](#html-bausteine-mit-speziellen-css-klassen). Allgemeine Tipps zur Bearbeitung:
-  - Es sollte immer nur ein Rahmen der selben Farbe geben.
-  - Der gesamte Text sollte innerhalb des <span style="color: #607d8b">**grauen**</span> Rahmen sein.
-  - Bilder im `ethiquable-grid` austauschen: In WordPress im Editor den `Visuell`-Modus auswählen, ein bestehendes Bild anklicken &rarr; `Bearbeiten` &rarr; `Ersetzen`. Darauf achten, dass alle Bilder im <span style="color: #2196f3">**blauen**</span> Rahmen sind.
-  - Fließtext: Der Haupttext sollte sich im <span style="color: #f44336">**roten**</span> Rahmen befinden, "In aller Kürze" und "Vor Ort" sollte darunter im <span style="color: #ff9800">**orangenen**</span> Rahmen sein.
+  - Es sollte immer nur einen Rahmen der selben Farbe geben.
+  - Der gesamte Text sollte innerhalb des ![grau] **grauen** Rahmen sein.
+  - Bilder im `ethiquable-grid` austauschen: In WordPress im Editor den `Visuell`-Modus auswählen, ein bestehendes Bild anklicken &rarr; `Bearbeiten` &rarr; `Ersetzen`. Darauf achten, dass alle Bilder im ![blau] **blauen** Rahmen sind.
+  - Fließtext: Der Haupttext sollte sich im ![rot] **roten** Rahmen befinden, "In aller Kürze" und "Vor Ort" sollte darunter im ![orange] **orangenen** Rahmen sein.
   - Alternativ: HTML-Struktur im `Text`-Modus überprüfen. Hierbei beachten, dass die `div`-Elemente mit den speziellen Klassen `ethiquable-layout`, `left`, `right` und `ethiquable-grid` den richtigen Text umspannen (`<div>...</div>`) und nur jeweils einmal auftauchen:
 
 ```html
@@ -172,7 +172,7 @@ Die folgenden Textbausteine haben CSS-Klassen für besondere Styles. Die Textbau
 
 `ethiquable-layout` mit `left` und `right`
 
-Farbliche Hervorhebung: <span style="color: #607d8b">**grau**</span>, <span style="color: #f44336">**rot**</span>, <span style="color: #ff9800">**orange**</span>
+Farbliche Hervorhebung: ![grau] **grau**, ![rot] **rot**, ![orange] **orange**
 
 Zwei Spalten mit Inhalt nebeneinander, wobei die linke den meisten Platz einnimmt und die rechte schmal ist. Ist für Handys optimiert.
 
@@ -210,7 +210,7 @@ Erzeugt eine Tabelle, z.B. für Nährwerte. Die Kopfzeile wird gefärbt. Standar
 
 `ethiquable-grid`
 
-Farbliche Hervorhebung: <span style="color: #2196f3">**blau**</span>
+Farbliche Hervorhebung: ![blau] **blau**
 
 Mehrere Bilder nebeneinander anzeigen. Erzeugt zusätzlich einen Rahmen um jedes Bild (Polaroid-Effekt).
 
@@ -229,3 +229,9 @@ Mehrere Bilder nebeneinander anzeigen. Erzeugt zusätzlich einen Rahmen um jedes
 - Änderungen im Header, Footer, Menü, spezielle Seiten (Produzentenübersicht, Rezeptübersicht, Händler)
 - Hinzufügen zusätzlicher Kontaktformulare
 - Änderungen in ACF-Zusatzfeldern
+
+[grau]: https://via.placeholder.com/15/607d8b/000000?text=+
+[rot]: https://via.placeholder.com/15/f44336/000000?text=+
+[orange]: https://via.placeholder.com/15/ff9800/000000?text=+
+[blau]: https://via.placeholder.com/15/2196f3/000000?text=+
+[rot]: https://via.placeholder.com/15/f44336/000000?text=+
