@@ -46,7 +46,7 @@
 
       <!-- Body -->
       <!-- Left column -->
-      <v-col cols="12" :md="producers.length && 6">
+      <v-col cols="12" :md="(product.producerText || producers.length) && 6">
         <!-- Seals -->
         <div class="mt-4 mb-2" v-if="product.seals && product.seals.length">
           <template v-for="(item, i) in product.seals">
@@ -77,19 +77,17 @@
           hover
           :to="{ path: `/rezepte/${recipe.slug}`, query: { id: recipe.id } }"
           class="mt-4 mb-2"
-          style="border-top: 6px solid var(--product-bg-color-primary); max-width: 500px"
+          style="border-top: 6px solid var(--product-bg-color-primary); max-width: 600px"
           v-if="recipe"
         >
           <div class="d-flex">
-            <!-- Left -->
-            <v-avatar class="ma-3" size="125" tile>
+            <v-avatar class="ma-3" :size="$vuetify.breakpoint.smAndUp ? 150 : 100" tile>
               <v-img :src="recipe.featuredImage.source" :alt="recipe.featuredImage.title"></v-img>
             </v-avatar>
-            <!-- Right -->
             <div class="d-flex flex-column flex-grow-1">
               <v-card-text>
                 <div class="text-subtitle-2">Rezeptidee:</div>
-                <div class="text-h5">{{ recipe.title }}</div>
+                <div class="text-h6 text-sm-h5" style="word-wrap: break-word">{{ recipe.title }}</div>
                 <RecipeProps :recipe="recipe" class="pt-2" />
               </v-card-text>
               <v-spacer></v-spacer>
@@ -102,7 +100,7 @@
         </v-card>
 
         <!-- Shop link -->
-        <div class="pt-4" style="max-width: 500px" v-if="product.shopLink">
+        <div class="pt-4" style="max-width: 600px" v-if="product.shopLink">
           <v-btn
             block
             tile
@@ -121,29 +119,47 @@
       </v-col>
 
       <!-- Right column -->
-      <!-- Just don't show producers until it's loaded or if there is an error -->
-      <v-col cols="12" md="6" v-if="producers.length">
-        <!-- Producers -->
+      <v-col cols="12" md="6" v-if="product.producerText || producers.length">
         <h2 class="text-h4 mt-4 mb-2">Das will ich</h2>
-        <v-row no-gutters v-for="(producer, i) in producers" :key="i">
+        <!-- Producer text -->
+        <v-row no-gutters v-if="product.producerText">
           <v-col cols="12">
-            <v-divider class="mt-4 mb-2" v-if="i > 0"></v-divider>
-            <h3 class="text-h5 mb-2" v-if="producer.name">
-              <b>{{ producer.name }}</b>
-            </h3>
-            <div v-html="producer.content"></div>
-            <v-btn
-              :to="{ path: `/produzenten/${producer.slug}`, query: { id: producer.id } }"
-              dark
-              style="background-color: var(--product-bg-color-secondary); text-shadow: var(--product-text-shadow)"
-              class="mt-2"
-              v-if="producer.slug"
-            >
-              Weiterlesen
-              <v-icon right>mdi-chevron-right</v-icon>
-            </v-btn>
+            <div v-html="product.producerText"></div>
+            <v-divider class="mt-4 mb-2" v-if="producers.length"></v-divider>
           </v-col>
         </v-row>
+
+        <!-- Producers -->
+        <template v-if="producers.length">
+          <v-row no-gutters v-for="(producer, i) in producers" :key="i">
+            <v-col cols="12">
+              <v-card
+                hover
+                :to="{ path: `/produzenten/${producer.slug}`, query: { id: producer.id } }"
+                class="mt-4 mb-2"
+                style="border-top: 6px solid var(--product-bg-color-primary)"
+              >
+                <div class="d-flex">
+                  <v-avatar class="ma-3" :size="$vuetify.breakpoint.smAndUp ? 150 : 100" tile>
+                    <v-img :src="producer.featuredImage.source" :alt="producer.featuredImage.title"></v-img>
+                  </v-avatar>
+                  <div class="d-flex flex-column flex-grow-1">
+                    <v-card-text>
+                      <div class="text-subtitle-2">Produzent:</div>
+                      <div class="text-h6 text-sm-h5" style="word-wrap: break-word">{{ producer.name }}</div>
+                      <div v-html="producer.excerpt"></div>
+                    </v-card-text>
+                    <v-spacer></v-spacer>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-icon>mdi-chevron-right</v-icon>
+                    </v-card-actions>
+                  </div>
+                </div>
+              </v-card>
+            </v-col>
+          </v-row>
+        </template>
       </v-col>
     </v-row>
 
@@ -284,12 +300,9 @@ export default {
           (await this.$store.dispatch("fetchProducersById", idsToFetch).catch(error => console.error(error))) || [];
         producers.push(...fetchedProducers);
       }
-      const totalContentLength = this.$vuetify.breakpoint.mdAndUp ? 5000 : 2500;
-      const contentLength = parseInt(totalContentLength / producers.length, 10);
       producers.forEach(producer => {
-        // Shorten content on multiple producers
-        let content = this.shared.shortenTextLength(producer.content, contentLength);
-        this.producers.push({ ...producer, content });
+        const excerpt = this.shared.shortenTextLength(producer.excerpt, 150);
+        this.producers.push({ ...producer, excerpt });
       });
     },
     async getRecipeById(id) {
@@ -317,12 +330,6 @@ export default {
       }, 10);
       // Initialize producers
       this.producers = [];
-      // Add text to producer view
-      if (this.product.producerText) {
-        this.producers.push({
-          content: this.product.producerText
-        });
-      }
       if (this.product.producerIds && this.product.producerIds.length) {
         await this.getProducersById(this.product.producerIds);
       }
