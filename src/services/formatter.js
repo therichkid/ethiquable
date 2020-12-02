@@ -12,7 +12,7 @@ export default {
         title: decodeHtml(orig.title.rendered),
         author: orig.acf["different-author"] || orig._embedded.author[0].name,
         excerpt: orig.excerpt.rendered,
-        content: orig.content.rendered,
+        content: removeEmptyLines(orig.content.rendered),
         dateOrig: orig.date.slice(0, 10),
         date: formatDate(orig.date),
         featuredImage: addFeaturedImage(orig, "medium_large")
@@ -32,7 +32,7 @@ export default {
       id: orig.id,
       slug: orig.slug,
       title: decodeHtml(orig.title.rendered),
-      content: orig.content.rendered
+      content: removeEmptyLines(orig.content.rendered)
     };
     // Add teaser specific fields
     if (page.slug === "teaser") {
@@ -55,12 +55,12 @@ export default {
         id: orig.id,
         slug: orig.slug,
         name: decodeHtml(orig.title.rendered),
-        content: orig.content.rendered,
+        content: removeEmptyLines(orig.content.rendered),
         subtitle: orig.acf.subtitle,
         backgroundColor: orig.acf["background-color"],
         shopLink: orig.acf["shop-link"],
         producerIds: orig.acf["producer-ids"],
-        producerText: orig.acf["producer-text"],
+        producerText: removeEmptyLines(orig.acf["producer-text"]),
         recipeId: orig.acf["recipe-id"],
         seals: orig.acf["seals"],
         categories: addCategories(orig),
@@ -96,7 +96,8 @@ export default {
         id: orig.id,
         slug: orig.slug,
         name: decodeHtml(orig.title.rendered),
-        content: orig.content.rendered,
+        excerpt: orig.excerpt.rendered,
+        content: removeEmptyLines(orig.content.rendered),
         featuredImage: addFeaturedImage(orig, "medium"),
         country: orig.acf.country,
         ingredient: orig.acf.ingredient,
@@ -134,7 +135,7 @@ export default {
         id: orig.id,
         slug: orig.slug,
         title: decodeHtml(orig.title.rendered),
-        content: orig.content.rendered,
+        content: removeEmptyLines(orig.content.rendered),
         categories: addCategories(orig),
         featuredImage: addFeaturedImage(orig, "medium_large"),
         ingredients: addIngredients(orig),
@@ -263,4 +264,11 @@ const decodeHtml = str => {
   return str.replace(/&#(\d+);/g, (match, dec) => {
     return String.fromCharCode(dec);
   });
+};
+
+const removeEmptyLines = str => {
+  if (!str) {
+    return "";
+  }
+  return str.replace(/<p>&nbsp;<\/p>/g, "");
 };
