@@ -6,9 +6,16 @@
     </v-col>
   </v-row>
 
-  <!-- Products, producers, recipes -->
-  <v-row v-else-if="type === 'products' || type === 'producers' || type === 'recipes'">
+  <!-- Products, producers -->
+  <v-row v-else-if="type === 'products' || type === 'producers'">
     <v-col v-for="i in amount" :key="i" cols="6" sm="4" lg="3">
+      <v-skeleton-loader type="card"></v-skeleton-loader>
+    </v-col>
+  </v-row>
+
+  <!-- Recipes -->
+  <v-row v-else-if="type === 'recipes'">
+    <v-col v-for="i in amount" :key="i" cols="12" sm="6" md="4" lg="3">
       <v-skeleton-loader type="card"></v-skeleton-loader>
     </v-col>
   </v-row>

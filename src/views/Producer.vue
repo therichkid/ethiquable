@@ -16,7 +16,7 @@
       <v-col cols="12" v-if="products && products.length">
         <h2 class="text-h4 mb-2">Die Produkte</h2>
         <v-row class="mt-4" dense>
-          <v-col class="d-flex" v-for="product in products" :key="product.id" cols="3" md="2">
+          <v-col class="d-flex" v-for="product in products" :key="product.id" cols="4" sm="3" md="2">
             <v-card
               hover
               :to="{ path: `/produkte/${product.slug}`, query: { id: product.id } }"
