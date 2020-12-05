@@ -15,7 +15,7 @@
         <v-card class="my-1">
           <v-card-text>
             <v-row no-gutters>
-              <ProducersMap :selectedCountry="selectedCountry" @countrySelected="selectedCountry = $event" />
+              <ProducersMap :selectedCountry="selectedCountry" @countrySelected="onMapSelect($event)" />
               <v-col cols="12">
                 <v-select
                   :items="filteredCountries"
@@ -238,6 +238,10 @@ export default {
     },
     dismissInfo() {
       this.isInfoShown = false;
+    },
+    onMapSelect(country) {
+      this.selectedIngredient = null;
+      this.selectedCountry = country;
     }
   },
 

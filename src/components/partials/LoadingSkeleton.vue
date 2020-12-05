@@ -15,8 +15,11 @@
 
   <!-- Recipes -->
   <v-row v-else-if="type === 'recipes'">
+    <v-col cols="12" class="d-flex flex-wrap">
+      <v-skeleton-loader v-for="i in 4" :key="i" type="chip" class="pa-1"></v-skeleton-loader>
+    </v-col>
     <v-col v-for="i in amount" :key="i" cols="12" sm="6" md="4" lg="3">
-      <v-skeleton-loader type="card"></v-skeleton-loader>
+      <v-skeleton-loader type="image, article, actions"></v-skeleton-loader>
     </v-col>
   </v-row>
 

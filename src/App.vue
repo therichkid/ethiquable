@@ -180,15 +180,22 @@ table.ethiquable-table tr:last-child > td:last-child {
   width: 100%;
   justify-content: space-evenly;
   align-items: center;
+  margin-bottom: 10px;
 }
 .ethiquable-grid > * {
   min-width: 0;
+  max-width: 350px;
   margin: 2px;
 }
 .ethiquable-grid img {
   padding: 8px;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px,
     rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+}
+@media screen and (max-width: 767px) {
+  .ethiquable-grid {
+    flex-wrap: wrap;
+  }
 }
 .post-container .ethiquable-layout > .right {
   border: 1px solid rgba(0, 0, 0, 0.12);
