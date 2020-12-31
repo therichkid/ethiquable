@@ -1,5 +1,5 @@
 <template>
-  <div class="cookie-consent pa-2 pa-md-5" v-if="hasNotAcceptedCookies">
+  <div class="cookie-consent pa-2 pa-md-5" v-if="!hasAcceptedCookies">
     <v-card outlined class="cookie-consent-card">
       <v-card-text class="pb-0">
         <span>
@@ -27,24 +27,21 @@
 export default {
   data() {
     return {
-      hasNotAcceptedCookies: true,
+      hasAcceptedCookies: false,
       hasUnderstood: false
     };
   },
 
   methods: {
     acceptCookies() {
-      this.hasNotAcceptedCookies = false;
+      this.hasAcceptedCookies = true;
       localStorage.setItem("cookiesAccepted", true);
     }
   },
 
   mounted() {
-    if (!localStorage.getItem("cookiesAccepted")) {
-      localStorage.setItem("cookiesAccepted", false);
-    }
     if (localStorage.getItem("cookiesAccepted") === "true") {
-      this.hasNotAcceptedCookies = false;
+      this.hasAcceptedCookies = true;
     }
   }
 };
