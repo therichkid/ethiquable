@@ -91,7 +91,7 @@ export default {
 
 <style scoped>
 .slide-caption {
-  padding: 5px 30px;
+  padding: 10px 30px;
   background-color: rgba(0, 0, 0, 0.5);
 }
 </style>

@@ -3,7 +3,8 @@
     <v-card outlined class="cookie-consent-card">
       <v-card-text class="pb-0">
         <span>
-          Mit der Nutzung dieser Webseite erklären Sie sich damit einverstanden, dass wir Cookies verwenden.
+          Mit der Nutzung dieser Webseite erklären Sie sich damit einverstanden, dass wir technisch notwendige Cookies
+          verwenden.
         </span>
         <v-btn text to="/datenschutz">Weiterlesen</v-btn>
       </v-card-text>
