@@ -5,8 +5,8 @@
     <LoadingSkeleton type="products" v-if="isLoading" />
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getProducts(category)" />
 
-    <v-row v-if="categoryPage">
-      <v-col cols="12" v-html="categoryPage.content" class="pb-0"></v-col>
+    <v-row v-if="categoryPage" class="category-page">
+      <v-col cols="12" v-html="categoryPage.content"></v-col>
     </v-row>
 
     <v-row v-if="!isLoading && !loadingError && products.length" no-gutters>
@@ -17,7 +17,7 @@
           tile
           :to="`/produkte/${product.slug}`"
           class="d-flex flex-column my-2"
-          style="border-bottom: 6px solid var(--v-secondary-base); width: 100%"
+          style="border-bottom: 6px solid #e0e0e0; width: 100%"
         >
           <v-spacer></v-spacer>
           <v-img :src="product.featuredImage.source" :alt="product.featuredImage.title" v-bind="imageProps">
@@ -84,19 +84,17 @@ export default {
 
   methods: {
     async getProducts() {
-      let products = [];
       const productsFetched = this.$store.getters.getFetchedProductsPerCategory(this.category);
       if (productsFetched[0]) {
         // Already fetched
-        products = productsFetched[1];
+        this.products = productsFetched[1];
       } else {
         // Not fetched yet
-        products =
+        this.products =
           (await this.$store.dispatch("fetchProducts", this.category).catch(error => {
             console.error(error);
           })) || [];
       }
-      this.products = products.sort((a, b) => a.name.localeCompare(b.name, "de", { sensitivity: "base" }));
       if (this.formattedCategory) {
         document.title = this.formattedCategory + " - " + document.title;
       }
@@ -158,4 +156,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.category-page >>> h3,
+.category-page >>> h4,
+.category-page >>> h5,
+.category-page >>> h6 {
+  color: var(--v-primary-base);
+  text-transform: uppercase;
+}
+</style>

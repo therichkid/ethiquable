@@ -5,8 +5,8 @@
     <LoadingSkeleton type="recipes" v-if="isLoading" />
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getRecipes()" />
 
-    <v-row v-if="recipePage">
-      <v-col cols="12" v-html="recipePage.content" class="pb-0"></v-col>
+    <v-row v-if="recipePage" class="recipe-page">
+      <v-col cols="12" v-html="recipePage.content"></v-col>
     </v-row>
 
     <v-row v-if="!isLoading && !loadingError" :dense="$vuetify.breakpoint.xsOnly">
@@ -228,4 +228,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.recipe-page >>> h3,
+.recipe-page >>> h4,
+.recipe-page >>> h5,
+.recipe-page >>> h6 {
+  color: var(--v-primary-base);
+  text-transform: uppercase;
+}
+</style>

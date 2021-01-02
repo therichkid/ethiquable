@@ -100,7 +100,9 @@ export default {
     const params = {
       _embed: true,
       per_page: 100,
-      "filter[category_name]": category
+      "filter[category_name]": category,
+      "filter[orderby]": "menu_order",
+      "filter[order]": "asc"
     };
     return new Promise((resolve, reject) => {
       api
@@ -330,7 +332,9 @@ export default {
     const path = "wp/v2/slides";
     const params = {
       _embed: true,
-      per_page: 100
+      per_page: 100,
+      "filter[orderby]": "menu_order",
+      "filter[order]": "asc"
     };
     return new Promise((resolve, reject) => {
       api

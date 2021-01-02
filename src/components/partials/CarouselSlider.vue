@@ -3,22 +3,31 @@
     <LoadingSkeleton type="slider" v-if="isLoading" />
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getSlides()" />
 
-    <v-carousel
-      hide-delimiters
-      :cycle="true"
-      interval="10000"
-      :height="$vuetify.breakpoint.smAndUp ? 500 : 250"
-      v-if="!isLoading && !loadingError && slides && slides.length"
-    >
-      <v-carousel-item v-for="(slide, i) in slides" :key="i" :src="slide.featuredImage.source" v-bind="slide.linkProps">
-        <v-row class="fill-height" justify="center" align="end">
-          <v-col cols="12" class="slide-caption">
-            <h3 class="text-h4">{{ slide.title }}</h3>
-            <span class="text-subtitle-1" v-if="slide.excerpt">{{ slide.excerpt }}</span>
-          </v-col>
-        </v-row>
-      </v-carousel-item>
-    </v-carousel>
+    <v-hover v-slot:default="{ hover }">
+      <v-carousel
+        hide-delimiters
+        :cycle="!hover"
+        interval="10000"
+        :height="$vuetify.breakpoint.smAndUp ? 500 : 250"
+        v-if="!isLoading && !loadingError && slides && slides.length"
+      >
+        <v-carousel-item
+          v-for="(slide, i) in slides"
+          :key="i"
+          :src="slide.featuredImage.source"
+          v-bind="slide.linkProps"
+        >
+          <v-container class="fill-height" style="align-items: end">
+            <v-row>
+              <v-col cols="12" class="slide-caption">
+                <h3 class="text-h4">{{ slide.title }}</h3>
+                <span class="text-subtitle-1" v-if="slide.excerpt">{{ slide.excerpt }}</span>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-carousel-item>
+      </v-carousel>
+    </v-hover>
   </div>
 </template>
 

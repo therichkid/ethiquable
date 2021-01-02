@@ -68,6 +68,8 @@ Felder:
 - Produzent/en: Mehrfachauswahl möglich. Erstellt automatisch einen Textauszug und eine Verlinkung zum Produzenten.
 - Produzent/en (Zusatz): Zusätzlicher Text, der oberhalb der verlinkten Produzenten in der rechten Spalte angezeigt wird.
 
+**Reihenfolge ändern**: In der Übersicht ein Element an einer freien Stelle anklicken, dann kann man es mit gedrückter Maustaste verschieben. Je weiter vorne, desto eher erscheint es auf der Seite. Dies funktioniert am besten, wenn man vorher die Auswahl einschränkt: Auf das Menü "Alle Kategorien" oberhalb der Liste klicken, eine Produktkategorie auswählen (z.B. Schokolade) und dann auf "Auswahl einschränken" klicken.
+
 ### Produzenten
 
 http://dev.ethiquable.de/produzenten
@@ -159,6 +161,8 @@ Felder:
 - Verlinkung
   - Intern &rarr; innerhalb ETHIQUABLE-Seite: Nur Pfad ohne http(s)/www eingeben (Bsp. `/produzenten`).
   - Extern: Host mit `http(s)` / `www` und optionalem Pfad eingeben (Bsp. `www.ideas.coop` oder `https://www.ideas.coop/home`).
+
+**Reihenfolge ändern**: In der Übersicht ein Element an einer freien Stelle anklicken, dann kann man es mit gedrückter Maustaste verschieben. Je weiter vorne, desto eher erscheint es auf der Seite.
 
 ### Formulare
 
