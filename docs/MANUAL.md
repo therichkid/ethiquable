@@ -19,7 +19,7 @@ Admin-Panel: https://www.ethiquable.de/wp-admin/
 
 ### Beiträge
 
-http://dev.ethiquable.de/magazin und Startseite.
+https://www.ethiquable.de/magazin und Startseite.
 
 Felder:
 
@@ -63,7 +63,7 @@ Felder:
   - Taucht im Header rechts auf.
   - Gleiche Regeln wie Beitragsbild.
 - Shop-Link
-- Siegel: Erzeugt automatisch Bilder der Siegel inkl. Verlinkung zu http://dev.ethiquable.de/die-siegel.
+- Siegel: Erzeugt automatisch Bilder der Siegel inkl. Verlinkung zu https://www.ethiquable.de/die-siegel.
 - Rezept
 - Produzent/en: Mehrfachauswahl möglich. Erstellt automatisch einen Textauszug und eine Verlinkung zum Produzenten.
 - Produzent/en (Zusatz): Zusätzlicher Text, der oberhalb der verlinkten Produzenten in der rechten Spalte angezeigt wird.
@@ -72,7 +72,7 @@ Felder:
 
 ### Produzenten
 
-http://dev.ethiquable.de/produzenten
+https://www.ethiquable.de/produzenten
 
 Felder:
 
@@ -114,7 +114,7 @@ Felder:
 
 ### Rezepte
 
-http://dev.ethiquable.de/rezepte
+https://www.ethiquable.de/rezepte
 
 Felder:
 
@@ -136,7 +136,7 @@ Felder:
 
 ### Shops
 
-http://dev.ethiquable.de/shopfinder
+https://www.ethiquable.de/shopfinder
 
 Felder:
 
