@@ -11,16 +11,10 @@
 
       <!-- Body -->
       <v-col cols="12">
-        <v-chip-group>
-          <v-chip>
-            <v-icon left color="primary">mdi-calendar</v-icon>
-            {{ post.date }}
-          </v-chip>
-          <v-chip>
-            <v-icon left color="primary">mdi-account</v-icon>
-            {{ post.author }}
-          </v-chip>
-        </v-chip-group>
+        <v-chip>
+          <v-icon left color="primary">mdi-calendar</v-icon>
+          {{ post.date }}
+        </v-chip>
       </v-col>
       <v-col cols="12" v-html="post.content"></v-col>
       <!-- Social media -->

@@ -6,18 +6,11 @@
           Mit der Nutzung dieser Webseite erklären Sie sich damit einverstanden, dass wir technisch notwendige Cookies
           verwenden.
         </span>
-        <v-btn text to="/datenschutz">Weiterlesen</v-btn>
+        <router-link to="/datenschutz">Weiterlesen</router-link>.
       </v-card-text>
       <v-card-actions>
-        <v-checkbox
-          v-model="hasUnderstood"
-          label="Ich habe verstanden"
-          hide-details
-          color="success"
-          class="mt-0 pt-0"
-        ></v-checkbox>
         <v-spacer></v-spacer>
-        <v-btn :disabled="!hasUnderstood" @click="acceptCookies()" color="success">Akzeptieren </v-btn>
+        <v-btn @click="acceptCookies()" color="success">Akzeptieren </v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -27,8 +20,7 @@
 export default {
   data() {
     return {
-      hasAcceptedCookies: false,
-      hasUnderstood: false
+      hasAcceptedCookies: false
     };
   },
 

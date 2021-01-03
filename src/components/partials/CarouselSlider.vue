@@ -3,14 +3,8 @@
     <LoadingSkeleton type="slider" v-if="isLoading" />
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getSlides()" />
 
-    <v-hover v-slot:default="{ hover }">
-      <v-carousel
-        hide-delimiters
-        :cycle="!hover"
-        interval="10000"
-        :height="$vuetify.breakpoint.smAndUp ? 500 : 250"
-        v-if="!isLoading && !loadingError && slides && slides.length"
-      >
+    <v-hover v-slot:default="{ hover }" v-if="!isLoading && !loadingError && slides && slides.length">
+      <v-carousel hide-delimiters :cycle="!hover" interval="10000" :height="$vuetify.breakpoint.smAndUp ? 500 : 250">
         <v-carousel-item
           v-for="(slide, i) in slides"
           :key="i"
