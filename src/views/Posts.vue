@@ -31,7 +31,7 @@ export default {
 
   methods: {
     changePage() {
-      this.$router.push(`/${this.routerPage}/page/${this.page}`);
+      this.$router.push(`/magazin/page/${this.page}`);
     }
   }
 };
