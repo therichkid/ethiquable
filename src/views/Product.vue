@@ -249,7 +249,7 @@ export default {
   watch: {
     product(product) {
       if (!product && !this.failedRequests) {
-        this.$router.push("/404");
+        this.$router.replace("/404");
       }
     },
     $route() {

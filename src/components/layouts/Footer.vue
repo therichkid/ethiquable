@@ -84,6 +84,7 @@
             <v-form v-model="valid">
               <v-text-field solo light hide-details label="Name" v-model="name" class="mb-2"></v-text-field>
               <v-text-field
+                type="email"
                 solo
                 light
                 hide-details="auto"

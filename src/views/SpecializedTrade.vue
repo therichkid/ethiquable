@@ -16,7 +16,7 @@
       <v-col cols="12" class="pt-0">
         <v-form v-model="valid">
           <v-text-field label="Name" v-model="name" required></v-text-field>
-          <v-text-field label="E-Mail" v-model="email" :rules="emailRules" required></v-text-field>
+          <v-text-field type="email" label="E-Mail" v-model="email" :rules="emailRules" required></v-text-field>
           <v-checkbox
             label="Ich möchte meine Zugansdaten für die Online-Bestellung bekommen."
             v-model="accessDataAccepted"
@@ -104,7 +104,7 @@ export default {
   watch: {
     page(page) {
       if (!page && !this.failedRequests) {
-        this.$router.push("/404");
+        this.$router.replace("/404");
       }
     }
   },
