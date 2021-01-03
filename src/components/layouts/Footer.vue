@@ -110,23 +110,14 @@
                   <span>Ich stimme der <router-link to="/datenschutz">Datenschutzerklärung</router-link> zu.</span>
                 </template>
               </v-checkbox>
+              <v-text-field label="HP" v-model="hp" v-show="false"></v-text-field>
               <v-btn
                 class="secondary"
                 :disabled="!valid || !email || !message || !privacyPolicyAccepted"
-                @click="sendForm"
+                :loading="isPosting"
+                @click="postForm"
                 >Senden</v-btn
               >
-              <div class="caption mt-2">
-                Diese Website ist durch reCAPTCHA geschützt und es gelten die
-                <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer"
-                  >Datenschutzbestimmungen</a
-                >
-                und
-                <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer"
-                  >Nutzungsbedingungen</a
-                >
-                von Google.
-              </div>
             </v-form>
           </v-card-text>
         </v-col>
@@ -170,6 +161,9 @@ export default {
       emailRules: [v => /\S+@\S+\.\S+/.test(v) || !v || "Diese E-Mail ist ungültig!"],
       message: "",
       privacyPolicyAccepted: false,
+      hp: "",
+      isPosting: false,
+      initTime: 0,
       dialog: false,
       alertMessage: "",
       alertType: "",
@@ -281,17 +275,21 @@ export default {
   },
 
   methods: {
-    async sendForm() {
+    async postForm() {
+      this.isPosting = true;
       const data = {
         fullname: this.name.trim(),
         email: this.email.trim(),
         subject: "Ich habe eine Frage / Anregung",
-        message: this.message
+        message: this.message,
+        _timer: Date.now() - this.initTime
       };
-      // Create token for reCAPTCHA
-      const token = await this.$recaptcha("login");
+      // Honeypot
+      if (this.hp && this.hp.length) {
+        data._hp = this.hp;
+      }
       await api
-        .postData(data, token, "contact")
+        .postData("contact", data)
         .then(response => {
           this.alertType = "success";
           this.alertMessage = response;
@@ -302,9 +300,16 @@ export default {
         .catch(error => {
           this.alertType = "error";
           this.alertMessage = error;
+        })
+        .finally(() => {
+          this.isPosting = false;
+          this.dialog = true;
         });
-      this.dialog = true;
     }
+  },
+
+  mounted() {
+    this.initTime = Date.now();
   }
 };
 </script>

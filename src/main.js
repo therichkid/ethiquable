@@ -8,10 +8,6 @@ import store from "./store/index";
 import shared from "./services/shared";
 Vue.prototype.shared = shared;
 
-// reCAPTCHA
-import { VueReCaptcha } from "vue-recaptcha-v3";
-Vue.use(VueReCaptcha, { siteKey: "6Lc55OEZAAAAANdKxPt83LRWXGNghC_gmcoPiscW" });
-
 // vue2-leaflet
 import { Icon } from "leaflet";
 import "leaflet/dist/leaflet.css";

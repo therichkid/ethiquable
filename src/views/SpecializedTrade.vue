@@ -27,24 +27,15 @@
               <span>Ich stimme der <router-link to="/datenschutz">Datenschutzerklärung</router-link> zu.</span>
             </template>
           </v-checkbox>
+          <v-text-field label="HP" v-model="hp" v-show="false"></v-text-field>
           <v-btn
             color="secondary"
             :disabled="!valid || !name || !email || !accessDataAccepted || !privacyPolicyAccepted"
-            @click="sendForm"
+            :loading="isPosting"
+            @click="postForm"
           >
             Senden
           </v-btn>
-          <div class="caption mt-2">
-            Diese Website ist durch reCAPTCHA geschützt und es gelten die
-            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer"
-              >Datenschutzbestimmungen</a
-            >
-            und
-            <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer"
-              >Nutzungsbedingungen</a
-            >
-            von Google.
-          </div>
         </v-form>
       </v-col>
 
@@ -83,6 +74,9 @@ export default {
       emailRules: [v => /\S+@\S+\.\S+/.test(v) || !v || "Diese E-Mail ist ungültig!"],
       accessDataAccepted: false,
       privacyPolicyAccepted: false,
+      hp: "",
+      isPosting: false,
+      initTime: 0,
       dialog: false,
       alertMessage: "",
       alertType: ""
@@ -126,16 +120,20 @@ export default {
         document.title = this.page.title + " - " + document.title;
       }
     },
-    async sendForm() {
+    async postForm() {
+      this.isPosting = true;
       const data = {
         fullname: this.name.trim(),
         email: this.email.trim(),
-        subject: "Anfrage Zugangsdaten für Fachhandel"
+        subject: "Anfrage Zugangsdaten für Fachhandel",
+        _timer: Date.now() - this.initTime
       };
-      // Create token for reCAPTCHA
-      const token = await this.$recaptcha("login");
+      // Honeypot
+      if (this.hp && this.hp.length) {
+        data._hp = this.hp;
+      }
       await api
-        .postData(data, token, "trade")
+        .postData("trade", data)
         .then(response => {
           this.alertType = "success";
           this.alertMessage = response;
@@ -145,8 +143,11 @@ export default {
         .catch(error => {
           this.alertType = "error";
           this.alertMessage = error;
+        })
+        .finally(() => {
+          this.isPosting = false;
+          this.dialog = true;
         });
-      this.dialog = true;
     },
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
@@ -155,6 +156,10 @@ export default {
 
   created() {
     this.getPage();
+  },
+
+  mounted() {
+    this.initTime = Date.now();
   }
 };
 </script>

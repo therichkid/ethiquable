@@ -66,4 +66,7 @@ function add_editor_styles() {
   add_editor_style('editor-style.css');
 }
 add_action('admin_init', 'add_editor_styles');
+
+// Disable contact form spam filter to make post requests work
+add_filter('wpcf7_spam', '__return_false');
 ?>

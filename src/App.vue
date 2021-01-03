@@ -61,9 +61,6 @@ h2 {
   max-width: 1200px;
   min-height: 60vh;
 }
-.grecaptcha-badge {
-  display: none;
-}
 .post-container {
   max-width: 750px;
   line-height: 1.8;
