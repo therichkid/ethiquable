@@ -139,6 +139,8 @@ export default {
           this.alertMessage = response;
           this.name = "";
           this.email = "";
+          this.accessDataAccepted = false;
+          this.privacyPolicyAccepted = false;
         })
         .catch(error => {
           this.alertType = "error";

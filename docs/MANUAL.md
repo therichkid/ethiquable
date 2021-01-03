@@ -13,7 +13,7 @@
   - [HTML-Bausteine mit speziellen CSS-Klassen](#html-bausteine-mit-speziellen-css-klassen)
   - [Aufgaben, wofür ihr mich konsultieren müsst](#aufgaben-wofür-ihr-mich-konsultieren-müsst)
 
-Admin-Panel: http://admin.ethiquable.de/wp-admin/
+Admin-Panel: https://www.ethiquable.de/wp-admin/
 
 ## Post-Typen und deren Bearbeitung
 
@@ -40,7 +40,7 @@ Spezielle Seiten:
 
 - **Teaser**: Ändert den großen Schriftzug auf der Startseite.
 - **Fachhandel**: Ändert den Text für die Seite unter "Händler-Login". Der Text bis zum Formular kann geändert werden. Das Formular selbst wird automatisch erzeugt. Die Links haben hier ein automatisches Styling.
-- **Produktkategorien**: Falls eine Seite existiert, die genauso heißt wie eine Produktkategorie, z.B. `Kaffee`, dann wird diese in der Produktübersicht über der Produktliste angezeigt. Aber noch einmal kurz überprüfen, dass der `Permalink` auch `http://admin.ethiquable.de/kaffee/` heißt (und nicht `.../kaffee-1/` o.ä.).
+- **Produktkategorien**: Falls eine Seite existiert, die genauso heißt wie eine Produktkategorie, z.B. `Kaffee`, dann wird diese in der Produktübersicht über der Produktliste angezeigt. Aber noch einmal kurz überprüfen, dass der `Permalink` auch `https://www.ethiquable.de/kaffee/` heißt (und nicht `.../kaffee-1/` o.ä.).
 - **Rezepte**: Wie _Produktkategorien_.
 
 ### Produkte

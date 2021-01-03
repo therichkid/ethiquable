@@ -1,8 +1,7 @@
 import axios from "axios";
 
-// TODO: enable https
 const wpInstance = axios.create({
-  baseURL: "http://admin.ethiquable.de/wp-json/",
+  baseURL: "https://www.ethiquable.de/wp-json/",
   timeout: 7500
 });
 const osmInstance = axios.create({

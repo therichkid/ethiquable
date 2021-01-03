@@ -318,6 +318,7 @@ export default {
           this.name = "";
           this.email = "";
           this.message = "";
+          this.privacyPolicyAccepted = false;
         })
         .catch(error => {
           this.alertType = "error";

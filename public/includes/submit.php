@@ -19,7 +19,7 @@
   }
   $header = "Content-Type: application/x-www-form-urlencoded";
   $content = http_build_query($data);
-  $base_url = "http://admin.ethiquable.de/wp-json/";
+  $base_url = "https://www.ethiquable.de/wp-json/";
   $path = "contact-form-7/v1/contact-forms/" . $id . "/feedback";
   $url = $base_url . $path;
 
