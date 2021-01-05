@@ -35,7 +35,8 @@ const routes = [
     name: "shopfinder",
     component: ShopFinder,
     meta: {
-      title: "Shopfinder"
+      title: "Shopfinder",
+      description: "Finden Sie einen Laden in Ihrer Nähe, der ETHIQUABLE-Produkte führt."
     }
   },
   {
@@ -47,7 +48,8 @@ const routes = [
     name: "products",
     component: Products,
     meta: {
-      title: "Produkte"
+      title: "Produkte",
+      description: "Hier finden Sie eine Übersicht vom {category}-Sortiment, das wir bei ETHIQUABLE verkaufen."
     },
     props: true
   },
@@ -56,7 +58,9 @@ const routes = [
     name: "product",
     component: Product,
     meta: {
-      title: "Produkt"
+      title: "Produkt",
+      description:
+        "Alle Infos zum Produkt \u201E{slug}\u201C von ETHIQUABLE inkl. Infos über Inhaltsstoffe und Herkunft."
     },
     props: true
   },
@@ -69,7 +73,9 @@ const routes = [
     name: "producers",
     component: Producers,
     meta: {
-      title: "Produzenten"
+      title: "Produzenten",
+      description:
+        "Entdecken Sie die Produzenten, mit denen wir zusammenarbeiten sowie die Projekte, die wir unterstützen."
     }
   },
   {
@@ -81,7 +87,8 @@ const routes = [
     name: "producer",
     component: Producer,
     meta: {
-      title: "Produzent"
+      title: "Produzent",
+      description: "Detaillierte Informationen über den Produzenten {slug} und Projekte, die gefördert werden."
     },
     props: true
   },
@@ -90,7 +97,8 @@ const routes = [
     name: "posts",
     component: Posts,
     meta: {
-      title: "Magazin"
+      title: "Magazin",
+      description: "Kleine informative Artikel und Geschichten."
     },
     alias: "/magazin"
   },
@@ -99,7 +107,8 @@ const routes = [
     name: "post",
     component: Post,
     meta: {
-      title: "Magazin"
+      title: "Magazin",
+      description: "Interessante Fakten zum Thema \u201E{slug}\u201C."
     },
     props: true
   },
@@ -109,7 +118,8 @@ const routes = [
     name: "recipes",
     component: Recipes,
     meta: {
-      title: "Rezepte"
+      title: "Rezepte",
+      description: "Vielfältige und einfache Rezepte für jede Saison."
     }
   },
   {
@@ -117,7 +127,8 @@ const routes = [
     name: "recipe",
     component: Recipe,
     meta: {
-      title: "Rezept"
+      title: "Rezept",
+      description: "Alle Zutaten und Zubereitungsschritte zum \u201E{slug}\u201C-Rezept."
     },
     props: true
   },
@@ -127,7 +138,8 @@ const routes = [
     name: "Fachhandel",
     component: SpecializedTrade,
     meta: {
-      title: "Fachhandel"
+      title: "Fachhandel",
+      description: "Sind Sie ein Händler? Bestellen Sie hier."
     }
   },
   {
@@ -145,6 +157,9 @@ const routes = [
     path: "/:slug",
     name: "page",
     component: Page,
+    meta: {
+      description: "Lernen Sie die Genossenschaft ETHIQUABLE und unsere Arbeit kennen."
+    },
     props: true
   },
   { path: "*", redirect: "/404" }
@@ -179,6 +194,24 @@ router.beforeEach((to, from, next) => {
   }
   title += "ETHIQUABLE";
   document.title = title;
+  let description =
+    to.meta.description || "Die Infoseite für Fair Trade- und Bio-Produkte von ETHIQUABLE Deutschland eG.";
+  description = description.replace(/\{(.+?)\}/g, (_, param) => {
+    const key = param.trim();
+    if (to.params[key]) {
+      return to.params[key]
+        .split("-")
+        .map(word => {
+          word = word.replace(/ae/g, "\u00e4").replace(/oe/g, "\u00f6").replace(/ue/g, "\u00fc");
+          return word.charAt(0).toUpperCase() + word.slice(1);
+        })
+        .join(" ");
+    }
+    return key;
+  });
+  document.querySelector('meta[name="description"]').setAttribute("content", description);
+  document.querySelector('meta[property="og:description"]').setAttribute("content", description);
+  document.querySelector('meta[itemprop="description"]').setAttribute("content", description);
   next();
 });
 

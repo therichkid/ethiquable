@@ -23,8 +23,6 @@ https://www.ethiquable.de/magazin und Startseite.
 
 Felder:
 
-- Abweichender Autor
-  - Ausfüllen, falls der Autor des Textes vom WordPress-Benutzer abweicht, sonst leerlassen.
 - Textauszug
   - Taucht auf der Übersichtsseite auf.
   - Text sollte möglichst kurz sein.

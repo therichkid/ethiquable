@@ -1,7 +1,7 @@
 <template>
   <div v-if="teaser" class="text-center">
     <h2 class="my-5" :class="teaser.length < 100 ? 'text-h4' : 'text-h5'" style="color: var(--v-secondary-base)">
-      <span class="pr-2">&#171;</span>{{ teaser }}<span class="pl-2">&#187;</span>
+      <span class="pr-2">&bdquo;</span>{{ teaser }}<span class="pl-2">&ldquo;</span>
     </h2>
   </div>
 </template>
