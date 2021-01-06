@@ -1,5 +1,10 @@
 # ethiquable
 
+[![logo]][website]
+
+[logo]: https://user-images.githubusercontent.com/39305770/103774364-baefe880-502c-11eb-9503-4f7ff6f1b081.jpg
+[website]: https://www.ethiquable.de
+
 ## Used libraries
 
 | Project        | Status                                         |

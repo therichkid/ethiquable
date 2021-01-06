@@ -59,8 +59,7 @@ const routes = [
     component: Product,
     meta: {
       title: "Produkt",
-      description:
-        "Alle Infos zum Produkt \u201E{slug}\u201C von ETHIQUABLE inkl. Infos über Inhaltsstoffe und Herkunft."
+      description: "Alle Infos zum Produkt {slug} von ETHIQUABLE inkl. Infos über Inhaltsstoffe und Herkunft."
     },
     props: true
   },
@@ -128,7 +127,7 @@ const routes = [
     component: Recipe,
     meta: {
       title: "Rezept",
-      description: "Alle Zutaten und Zubereitungsschritte zum \u201E{slug}\u201C-Rezept."
+      description: "Alle Zutaten und Zubereitungsschritte zum Rezept {slug}."
     },
     props: true
   },
