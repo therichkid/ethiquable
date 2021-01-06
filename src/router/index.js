@@ -41,7 +41,13 @@ const routes = [
   },
   {
     path: "/produkt-kategorie/*",
-    redirect: route => "/produkt-kategorie/" + route.path.split("/").pop().replace(".html", "")
+    redirect: route =>
+      "/produkt-kategorie/" +
+      route.path
+        .split("/")
+        .filter(path => path)
+        .pop()
+        .replace(".html", "")
   },
   {
     path: "/produkt-kategorien/:category",
@@ -79,7 +85,13 @@ const routes = [
   },
   {
     path: "/uebersicht-weltkarte/*",
-    redirect: route => "/produzenten/" + route.path.split("/").pop().replace(".html", "")
+    redirect: route =>
+      "/produzenten/" +
+      route.path
+        .split("/")
+        .filter(path => path)
+        .pop()
+        .replace(".html", "")
   },
   {
     path: "/produzenten/:slug",
