@@ -42,7 +42,7 @@ const routes = [
   {
     path: "/produkt-kategorie/*",
     redirect: route =>
-      "/produkt-kategorie/" +
+      "/produkt-kategorien/" +
       route.path
         .split("/")
         .filter(path => path)
