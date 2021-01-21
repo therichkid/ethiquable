@@ -11,7 +11,7 @@
           :src="slide.featuredImage.source"
           v-bind="slide.linkProps"
         >
-          <v-container class="fill-height" style="align-items: end">
+          <v-container class="fill-height align-end">
             <v-row>
               <v-col cols="12" class="slide-caption">
                 <h3 class="text-h4">{{ slide.title }}</h3>

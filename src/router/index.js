@@ -60,6 +60,16 @@ const routes = [
     props: true
   },
   {
+    path: "/produkt/*",
+    redirect: route =>
+      "/produkte/" +
+      route.path
+        .split("/")
+        .filter(path => path)
+        .pop()
+        .replace(".html", "")
+  },
+  {
     path: "/produkte/:slug",
     name: "product",
     component: Product,
