@@ -26,7 +26,7 @@
             <template v-slot:label>
               <span>
                 Ich stimme der
-                <router-link to="/datenschutz" @click.native.stop>Datenschutzerklärung</router-link>
+                <a href="/datenschutz" target="_blank" rel="noopener noreferrer" @click.stop>Datenschutzerklärung</a>
                 zu.
               </span>
             </template>
