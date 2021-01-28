@@ -22,9 +22,13 @@
             v-model="accessDataAccepted"
           >
           </v-checkbox>
-          <v-checkbox v-model="privacyPolicyAccepted" class="mt-0">
+          <v-checkbox v-model="privacyPolicyAccepted" required class="mt-0">
             <template v-slot:label>
-              <span>Ich stimme der <router-link to="/datenschutz">Datenschutzerklärung</router-link> zu.</span>
+              <span>
+                Ich stimme der
+                <router-link to="/datenschutz" @click.native.stop>Datenschutzerklärung</router-link>
+                zu.
+              </span>
             </template>
           </v-checkbox>
           <v-text-field label="HP" v-model="hp" v-show="false"></v-text-field>
