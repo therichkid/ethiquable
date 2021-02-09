@@ -320,6 +320,6 @@ const createYtElement = id => {
 };
 const createLinkElement = url => {
   return `<a href="${url}" target="_blank" rel="noopener noreferrer">
-  Hier geht es zum Video.
+  Hier geht es zum externen Inhalt.
 </a>`;
 };
