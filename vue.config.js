@@ -6,6 +6,7 @@ module.exports = {
   publicPath: isProd ? "/wp-content/themes/ethiquable/dist/" : "/",
   filenameHashing: false,
   configureWebpack: {
+    externals: isProd ? { "babel-polyfill": "babel-polyfill" } : {},
     optimization: {
       splitChunks: false
     },

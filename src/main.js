@@ -1,4 +1,8 @@
-import "babel-polyfill";
+const isProd = process.env.NODE_ENV === "production";
+
+if (!isProd) {
+  require("babel-polyfill");
+}
 import Vue from "vue";
 import App from "./App.vue";
 import vuetify from "./plugins/vuetify";
