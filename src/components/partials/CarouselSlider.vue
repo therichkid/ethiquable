@@ -96,5 +96,6 @@ export default {
 .slide-caption {
   padding: 10px 30px;
   background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
 }
 </style>
